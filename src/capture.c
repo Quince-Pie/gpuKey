@@ -9,6 +9,7 @@
 #include <inttypes.h>
 #include <pipewire/pipewire.h>
 #include <spa/param/audio/format-utils.h>
+#include <spa/param/audio/raw-json.h>
 #include <spa/param/video/format-utils.h>
 #include <spa/pod/builder.h>
 #include <stdbit.h>
@@ -23,7 +24,7 @@
 /* SPA's public pod-building macros intentionally use GNU statement expressions. */
 #pragma GCC diagnostic ignored "-Wpedantic"
 
-enum { AUDIO_SLOTS = 32 };
+enum { AUDIO_SLOTS = 256 };
 static_assert(GK_AUDIO_CHANNELS == SPA_AUDIO_MAX_CHANNELS);
 struct record {
     struct pw_buffer *wrapper; /* Only touched with the PipeWire loop lock. */
@@ -48,11 +49,13 @@ struct target_watch {
 struct audio_input {
     struct gk_capture *capture;
     struct pw_stream *stream;
-    struct spa_hook listener;
+    struct pw_node *node_proxy;
+    struct spa_hook listener, node_listener;
     struct gk_ring ready, free;
     struct audio_record records[AUDIO_SLOTS];
     float *samples;
     struct gk_audio_format format;
+    struct spa_audio_info_raw requested;
     char *title;
     char serial[32];
     uint32_t node;
@@ -839,15 +842,33 @@ static int connect_audio(struct gk_capture *c, unsigned track)
     pw_stream_add_listener(a->stream, &a->listener, &audio_events, a);
     uint8_t storage[1024];
     struct spa_pod_builder builder = SPA_POD_BUILDER_INIT(storage, sizeof(storage));
-    /* PipeWire's native capture contract: omitted rate/channels accept the
-     * selected source's negotiated values; stream.dont-remix forbids downmix. */
-    const struct spa_pod *param = spa_format_audio_raw_build(
-        &builder, SPA_PARAM_EnumFormat, &SPA_AUDIO_INFO_RAW_INIT(.format = SPA_AUDIO_FORMAT_F32));
+    /* PipeWire's native capture contract: supply the target node's advertised
+     * channel positions when present so WirePlumber and stream.dont-remix do
+     * not default an unspecified format to unpositioned stereo. */
+    struct spa_audio_info_raw info = a->requested;
+    info.format = SPA_AUDIO_FORMAT_F32;
+    const struct spa_pod *param = spa_format_audio_raw_build(&builder, SPA_PARAM_EnumFormat, &info);
     return pw_stream_connect(a->stream, PW_DIRECTION_INPUT, PW_ID_ANY,
                              PW_STREAM_FLAG_AUTOCONNECT | PW_STREAM_FLAG_MAP_BUFFERS |
                                  PW_STREAM_FLAG_DONT_RECONNECT | PW_STREAM_FLAG_RT_PROCESS,
                              &param, 1);
 }
+
+static void audio_node_info(void *opaque, const struct pw_node_info *info)
+{
+    struct audio_input *a = opaque;
+    if (!info || !info->props || a->requested.channels)
+        return;
+    const char *pos = spa_dict_lookup(info->props, SPA_KEY_AUDIO_POSITION);
+    if (pos)
+        spa_audio_parse_position_n(pos, strlen(pos), a->requested.position, SPA_AUDIO_MAX_CHANNELS,
+                                   &a->requested.channels);
+}
+
+static const struct pw_node_events audio_node_events = {
+    .version = PW_VERSION_NODE_EVENTS,
+    .info = audio_node_info,
+};
 
 static void audio_global(void *opaque, uint32_t id, uint32_t permissions, const char *type,
                          uint32_t version, const struct spa_dict *props)
@@ -894,6 +915,16 @@ static void audio_global(void *opaque, uint32_t id, uint32_t permissions, const 
         a->node = id;
         a->monitor = info.monitor;
         a->selected = true;
+        const char *pos = spa_dict_lookup(props, SPA_KEY_AUDIO_POSITION);
+        if (pos)
+            spa_audio_parse_position_n(pos, strlen(pos), a->requested.position,
+                                       SPA_AUDIO_MAX_CHANNELS, &a->requested.channels);
+        a->node_proxy =
+            pw_registry_bind(c->audio_registry, id, PW_TYPE_INTERFACE_Node, PW_VERSION_NODE, 0);
+        if (a->node_proxy) {
+            pw_node_add_listener(a->node_proxy, &a->node_listener, &audio_node_events, a);
+            c->audio_sync = pw_core_sync(c->audio_core, PW_ID_CORE, c->audio_sync);
+        }
     }
 }
 
@@ -929,6 +960,12 @@ static void audio_done(void *opaque, uint32_t id, int seq)
             }
     }
     for (unsigned i = 0; i < c->options.audio_count; ++i) {
+        struct audio_input *a = &c->audio[i];
+        if (a->node_proxy) {
+            spa_hook_remove(&a->node_listener);
+            pw_proxy_destroy((struct pw_proxy *)a->node_proxy);
+            a->node_proxy = nullptr;
+        }
         int ret = connect_audio(c, i);
         if (ret < 0) {
             error(c, ret, "connect selected audio");
@@ -1291,6 +1328,10 @@ void gk_capture_close(struct gk_capture **capture, struct gk_capture_stats *stat
     if (c->audio)
         for (unsigned i = 0; i < c->options.audio_count; ++i) {
             struct audio_input *a = &c->audio[i];
+            if (a->node_proxy) {
+                spa_hook_remove(&a->node_listener);
+                pw_proxy_destroy((struct pw_proxy *)a->node_proxy);
+            }
             /* Destroy synchronizes the RT data loop before reclaiming its pools. */
             if (a->stream)
                 pw_stream_destroy(a->stream);
