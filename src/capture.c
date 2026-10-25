@@ -24,7 +24,7 @@
 /* SPA's public pod-building macros intentionally use GNU statement expressions. */
 #pragma GCC diagnostic ignored "-Wpedantic"
 
-enum { AUDIO_SLOTS = 256 };
+enum { AUDIO_SLOTS = 256, AUDIO_SAMPLE_FRAMES = 32768 };
 static_assert(GK_AUDIO_CHANNELS == SPA_AUDIO_MAX_CHANNELS);
 struct record {
     struct pw_buffer *wrapper; /* Only touched with the PipeWire loop lock. */
@@ -35,7 +35,7 @@ struct record {
 };
 struct audio_record {
     int64_t pts;
-    unsigned frames;
+    uint32_t offset, frames, charged;
 };
 struct target_watch {
     struct gk_capture *capture;
@@ -58,10 +58,11 @@ struct audio_input {
     struct spa_audio_info_raw requested;
     char *title;
     char serial[32];
-    uint32_t node;
+    uint32_t node, write_offset;
     bool selected, monitor, seen, header_clock;
     _Atomic bool formatted;
-    alignas(64) uint64_t blocks, dropped, silenced;
+    alignas(64) _Atomic uint32_t free_frames;
+    uint64_t blocks, dropped, silenced;
 };
 struct gk_capture {
     struct pw_thread_loop *loop;
@@ -690,7 +691,7 @@ static void audio_param(void *opaque, uint32_t id, const struct spa_pod *param)
             error(c, -ESTALE, "selected audio rate/layout changed");
         return;
     }
-    size_t bytes = (size_t)AUDIO_SLOTS * GK_AUDIO_FRAMES * format.channels * sizeof(float);
+    size_t bytes = (size_t)AUDIO_SAMPLE_FRAMES * format.channels * sizeof(float);
     a->samples = malloc(bytes);
     if (!a->samples) {
         error(c, -ENOMEM, "allocate bounded audio slabs");
@@ -699,6 +700,7 @@ static void audio_param(void *opaque, uint32_t id, const struct spa_pod *param)
     /* First-touch every page on the control loop, before the RT callback can
      * publish. Explicit stores prevent malloc+memset folding to lazy calloc. */
     memset_explicit(a->samples, 0, bytes);
+    atomic_init(&a->free_frames, AUDIO_SAMPLE_FRAMES);
     a->format = format;
     unsigned stride = format.channels * sizeof(float);
     uint8_t storage[1024];
@@ -777,15 +779,24 @@ static void audio_process(void *opaque)
             audio_error(c, -ENOBUFS);
             goto next;
         }
-        if (!gk_ring_pop(&a->free, &slot)) {
+        uint32_t frames = chunk->size / stride;
+        uint32_t pad = a->write_offset + frames > AUDIO_SAMPLE_FRAMES
+                           ? AUDIO_SAMPLE_FRAMES - a->write_offset
+                           : 0;
+        uint32_t offset = pad ? 0 : a->write_offset;
+        uint32_t charged = pad + frames;
+        if (atomic_load_explicit(&a->free_frames, memory_order_acquire) < charged ||
+            !gk_ring_pop(&a->free, &slot)) {
             ++a->dropped;
             audio_error(c, -ENOBUFS);
             goto next;
         }
+        atomic_fetch_sub_explicit(&a->free_frames, charged, memory_order_relaxed);
+        a->write_offset = offset + frames == AUDIO_SAMPLE_FRAMES ? 0 : offset + frames;
         struct audio_record *r = &a->records[slot];
-        float *samples = a->samples + slot * GK_AUDIO_FRAMES * a->format.channels;
-        r->pts = pts;
-        r->frames = chunk->size / stride;
+        float *samples = a->samples + (size_t)offset * a->format.channels;
+        *r = (struct audio_record){
+            .pts = pts, .offset = offset, .frames = frames, .charged = charged};
         if ((header &&
              (header->flags & (SPA_META_HEADER_FLAG_CORRUPTED | SPA_META_HEADER_FLAG_GAP))) ||
             ((uint32_t)chunk->flags & (SPA_CHUNK_FLAG_CORRUPTED | SPA_CHUNK_FLAG_EMPTY))) {
@@ -1269,12 +1280,12 @@ bool gk_capture_audio_next(struct gk_capture *c, struct gk_audio_frame *frame)
         if (!gk_ring_pop(&a->ready, &slot))
             continue;
         const struct audio_record *r = &a->records[slot];
-        *frame = (struct gk_audio_frame){.samples = a->samples +
-                                                    slot * GK_AUDIO_FRAMES * a->format.channels,
-                                         .frames = r->frames,
-                                         .track = track,
-                                         .token = (uint64_t)track << 32 | slot,
-                                         .pts = r->pts};
+        *frame =
+            (struct gk_audio_frame){.samples = a->samples + (size_t)r->offset * a->format.channels,
+                                    .frames = r->frames,
+                                    .track = track,
+                                    .token = (uint64_t)track << 32 | slot,
+                                    .pts = r->pts};
         return true;
     }
     return false;
@@ -1283,9 +1294,17 @@ bool gk_capture_audio_next(struct gk_capture *c, struct gk_audio_frame *frame)
 void gk_capture_audio_release(struct gk_capture *c, uint64_t token)
 {
     unsigned track = (unsigned)(token >> 32), slot = (uint32_t)token;
-    if (track >= c->options.audio_count || slot >= AUDIO_SLOTS ||
-        !gk_ring_push(&c->audio[track].free, slot))
+    if (track >= c->options.audio_count || slot >= AUDIO_SLOTS) {
         error(c, -EIO, "audio retirement invariant");
+        return;
+    }
+    struct audio_input *a = &c->audio[track];
+    uint32_t charged = a->records[slot].charged;
+    if (!gk_ring_push(&a->free, slot)) {
+        error(c, -EIO, "audio retirement invariant");
+        return;
+    }
+    atomic_fetch_add_explicit(&a->free_frames, charged, memory_order_release);
 }
 
 void gk_capture_stop(struct gk_capture *c)

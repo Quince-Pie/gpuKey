@@ -333,7 +333,7 @@ static int parse(int argc, char **argv, struct options *o)
     };
     int c;
     uint64_t n;
-    bool test_audio = false, container_set = false, source_set = false;
+    bool test_audio = false, container_set = false, source_set = false, backend_set = false;
     bool replay_memory_set = false, static_interval_set = false, gpu_memory_set = false;
     while ((c = getopt_long(argc, argv, "ho:D:d::wf:a:", opts, nullptr)) != -1) {
         switch (c) {
@@ -384,6 +384,7 @@ static int parse(int argc, char **argv, struct options *o)
             o->media.output = optarg;
             break;
         case BACKEND:
+            backend_set = true;
             if (!strcmp(optarg, "vaapi"))
                 o->backend = GK_VAAPI;
             else if (!strcmp(optarg, "nvenc"))
@@ -624,6 +625,11 @@ static int parse(int argc, char **argv, struct options *o)
             return invalid_value("replay interval", argv[optind], "positive seconds");
         ++optind;
     }
+#ifdef GK_VULKAN_RGB
+    if (!backend_set && !o->test_source && !o->capture.force_shm && !o->capture.allow_shm &&
+        o->media.bits == 8 && !o->media.surfaces && o->pipewire_fd < 0 && !o->device)
+        o->backend = GK_VULKAN;
+#endif
     if (o->replay) {
         uint64_t seconds_needed = (uint64_t)((o->media.replay.duration_ns + GK_NS - 1) / GK_NS);
         if (!replay_memory_set && seconds_needed > 30) {
@@ -1236,8 +1242,8 @@ static int record(struct options *o, struct gk_gpu *gpu, int signals, struct gk_
          * discarding it here loses the first audio block even without a GPU
          * wait; those samples can belong after the eventual video origin. */
         if (!stop && media && first_pts >= 0)
-            ret = consume_audio(capture, media, o, first_pts, o->duration, o->capture.audio_count,
-                                &work);
+            ret = consume_audio(capture, media, o, first_pts, o->duration,
+                                32U * o->capture.audio_count, &work);
         if (ret < 0)
             stop = true;
         if (stop)

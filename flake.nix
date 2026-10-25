@@ -137,7 +137,7 @@
         in
         {
           packages = packages // {
-            default = amdPackage;
+            default = rgbAmd;
             full = fullPackage;
             amd = amdPackage;
             vaapi-dpb = vaapiPackage;
