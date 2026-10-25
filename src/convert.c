@@ -166,7 +166,8 @@ size_t gk_rgb_workspace_size(unsigned width)
     return bytes;
 }
 
-#if defined(__x86_64__) && __has_c_attribute(gnu::target_clones) && !defined(GK_RGB_PORTABLE)
+#if defined(__x86_64__) && __has_c_attribute(gnu::target_clones) && !defined(GK_RGB_PORTABLE) &&   \
+    !defined(__SANITIZE_THREAD__)
 [[gnu::target_clones("arch=x86-64-v4", "arch=x86-64-v3", "default")]]
 #endif
 int gk_rgb_to_yuv_rows(const struct gk_video_format *format, const struct gk_image *image,

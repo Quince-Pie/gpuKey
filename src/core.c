@@ -5,6 +5,7 @@
 #include <stdbit.h>
 #include <stdckdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/eventfd.h>
 #include <time.h>
 #include <unistd.h>
@@ -16,9 +17,11 @@ int gk_ring_init(struct gk_ring *q, uint32_t capacity)
     *q = (struct gk_ring){};
     atomic_init(&q->published, 0);
     atomic_init(&q->released, 0);
-    q->cells = calloc(capacity, sizeof(*q->cells));
+    size_t bytes = ((size_t)capacity * sizeof(*q->cells) + 63U) & ~(size_t)63U;
+    q->cells = aligned_alloc(64, bytes);
     if (!q->cells)
         return -ENOMEM;
+    memset(q->cells, 0, bytes);
     q->capacity = capacity;
     return 0;
 }

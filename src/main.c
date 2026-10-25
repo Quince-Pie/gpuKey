@@ -629,6 +629,8 @@ static int parse(int argc, char **argv, struct options *o)
     if (!backend_set && !o->test_source && !o->capture.force_shm && !o->capture.allow_shm &&
         o->media.bits == 8 && !o->media.surfaces && o->pipewire_fd < 0 && !o->device)
         o->backend = GK_VULKAN;
+#else
+    (void)backend_set;
 #endif
     if (o->replay) {
         uint64_t seconds_needed = (uint64_t)((o->media.replay.duration_ns + GK_NS - 1) / GK_NS);

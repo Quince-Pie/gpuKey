@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/eventfd.h>
+#include <sys/uio.h>
 #include <tracy/TracyC.h>
 #include <unistd.h>
 
@@ -23,14 +24,16 @@ struct gk_sink {
     int fd, directory, ready, space;
     pthread_t thread;
     bool started;
-    bool quarantine;
+    bool quarantine, fixed_io;
     uint8_t *bytes;
     struct slab *slabs;
     int64_t *accepted_at; /* Optional cold timing data, absent in ordinary recordings. */
     alignas(64) _Atomic uint32_t published;
     uint32_t next, cached_released;
     uint64_t logical;
+    _Atomic bool waiting_space;
     alignas(64) _Atomic uint32_t released;
+    _Atomic bool waiting_ready;
     _Atomic int error;
     _Atomic bool stop;
     struct gk_sink_stats stats;
@@ -61,6 +64,7 @@ static size_t write_size(struct gk_sink *s, const struct slab *b)
 
 static void release_prefix(struct gk_sink *s, uint32_t *read, uint32_t issued)
 {
+    uint32_t before = *read;
     while (*read != issued) {
         struct slab *b = &s->slabs[*read & (s->options.slabs - 1)];
         if (!b->terminal)
@@ -73,10 +77,15 @@ static void release_prefix(struct gk_sink *s, uint32_t *read, uint32_t issued)
                         (uint64_t)(gk_now_ns() - s->accepted_at[*read & (s->options.slabs - 1)]));
         ++*read;
     }
-    atomic_store_explicit(&s->released, *read, memory_order_release);
-    int ret = gk_notify(s->space);
-    if (ret < 0)
-        latch(s, ret);
+    if (*read != before) {
+        atomic_store_explicit(&s->released, *read, memory_order_seq_cst);
+        if (atomic_load_explicit(&s->waiting_space, memory_order_seq_cst) &&
+            atomic_exchange_explicit(&s->waiting_space, false, memory_order_relaxed)) {
+            int ret = gk_notify(s->space);
+            if (ret < 0)
+                latch(s, ret);
+        }
+    }
 }
 
 static void buffered_write(struct gk_sink *s, uint32_t sequence)
@@ -114,8 +123,13 @@ static int submit_slab(struct gk_sink *s, struct io_uring *ring, uint32_t sequen
     struct io_uring_sqe *sqe = io_uring_get_sqe(ring);
     if (!sqe)
         return -ENOBUFS;
-    io_uring_prep_write(sqe, s->fd, s->bytes + (size_t)i * s->options.slab_size + b->completed,
-                        (unsigned)n, b->offset + b->completed);
+    uint8_t *buf = s->bytes + (size_t)i * s->options.slab_size + b->completed;
+    if (s->fixed_io) {
+        io_uring_prep_write_fixed(sqe, 0, buf, (unsigned)n, b->offset + b->completed, 0);
+        sqe->flags |= IOSQE_FIXED_FILE;
+    } else {
+        io_uring_prep_write(sqe, s->fd, buf, (unsigned)n, b->offset + b->completed);
+    }
     io_uring_sqe_set_data64(sqe, sequence);
     return 0;
 }
@@ -137,10 +151,14 @@ static void *writer(void *opaque)
             latch(s, ret);
             return nullptr;
         }
+        struct iovec iov = {.iov_base = s->bytes,
+                            .iov_len = s->options.slab_size * s->options.slabs};
+        if (io_uring_register_files(&ring, &s->fd, 1) == 0 &&
+            io_uring_register_buffers(&ring, &iov, 1) == 0)
+            s->fixed_io = true;
     }
     uint32_t read = 0, issued = 0, pending = 0;
     for (;;) {
-        gk_drain_event(s->ready);
         uint32_t published = atomic_load_explicit(&s->published, memory_order_acquire);
         while (issued != published) {
             struct slab *b = &s->slabs[issued & (s->options.slabs - 1)];
@@ -206,15 +224,20 @@ static void *writer(void *opaque)
             }
         }
         release_prefix(s, &read, issued);
-        /* Stop is published after the final write. Re-read published after stop. */
-        if (atomic_load_explicit(&s->stop, memory_order_acquire) && !pending &&
-            issued == atomic_load_explicit(&s->published, memory_order_acquire))
-            break;
         if (!pending && issued == atomic_load_explicit(&s->published, memory_order_acquire)) {
-            int ret = gk_wait(s->ready, -1);
-            if (ret < 0) {
-                latch(s, ret);
+            if (atomic_load_explicit(&s->stop, memory_order_acquire))
                 break;
+            atomic_store_explicit(&s->waiting_ready, true, memory_order_seq_cst);
+            if (issued == atomic_load_explicit(&s->published, memory_order_seq_cst) &&
+                !atomic_load_explicit(&s->stop, memory_order_seq_cst)) {
+                int ret = gk_wait(s->ready, -1);
+                gk_drain_event(s->ready);
+                if (ret < 0) {
+                    latch(s, ret);
+                    break;
+                }
+            } else {
+                atomic_store_explicit(&s->waiting_ready, false, memory_order_relaxed);
             }
         }
     }
@@ -306,10 +329,15 @@ int gk_sink_write(void *opaque, const uint8_t *data, int size)
         if (error)
             return error;
         while (s->next - s->cached_released == s->options.slabs) {
-            gk_drain_event(s->space);
             s->cached_released = atomic_load_explicit(&s->released, memory_order_acquire);
             if (s->next - s->cached_released != s->options.slabs)
                 break;
+            atomic_store_explicit(&s->waiting_space, true, memory_order_seq_cst);
+            s->cached_released = atomic_load_explicit(&s->released, memory_order_seq_cst);
+            if (s->next - s->cached_released != s->options.slabs) {
+                atomic_store_explicit(&s->waiting_space, false, memory_order_relaxed);
+                break;
+            }
             if ((error = atomic_load(&s->error)))
                 return error;
             int64_t left = deadline - gk_now_ns();
@@ -318,6 +346,7 @@ int gk_sink_write(void *opaque, const uint8_t *data, int size)
                 return -ETIMEDOUT;
             }
             error = gk_wait(s->space, (int)((left + 999999) / 1000000));
+            gk_drain_event(s->space);
             if (error < 0) {
                 latch(s, error);
                 return error;
@@ -337,11 +366,14 @@ int gk_sink_write(void *opaque, const uint8_t *data, int size)
         uint64_t occupancy = (uint64_t)(s->next + 1 - s->cached_released) * s->options.slab_size;
         if (occupancy > s->stats.peak_pending)
             s->stats.peak_pending = occupancy;
-        atomic_store_explicit(&s->published, ++s->next, memory_order_release);
-        error = gk_notify(s->ready);
-        if (error < 0) {
-            latch(s, error);
-            return error;
+        atomic_store_explicit(&s->published, ++s->next, memory_order_seq_cst);
+        if (atomic_load_explicit(&s->waiting_ready, memory_order_seq_cst) &&
+            atomic_exchange_explicit(&s->waiting_ready, false, memory_order_relaxed)) {
+            error = gk_notify(s->ready);
+            if (error < 0) {
+                latch(s, error);
+                return error;
+            }
         }
     }
     return size;
