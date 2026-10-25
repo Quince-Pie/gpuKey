@@ -1,8 +1,0 @@
-Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
-Saved clips include the preceding keyframe and the latest completed audio.
-device: explicit software AV1 control
-plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
-Replay 'default' ready. Enter saves. Run 'gpukey save' to save; Ctrl-C stops.
-Saving replay to /tmp/gpukey-replay-tty-final/gpukey-replay-20261020-015604-504160782.mkv
-Saved 1.614 seconds to /tmp/gpukey-replay-tty-final/gpukey-replay-20261020-015604-504160782.mkv
-Replay stopped: 1 clips saved, 0 failed; unsaved history discarded.

@@ -1,24 +1,19 @@
 {
   lib,
   ffmpeg-headless,
-  synchronousTransfer ? true,
 }:
 let
-  base = import ./ffmpeg-capacity.nix {
+  base = import ./ffmpeg.nix {
     inherit lib ffmpeg-headless;
-    returnPolicy = true;
+    withVaapiDpb = false;
   };
 in
 base.overrideAttrs (old: {
   pname = "ffmpeg-gpukey-vulkan-rgb";
-  patches =
-    old.patches
-    ++ [
-      ./ffmpeg-vulkan-rgb.patch
-      ./ffmpeg-quantizer-vulkan.patch
-      ./ffmpeg-dpb-idle.patch
-    ]
-    ++ lib.optionals synchronousTransfer [
-      ./ffmpeg-vulkan-transfer.patch
-    ];
+  patches = old.patches ++ [
+    ./ffmpeg-vulkan-rgb.patch
+    ./ffmpeg-quantizer-vulkan.patch
+    ./ffmpeg-dpb-idle.patch
+    ./ffmpeg-vulkan-transfer.patch
+  ];
 })

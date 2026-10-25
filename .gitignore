@@ -3,5 +3,8 @@
 /result
 /result-*
 /.direnv/
+__pycache__/
+*.pyc
 *.tracy
-!/docs/evidence/*.tracy
+*.mkv
+*.mp4

@@ -152,19 +152,6 @@ $(builddir)/tests/%: tests/%.c $(lib_objs) | $(builddir)/tests
 $(builddir)/tests/conversion_probe: private probe_libraries := $(conversion_probe_libs)
 $(builddir)/tests/conversion_fallback_test: private probe_libraries := $(conversion_fallback_flags)
 
-# Archived replay mechanisms use the same current benchmark harness and support
-# objects, so packet preparation cannot favor one implementation.
-replay_controls := scan eventfd unshared
-replay_control_objs := $(addprefix $(builddir)/replay-control-,$(addsuffix .o,$(replay_controls)))
-replay_control_bins := $(addprefix $(builddir)/tests/replay_bench_,$(replay_controls))
-replay_support := $(filter-out $(builddir)/replay.o,$(lib_objs))
-.PHONY: replay-controls
-replay-controls: $(replay_control_bins)
-$(replay_control_objs): $(builddir)/replay-control-%.o: docs/evidence/replay-%-control.c.txt $(config_file) | $(builddir)
-> $(CC) $(cppflags) $(cflags) -x c -MMD -MP -MF $(@:.o=.d) -c -o $@ $<
-$(replay_control_bins): $(builddir)/tests/replay_bench_%: tests/replay_bench.c $(builddir)/replay-control-%.o $(replay_support) $(config_file) | $(builddir)/tests
-> $(CC) $(cppflags) $(cflags) -MMD -MP -MF $@.d $(ldflags) -o $@ $< $(filter %.o,$^) $(ldlibs)
-
 check: $(bin) $(test_bins)
 > @for t in $(test_bins); do echo "run $$t"; "$$t" || exit 1; done
 > bash tests/cli.sh $(abspath $(bin))
@@ -196,4 +183,3 @@ $(builddir) $(builddir)/tests:
 > mkdir -p $@
 
 -include $(objs:.o=.d) $(wildcard $(builddir)/tests/*.d)
--include $(replay_control_objs:.o=.d) $(addsuffix .d,$(replay_control_bins))

@@ -1,9 +1,10 @@
-# Memory targets for the active optimization goal
+# Conditional memory targets
 
-User goal, added 20 October 2026: retain AV1 and improve every relevant metric;
-calculate RAM and VRAM lower bounds and use them as explicit optimization targets.
-These targets supplement `IMPLEMENTATION.md`. They are not claims that the
-current implementation, or any tested alternative, is universally optimal.
+These targets model the dense image, bitstream, and replay payload storage for
+`gpuKey`'s two-reference AV1 recording pipeline. They supplement
+[`README.md`](../README.md) and [`docs/validation.md`](validation.md), and are
+not claims that any single configuration is universally optimal across all
+workloads.
 
 ## What can be calculated
 

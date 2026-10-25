@@ -1,8 +1,0 @@
-Saving to /tmp/gpukey-missing-pts-fixed/result.mp4
-device: explicit software AV1 control
-plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
-Recording. Ctrl-C stops and finalizes.
-capture: using PipeWire graph-cycle timestamps
-capture: video clock stopped or moved backwards (Stale file handle)
-Incomplete recording: 1 video inputs, 1 encoded packets; 1 capture skips, 0 FPS-limited; accepted/written/durable bytes=1027/1027/0
-gpukey: Stale file handle. Any partial output has been preserved.

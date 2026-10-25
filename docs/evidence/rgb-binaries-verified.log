@@ -1,6 +1,0 @@
-/nix/store/4fsykvy59bv48gl14plaplbgrpizkq9q-gpukey-rgb-amd/bin/.gpukey-wrapped: OK
-/nix/store/q7rkq342smywmjd4c3iv4syh1qw9lvrz-gpukey-amd/bin/.gpukey-wrapped: OK
-/nix/store/0jq2axwnmxcargkdlmpjjv02m7g4aggx-mesa-gpukey-rgb-26.2.5/lib/libvulkan_radeon.so: OK
-build/gcc-release/gpukey: OK
-build/gcc-release-tracy-rgb/gpukey: OK
-build/gcc-release/tests/capture_fixture: OK

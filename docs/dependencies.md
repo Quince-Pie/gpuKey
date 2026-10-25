@@ -202,8 +202,6 @@ actual pinned toolchains with `-std=c23 -Wall -Wextra -Wformat=2 -Werror`.
 GCC 16.2.0 accepts it and prints `UINT64_MAX` correctly; Clang 21.1.8 rejects it as
 `invalid conversion specifier '6'`. The compatibility choice retains format
 checking on both compilers. It is not a claim that C23 lacks width modifiers.
-The exact probe and diagnostics are in
-[`evidence/c23-width-format.txt`](evidence/c23-width-format.txt).
 
 ## Rolling replay and export ownership
 

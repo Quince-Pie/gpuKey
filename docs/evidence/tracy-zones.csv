@@ -1,6 +1,0 @@
-name,src_file,src_line,total_ns,total_perc,counts,mean_ns,min_ns,max_ns,std_ns
-media.prepare-submit,src/media.c,502,12622449,0.294984,243,51944,17583,3714059,236165.597590
-media.encode-and-packets,src/media.c,549,14781084,0.345431,243,60827,29826,492608,36934.182526
-sink.pwrite,src/sink.c,86,107736,0.002518,7,15390,6783,27552,7539.224054
-gpu.source-read-completion,src/gpu.c,305,36974740,0.864092,243,152159,72188,442422,78028.504512
-gpu.vpp-submit,src/gpu.c,272,12597940,0.294411,243,51843,17503,3714019,236169.256258

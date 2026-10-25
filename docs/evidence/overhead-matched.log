@@ -1,7 +1,0 @@
-case variant: mean_cpu_ms sample_sd_ms max_cpu_ms mean_one_core_percent mean_rss_kib worst_lease_ns
-changing ready_time: 74.159 0.330 74.627 1.8324 83208.0 4031052
-changing control: 4008.451 2.676 4011.114 99.0625 83212.8 4475908
-static ready_time: 38.581 0.636 39.331 0.9539 83208.0 4056841
-static control: 4040.319 1.873 4042.432 99.9040 83833.6 4004932
-changing candidate: 73.342 4.314 78.045 1.8126 83468.8 4142844
-static candidate: 38.308 0.922 39.298 0.9472 83248.8 4063945
