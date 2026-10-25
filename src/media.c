@@ -774,12 +774,15 @@ int gk_media_open(struct gk_media **out, struct gk_gpu *gpu, const struct gk_vid
         ret = gk_sink_open(&m->sink, options->output, &options->sink);
         if (ret < 0)
             goto fail;
-        uint8_t *io_buffer = av_malloc(65536);
+        int io_size = options->sink.slab_size && options->sink.slab_size <= INT_MAX
+                          ? (int)options->sink.slab_size
+                          : 65536;
+        uint8_t *io_buffer = av_malloc((size_t)io_size);
         if (!io_buffer) {
             ret = -ENOMEM;
             goto fail;
         }
-        m->io = avio_alloc_context(io_buffer, 65536, 1, m->sink, nullptr, gk_sink_write, nullptr);
+        m->io = avio_alloc_context(io_buffer, io_size, 1, m->sink, nullptr, gk_sink_write, nullptr);
         if (!m->io) {
             av_free(io_buffer);
             ret = -ENOMEM;

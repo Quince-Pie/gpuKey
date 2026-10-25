@@ -16,6 +16,7 @@
 struct slab {
     uint64_t offset;
     size_t size, completed;
+    uint32_t buf_id;
     bool terminal;
 };
 
@@ -30,9 +31,10 @@ struct gk_sink {
     int64_t *accepted_at; /* Optional cold timing data, absent in ordinary recordings. */
     alignas(64) _Atomic uint32_t published;
     uint32_t next, cached_released;
-    uint64_t logical;
+    uint64_t logical, local_free_mask;
     _Atomic bool waiting_space;
     alignas(64) _Atomic uint32_t released;
+    _Atomic uint64_t returned_mask;
     _Atomic bool waiting_ready;
     _Atomic int error;
     _Atomic bool stop;
@@ -65,6 +67,7 @@ static size_t write_size(struct gk_sink *s, const struct slab *b)
 static void release_prefix(struct gk_sink *s, uint32_t *read, uint32_t issued)
 {
     uint32_t before = *read;
+    uint64_t freed_mask = 0;
     while (*read != issued) {
         struct slab *b = &s->slabs[*read & (s->options.slabs - 1)];
         if (!b->terminal)
@@ -75,9 +78,13 @@ static void release_prefix(struct gk_sink *s, uint32_t *read, uint32_t issued)
         if (b->completed == b->size && s->options.measure)
             gk_hist_add(&s->stats.completion,
                         (uint64_t)(gk_now_ns() - s->accepted_at[*read & (s->options.slabs - 1)]));
+        if (s->options.slabs <= 64)
+            freed_mask |= UINT64_C(1) << b->buf_id;
         ++*read;
     }
     if (*read != before) {
+        if (freed_mask)
+            atomic_fetch_or_explicit(&s->returned_mask, freed_mask, memory_order_release);
         atomic_store_explicit(&s->released, *read, memory_order_seq_cst);
         if (atomic_load_explicit(&s->waiting_space, memory_order_seq_cst) &&
             atomic_exchange_explicit(&s->waiting_space, false, memory_order_relaxed)) {
@@ -99,8 +106,9 @@ static void buffered_write(struct gk_sink *s, uint32_t sequence)
             latch(s, -ENOSPC);
             break;
         }
-        ssize_t n = pwrite(s->fd, s->bytes + (size_t)i * s->options.slab_size + b->completed,
-                           amount, (off_t)(b->offset + b->completed));
+        ssize_t n =
+            pwrite(s->fd, s->bytes + (size_t)b->buf_id * s->options.slab_size + b->completed,
+                   amount, (off_t)(b->offset + b->completed));
         if (n < 0 && errno == EINTR)
             continue;
         if (n <= 0) {
@@ -123,7 +131,7 @@ static int submit_slab(struct gk_sink *s, struct io_uring *ring, uint32_t sequen
     struct io_uring_sqe *sqe = io_uring_get_sqe(ring);
     if (!sqe)
         return -ENOBUFS;
-    uint8_t *buf = s->bytes + (size_t)i * s->options.slab_size + b->completed;
+    uint8_t *buf = s->bytes + (size_t)b->buf_id * s->options.slab_size + b->completed;
     if (s->fixed_io) {
         io_uring_prep_write_fixed(sqe, 0, buf, (unsigned)n, b->offset + b->completed, 0);
         sqe->flags |= IOSQE_FIXED_FILE;
@@ -265,9 +273,17 @@ int gk_sink_open(struct gk_sink **out, const char *path, const struct gk_sink_op
     struct gk_sink *s = aligned_alloc(64, aligned_size);
     if (!s)
         return -ENOMEM;
-    *s = (struct gk_sink){.options = *options, .fd = -1, .directory = -1, .ready = -1, .space = -1};
+    *s = (struct gk_sink){.options = *options,
+                          .fd = -1,
+                          .directory = -1,
+                          .ready = -1,
+                          .space = -1,
+                          .local_free_mask = options->slabs < 64
+                                                 ? ((UINT64_C(1) << options->slabs) - 1)
+                                                 : UINT64_MAX};
     atomic_init(&s->published, 0);
     atomic_init(&s->released, 0);
+    atomic_init(&s->returned_mask, 0);
     atomic_init(&s->error, 0);
     atomic_init(&s->stop, false);
     s->bytes = malloc(bytes);
@@ -356,8 +372,16 @@ int gk_sink_write(void *opaque, const uint8_t *data, int size)
         if (s->logical > INT64_MAX - n)
             return -EOVERFLOW;
         uint32_t i = s->next & (s->options.slabs - 1);
-        memcpy(s->bytes + (size_t)i * s->options.slab_size, data, n);
-        s->slabs[i] = (struct slab){.offset = s->logical, .size = n};
+        uint32_t buf_id = i;
+        if (s->options.slabs <= 64) {
+            if ((s->local_free_mask & 3U) == 0)
+                s->local_free_mask |=
+                    atomic_exchange_explicit(&s->returned_mask, 0, memory_order_acquire);
+            buf_id = (uint32_t)stdc_trailing_zeros(s->local_free_mask);
+            s->local_free_mask &= ~(UINT64_C(1) << buf_id);
+        }
+        memcpy(s->bytes + (size_t)buf_id * s->options.slab_size, data, n);
+        s->slabs[i] = (struct slab){.offset = s->logical, .size = n, .buf_id = buf_id};
         if (s->options.measure)
             s->accepted_at[i] = gk_now_ns();
         s->logical += n;

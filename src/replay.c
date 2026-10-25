@@ -62,6 +62,8 @@ static_assert(ATOMIC_INT_LOCK_FREE == 2 && sizeof(_Atomic uint32_t) == 4 &&
 struct gk_replay {
     const AVFormatContext *format;
     struct gk_replay_options options;
+    AVCodecParserContext *parser;
+    AVCodecContext *parser_ctx;
     struct block **blocks;
     uint32_t *available;
     uint32_t capacity, unused, available_count, head, tail, spare;
@@ -304,7 +306,7 @@ static int obu_prefix(const uint8_t *data, size_t size, bool *reduced, bool *seq
     return require_frame ? -EPROTO : 0;
 }
 
-static int verified_key(const AVCodecParameters *par, const AVPacket *pkt)
+static int verified_key(struct gk_replay *r, const AVCodecParameters *par, const AVPacket *pkt)
 {
     bool reduced = false, sequence = false;
     if (par->extradata_size) {
@@ -317,25 +319,22 @@ static int verified_key(const AVCodecParameters *par, const AVPacket *pkt)
     int ret = obu_prefix(pkt->data, (size_t)pkt->size, &reduced, &sequence, true);
     if (ret < 0)
         return ret;
-    AVCodecParserContext *parser = av_parser_init(AV_CODEC_ID_AV1);
-    AVCodecContext *ctx = avcodec_alloc_context3(nullptr);
-    if (!parser || !ctx) {
-        av_parser_close(parser);
-        avcodec_free_context(&ctx);
+    if (!r->parser || !r->parser_ctx)
         return -ENOMEM;
+    if (r->parser_ctx->extradata_size != par->extradata_size ||
+        (par->extradata_size &&
+         (!r->parser_ctx->extradata ||
+          memcmp(r->parser_ctx->extradata, par->extradata, (size_t)par->extradata_size)))) {
+        ret = avcodec_parameters_to_context(r->parser_ctx, par);
+        if (ret < 0)
+            return ret;
     }
-    ret = avcodec_parameters_to_context(ctx, par);
-    if (ret >= 0) {
-        parser->flags |= gk_av1_parser_flags(pkt);
-        uint8_t *output;
-        int size;
-        int consumed = av_parser_parse2(parser, ctx, &output, &size, pkt->data, pkt->size, pkt->pts,
-                                        pkt->dts, 0);
-        ret = consumed == pkt->size && size == pkt->size && parser->key_frame == 1 ? 0 : -ENOTSUP;
-    }
-    av_parser_close(parser);
-    avcodec_free_context(&ctx);
-    return ret;
+    r->parser->flags = gk_av1_parser_flags(pkt);
+    uint8_t *output;
+    int size;
+    int consumed = av_parser_parse2(r->parser, r->parser_ctx, &output, &size, pkt->data, pkt->size,
+                                    pkt->pts, pkt->dts, 0);
+    return consumed == pkt->size && size == pkt->size && r->parser->key_frame == 1 ? 0 : -ENOTSUP;
 }
 
 static int add_packet(struct gk_replay *r, AVPacket *pkt, bool cpu)
@@ -394,7 +393,7 @@ static int add_packet(struct gk_replay *r, AVPacket *pkt, bool cpu)
         AVPacket probe = *pkt;
         probe.buf = buffer;
         probe.data = buffer->data + offset;
-        ret = verified_key(r->format->streams[0]->codecpar, &probe);
+        ret = verified_key(r, r->format->streams[0]->codecpar, &probe);
         if (ret < 0)
             goto fail;
     } else if (!key && !stream && r->keep_key == no_position) {
@@ -640,9 +639,11 @@ static void compact_keys(struct export_state *e, const AVStream *output)
         const struct packet *p = saved_packet(e, pos);
         const struct packet *previous =
             write > s->cursor ? saved_packet(e, e->order[s->begin + write - 1]) : nullptr;
-        bool same = previous && (p->stream_flags & KEY) && (previous->stream_flags & KEY) &&
-                    p->size == previous->size;
-        if (same) {
+        bool shared_pair = previous && p->stream_flags == SHARED_KEY &&
+                           previous->stream_flags == SHARED_KEY && p->shared == previous->shared;
+        bool same = shared_pair || (previous && (p->stream_flags & KEY) &&
+                                    (previous->stream_flags & KEY) && p->size == previous->size);
+        if (same && !shared_pair) {
             const uint8_t *a = packet_buffer(p)->data + p->offset;
             const uint8_t *b = packet_buffer(previous)->data + previous->offset;
             same = a == b || !memcmp(a, b, p->size);
@@ -792,8 +793,18 @@ static int export_clip(struct gk_replay *r, struct snapshot *view)
         int64_t threshold = s->start;
         if (par->codec_id == AV_CODEC_ID_OPUS)
             threshold -= 3840;
-        while (s->cursor + 1 < s->count && stream_packet(&e, i, 1)->pts <= threshold)
-            ++s->cursor;
+        if (s->count > 1) {
+            size_t lo = 0, hi = s->count - 1;
+            while (lo < hi) {
+                size_t mid = lo + (hi - lo + 1) / 2;
+                if (saved_packet(&e, e.order[s->begin + mid])->pts <= threshold)
+                    lo = mid;
+                else
+                    hi = mid - 1;
+            }
+            if (saved_packet(&e, e.order[s->begin + lo])->pts <= threshold)
+                s->cursor = lo;
+        }
         if (i == 0) {
             while (s->cursor < s->count && stream_packet(&e, i, 0)->pts < s->start)
                 ++s->cursor;
@@ -830,12 +841,15 @@ static int export_clip(struct gk_replay *r, struct snapshot *view)
     ret = gk_sink_open(&sink, view->path, &r->options.sink);
     if (ret < 0)
         goto cleanup;
-    uint8_t *buffer = av_malloc(65536);
+    int io_size = r->options.sink.slab_size && r->options.sink.slab_size <= INT_MAX
+                      ? (int)r->options.sink.slab_size
+                      : 65536;
+    uint8_t *buffer = av_malloc((size_t)io_size);
     if (!buffer) {
         ret = -ENOMEM;
         goto cleanup;
     }
-    io = avio_alloc_context(buffer, 65536, 1, sink, nullptr, gk_sink_write, nullptr);
+    io = avio_alloc_context(buffer, io_size, 1, sink, nullptr, gk_sink_write, nullptr);
     if (!io) {
         av_free(buffer);
         ret = -ENOMEM;
@@ -919,11 +933,10 @@ static int export_clip(struct gk_replay *r, struct snapshot *view)
          * Only a terminal, unrepresentable video picture may be omitted. */
         if (end > pts && (track || output_end > output_pts)) {
             AVBufferRef *payload = packet_buffer(p);
-            packet->buf = av_buffer_ref(payload);
-            if (!packet->buf) {
-                ret = -ENOMEM;
-                goto cleanup;
-            }
+            /* The snapshot pins every block's payload through export_clip().
+             * Leaving packet->buf null avoids a duplicate av_buffer_ref/unref
+             * pair per packet inside av_write_frame(). */
+            packet->buf = nullptr;
             packet->data = payload->data + p->offset + data_offset;
             packet->size = (int)size;
             packet->pts = packet->dts = output_pts;
@@ -940,7 +953,8 @@ static int export_clip(struct gk_replay *r, struct snapshot *view)
                 AV_WL32(side + 4, skip_end);
             }
             ret = av_write_frame(mux, packet);
-            av_packet_unref(packet);
+            if (skip_end)
+                av_packet_unref(packet);
             if (ret < 0)
                 goto cleanup;
             video_written |= track == 0;
@@ -1084,13 +1098,15 @@ int gk_replay_open(struct gk_replay **out, const AVFormatContext *format,
     r->request = -1;
 #endif
     atomic_init(&r->state, IDLE);
+    r->parser = av_parser_init(AV_CODEC_ID_AV1);
+    r->parser_ctx = avcodec_alloc_context3(nullptr);
     r->capacity = (uint32_t)(options->bytes * 2 / sizeof(struct block)) + 3;
     r->blocks = calloc(r->capacity, sizeof(*r->blocks));
     r->available = calloc(r->capacity, sizeof(*r->available));
     r->last_pts = calloc(format->nb_streams, sizeof(*r->last_pts));
     r->ends = calloc(format->nb_streams, sizeof(*r->ends));
     int ret = -ENOMEM;
-    if (!r->blocks || !r->available || !r->last_pts || !r->ends)
+    if (!r->parser || !r->parser_ctx || !r->blocks || !r->available || !r->last_pts || !r->ends)
         goto fail;
     for (unsigned i = 0; i < format->nb_streams; ++i)
         r->last_pts[i] = r->ends[i] = INT64_MIN;
@@ -1145,10 +1161,15 @@ int gk_replay_save(struct gk_replay *r, const char *path, int64_t endpoint_ns)
     int64_t start = time_ns(r, at(r, key));
     if (start >= end)
         return -EAGAIN;
+    int64_t floor = start - (r->has_opus ? opus_preroll_ns : 0);
+    uint32_t key_block = (uint32_t)(key >> 32);
+    uint32_t first_id = r->head;
+    while (first_id != key_block && first_id != NO_BLOCK && r->blocks[first_id]->max_end_ns < floor)
+        first_id = r->blocks[first_id]->next;
     struct snapshot view = {
         .path = strdup(path),
         .result = {.start_ns = start, .end_ns = end, .requested_end_ns = endpoint_ns}};
-    for (uint32_t id = r->head; id != NO_BLOCK; id = r->blocks[id]->next)
+    for (uint32_t id = first_id; id != NO_BLOCK; id = r->blocks[id]->next)
         ++view.count;
     view.blocks = calloc(view.count, sizeof(*view.blocks));
     view.ids = calloc(view.count, sizeof(*view.ids));
@@ -1159,7 +1180,7 @@ int gk_replay_save(struct gk_replay *r, const char *path, int64_t endpoint_ns)
         return -ENOMEM;
     }
     size_t i = 0;
-    for (uint32_t id = r->head; id != NO_BLOCK; id = r->blocks[id]->next) {
+    for (uint32_t id = first_id; id != NO_BLOCK; id = r->blocks[id]->next) {
         struct block *b = r->blocks[id];
         view.blocks[i] = b;
         view.ids[i++] = id;
@@ -1229,6 +1250,8 @@ void gk_replay_close(struct gk_replay **replay, struct gk_replay_stats *stats)
     }
     for (uint32_t id = 0; id < r->unused; ++id)
         free_sized(r->blocks[id], sizeof(struct block));
+    av_parser_close(r->parser);
+    avcodec_free_context(&r->parser_ctx);
     free(r->blocks);
     free(r->available);
     free(r->last_pts);
