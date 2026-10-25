@@ -25,6 +25,12 @@
 static const char pm_name[] = "org.freedesktop.portal.Desktop";
 static const char pm_path[] = "/org/freedesktop/portal/desktop";
 static const char pm_session[] = "/org/freedesktop/portal/desktop/session/mock";
+static const char pm_mutter_name[] = "org.gnome.Mutter.ScreenCast";
+static const char pm_mutter_path[] = "/org/gnome/Mutter/ScreenCast";
+static const char pm_mutter_session[] = "/org/gnome/Mutter/ScreenCast/Session/u1";
+static const char pm_mutter_stream[] = "/org/gnome/Mutter/ScreenCast/Stream/u1";
+static const char pm_display_name[] = "org.gnome.Mutter.DisplayConfig";
+static const char pm_display_path[] = "/org/gnome/Mutter/DisplayConfig";
 static const char pm_xml[] =
     "<node><interface name='org.freedesktop.portal.ScreenCast'>"
     "<property name='version' type='u' access='read'/>"
@@ -39,7 +45,20 @@ static const char pm_xml[] =
     "<method name='OpenPipeWireRemote'><arg type='o' direction='in'/><arg type='a{sv}' "
     "direction='in'/><arg type='h' direction='out'/></method>"
     "</interface><interface name='org.freedesktop.portal.Session'><method "
-    "name='Close'/></interface></node>";
+    "name='Close'/></interface>"
+    "<interface name='org.gnome.Mutter.ScreenCast'>"
+    "<method name='CreateSession'><arg type='a{sv}' direction='in'/><arg type='o' "
+    "direction='out'/></method></interface>"
+    "<interface name='org.gnome.Mutter.ScreenCast.Session'>"
+    "<method name='RecordMonitor'><arg type='s' direction='in'/><arg type='a{sv}' "
+    "direction='in'/><arg type='o' direction='out'/></method>"
+    "<method name='Start'/><method name='Stop'/></interface>"
+    "<interface name='org.gnome.Mutter.DisplayConfig'>"
+    "<method name='GetCurrentState'>"
+    "<arg type='u' direction='out'/>"
+    "<arg type='a((ssss)a(siiddada{sv})a{sv})' direction='out'/>"
+    "<arg type='a(iiduba(ssss)a{sv})' direction='out'/>"
+    "<arg type='a{sv}' direction='out'/></method></interface></node>";
 
 struct gk_portal_mock {
     GMainContext *context;
@@ -73,8 +92,56 @@ static void pm_call(GDBusConnection *bus, const gchar *sender, const gchar *obje
                     GDBusMethodInvocation *invocation, gpointer opaque)
 {
     (void)object;
-    (void)interface;
     struct gk_portal_mock *m = opaque;
+    if (!strcmp(interface, "org.gnome.Mutter.DisplayConfig") &&
+        !strcmp(method, "GetCurrentState")) {
+        GVariantBuilder monitors, modes, props, logical, global_props;
+        g_variant_builder_init(&monitors, G_VARIANT_TYPE("a((ssss)a(siiddada{sv})a{sv})"));
+        g_variant_builder_init(&modes, G_VARIANT_TYPE("a(siiddada{sv})"));
+        g_variant_builder_init(&props, G_VARIANT_TYPE_VARDICT);
+        g_variant_builder_add(&monitors, "((ssss)a(siiddada{sv})a{sv})", "DP-1", "Mock", "VG279QM",
+                              "1", &modes, &props);
+        g_variant_builder_init(&logical, G_VARIANT_TYPE("a(iiduba(ssss)a{sv})"));
+        g_variant_builder_init(&global_props, G_VARIANT_TYPE_VARDICT);
+        g_dbus_method_invocation_return_value(
+            invocation,
+            g_variant_new("(u@a((ssss)a(siiddada{sv})a{sv})@a(iiduba(ssss)a{sv})@a{sv})", 1U,
+                          g_variant_builder_end(&monitors), g_variant_builder_end(&logical),
+                          g_variant_builder_end(&global_props)));
+        return;
+    }
+    if (!strcmp(interface, "org.gnome.Mutter.ScreenCast") && !strcmp(method, "CreateSession")) {
+        g_dbus_method_invocation_return_value(invocation, g_variant_new("(o)", pm_mutter_session));
+        return;
+    }
+    if (!strcmp(interface, "org.gnome.Mutter.ScreenCast.Session")) {
+        if (!strcmp(method, "RecordMonitor")) {
+            const char *conn = nullptr;
+            GVariant *opts = nullptr;
+            g_variant_get(parameters, "(&s@a{sv})", &conn, &opts);
+            g_variant_unref(opts);
+            if (strcmp(conn, "DP-1")) {
+                g_dbus_method_invocation_return_dbus_error(
+                    invocation, "org.freedesktop.DBus.Error.Failed", "no such monitor");
+                return;
+            }
+            g_dbus_method_invocation_return_value(invocation,
+                                                  g_variant_new("(o)", pm_mutter_stream));
+            return;
+        }
+        if (!strcmp(method, "Start")) {
+            PM_CHECK(g_dbus_connection_emit_signal(
+                bus, sender, pm_mutter_stream, "org.gnome.Mutter.ScreenCast.Stream",
+                "PipeWireStreamAdded", g_variant_new("(u)", atomic_load(&m->node)), nullptr));
+            g_dbus_method_invocation_return_value(invocation, nullptr);
+            return;
+        }
+        if (!strcmp(method, "Stop")) {
+            atomic_fetch_add(&m->closes, 1);
+            g_dbus_method_invocation_return_value(invocation, nullptr);
+            return;
+        }
+    }
     if (!strcmp(method, "SelectSources")) {
         GVariant *options = g_variant_get_child_value(parameters, 1);
         guint32 types;
@@ -158,15 +225,36 @@ static void *pm_serve(void *opaque)
         G_DBUS_CALL_FLAGS_NONE, 1000, nullptr, nullptr);
     PM_CHECK(reply != nullptr);
     g_variant_unref(reply);
+    reply = g_dbus_connection_call_sync(
+        m->bus, "org.freedesktop.DBus", "/org/freedesktop/DBus", "org.freedesktop.DBus",
+        "RequestName", g_variant_new("(su)", pm_mutter_name, 0U), G_VARIANT_TYPE("(u)"),
+        G_DBUS_CALL_FLAGS_NONE, 1000, nullptr, nullptr);
+    PM_CHECK(reply != nullptr);
+    g_variant_unref(reply);
+    reply = g_dbus_connection_call_sync(
+        m->bus, "org.freedesktop.DBus", "/org/freedesktop/DBus", "org.freedesktop.DBus",
+        "RequestName", g_variant_new("(su)", pm_display_name, 0U), G_VARIANT_TYPE("(u)"),
+        G_DBUS_CALL_FLAGS_NONE, 1000, nullptr, nullptr);
+    PM_CHECK(reply != nullptr);
+    g_variant_unref(reply);
     GDBusNodeInfo *info = g_dbus_node_info_new_for_xml(pm_xml, nullptr);
     PM_CHECK(info != nullptr);
     guint portal_id = g_dbus_connection_register_object(m->bus, pm_path, info->interfaces[0],
                                                         &pm_vtable, m, nullptr, nullptr);
     guint session_id = g_dbus_connection_register_object(m->bus, pm_session, info->interfaces[1],
                                                          &pm_vtable, m, nullptr, nullptr);
-    PM_CHECK(portal_id && session_id);
+    guint mutter_id = g_dbus_connection_register_object(m->bus, pm_mutter_path, info->interfaces[2],
+                                                        &pm_vtable, m, nullptr, nullptr);
+    guint mutter_sess_id = g_dbus_connection_register_object(
+        m->bus, pm_mutter_session, info->interfaces[3], &pm_vtable, m, nullptr, nullptr);
+    guint display_id = g_dbus_connection_register_object(
+        m->bus, pm_display_path, info->interfaces[4], &pm_vtable, m, nullptr, nullptr);
+    PM_CHECK(portal_id && session_id && mutter_id && mutter_sess_id && display_id);
     atomic_store_explicit(&m->ready, true, memory_order_release);
     g_main_loop_run(m->loop);
+    g_dbus_connection_unregister_object(m->bus, display_id);
+    g_dbus_connection_unregister_object(m->bus, mutter_sess_id);
+    g_dbus_connection_unregister_object(m->bus, mutter_id);
     g_dbus_connection_unregister_object(m->bus, portal_id);
     g_dbus_connection_unregister_object(m->bus, session_id);
     g_dbus_node_info_unref(info);

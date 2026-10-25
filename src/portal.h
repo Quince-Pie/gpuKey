@@ -12,6 +12,9 @@ struct gk_portal_source {
 /* No restore token is stored. Each invocation obtains portal authority. */
 [[nodiscard]] int gk_portal_open(struct gk_portal **out, struct gk_portal_source *source,
                                  uint32_t source_types, bool cursor, int signal_fd);
+/* Direct connector selection via org.gnome.Mutter.ScreenCast (Niri / GNOME). */
+[[nodiscard]] int gk_portal_open_display(struct gk_portal **out, struct gk_portal_source *source,
+                                         const char *connector, bool cursor, int signal_fd);
 /* Service revocation on the same context which owns the subscriptions. */
 bool gk_portal_closed(struct gk_portal *portal);
 /* Integrates capture readiness, cancellation, portal signals and a deadline. */

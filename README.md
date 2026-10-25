@@ -29,38 +29,41 @@ make PROFILE=release -j
 ## Everyday usage
 
 ```sh
-# Record a display or window chosen in the portal dialog
-gpukey display.mkv --display
-gpukey window.mkv --window
-
-# 10-bit SDR AV1, 120 FPS capture cap, 30-second duration
-gpukey recording.mp4 --bits 10 --fps 120 --duration 30
-gpukey recording.mkv --fps 60000/1001
-
-# Discover PipeWire audio inputs and output monitors
+# Discover connected displays and PipeWire audio inputs/monitors
 gpukey devices
 
+# Record a display directly by connector name (no portal dialog on Niri/GNOME),
+# or omit the name to open the desktop portal chooser
+gpukey display.mkv -d DP-1
+gpukey display.mkv --display
+gpukey window.mkv -w
+
+# 10-bit SDR AV1, 120 FPS capture cap, 30-second duration
+gpukey recording.mp4 --bits 10 -f 120 --duration 30
+gpukey recording.mkv -f 60000/1001
+
 # Record separate, unmixed audio tracks (microphone + desktop monitor)
-gpukey recording.mkv --audio MIC_ID --audio DESKTOP_ID
+gpukey recording.mkv -a mt48_game_sink.monitor -a mt48_mic1_source
 
 # Preserve discrete multichannel AUX interfaces (e.g., 16-channel USB/studio interfaces)
-gpukey studio.mkv --audio INTERFACE_NAME --audio-codec pcm
+gpukey studio.mkv -a INTERFACE_NAME --audio-codec pcm
 ```
 
 ## Instant replay
 
 ```sh
-# Retain the last 30 seconds of encoded AV1 in RAM
-gpukey replay 30 --display --fps 60
+# Retain the last 300 seconds on DP-1 at 120 FPS with two audio tracks
+gpukey replay 300 -d DP-1 -f 120 -a mt48_game_sink.monitor -a mt48_mic1_source
 
 # Save a clip while capture continues (or press Enter in an interactive terminal)
 gpukey save
 gpukey save highlight.mkv
-
-# 60-second rolling buffer at 120 FPS with two audio tracks
-gpukey replay 60 --display --fps 120 --audio MIC_ID --audio DESKTOP_ID \
-  --directory ~/Videos/Replays --replay-memory-mib 512
 ```
+
+In `replay` mode, `gpuKey` automatically defaults to:
+- **2-second static keyframe reuse & deduplication** (`--static-interval 2`)
+- **Compact GPU memory management** (`--gpu-memory compact`)
+- **Auto-scaled RAM replay budget** (`max(256 MiB, 8 MiB/s × seconds)`, so `replay 300` automatically budgets `2,400 MiB` unless `--replay-memory-mib` is overridden)
 
 Replay retains encoded AV1 and audio packets in flat 256-record blocks in RAM
 without touching disk until `gpukey save` (or `Enter`) triggers an export.

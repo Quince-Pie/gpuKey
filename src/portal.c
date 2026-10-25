@@ -37,7 +37,7 @@ struct gk_portal {
     GVariant *response;
     guint response_subscription, closed_subscription;
     uint32_t code;
-    bool received, closed, wake;
+    bool received, closed, wake, mutter;
 };
 
 static gboolean completion_check(GSource *source)
@@ -220,6 +220,180 @@ static GVariant *options(const char *token)
     g_variant_builder_init(&b, G_VARIANT_TYPE_VARDICT);
     g_variant_builder_add(&b, "{sv}", "handle_token", g_variant_new_string(token));
     return g_variant_builder_end(&b);
+}
+
+static bool connector_matches(const char *candidate, const char *target)
+{
+    if (!g_ascii_strcasecmp(candidate, target))
+        return true;
+    if (!g_ascii_strncasecmp(candidate, "HDMI-A-", 7) && !g_ascii_strncasecmp(target, "HDMI", 4)) {
+        const char *rest = target + 4;
+        if (*rest == '-' || *rest == '_')
+            ++rest;
+        if (!g_ascii_strcasecmp(candidate + 7, rest))
+            return true;
+    }
+    const char *a = candidate, *b = target;
+    while (*a || *b) {
+        while (*a == '-' || *a == '_')
+            ++a;
+        while (*b == '-' || *b == '_')
+            ++b;
+        if (g_ascii_tolower(*a) != g_ascii_tolower(*b))
+            return false;
+        if (*a)
+            ++a;
+        if (*b)
+            ++b;
+    }
+    return true;
+}
+
+static char *resolve_mutter_connector(GDBusConnection *bus, const char *target)
+{
+    GVariant *reply = g_dbus_connection_call_sync(
+        bus, "org.gnome.Mutter.DisplayConfig", "/org/gnome/Mutter/DisplayConfig",
+        "org.gnome.Mutter.DisplayConfig", "GetCurrentState", nullptr,
+        G_VARIANT_TYPE("(ua((ssss)a(siiddada{sv})a{sv})a(iiduba(ssss)a{sv})a{sv})"),
+        G_DBUS_CALL_FLAGS_NONE, 2000, nullptr, nullptr);
+    if (!reply)
+        return g_strdup(target);
+    GVariant *monitors = g_variant_get_child_value(reply, 1);
+    char *matched = nullptr;
+    for (int pass = 0; pass < 2 && !matched; ++pass) {
+        GVariantIter iter;
+        g_variant_iter_init(&iter, monitors);
+        GVariant *item;
+        while ((item = g_variant_iter_next_value(&iter))) {
+            GVariant *ids = g_variant_get_child_value(item, 0);
+            const char *conn = nullptr, *vendor = nullptr, *product = nullptr, *serial = nullptr;
+            g_variant_get(ids, "(&s&s&s&s)", &conn, &vendor, &product, &serial);
+            if (conn && (pass == 0 ? !strcmp(conn, target)
+                                   : (connector_matches(conn, target) ||
+                                      (product && !g_ascii_strcasecmp(product, target)))))
+                matched = g_strdup(conn);
+            g_variant_unref(ids);
+            g_variant_unref(item);
+            if (matched)
+                break;
+        }
+    }
+    g_variant_unref(monitors);
+    g_variant_unref(reply);
+    return matched ? matched : g_strdup(target);
+}
+
+static void mutter_stream_added(GDBusConnection *connection, const gchar *sender, const gchar *path,
+                                const gchar *interface, const gchar *signal, GVariant *parameters,
+                                gpointer opaque)
+{
+    (void)connection;
+    (void)sender;
+    (void)interface;
+    (void)signal;
+    struct gk_portal *p = opaque;
+    if (!p->request || strcmp(path, p->request) || p->received)
+        return;
+    if (!g_variant_is_of_type(parameters, G_VARIANT_TYPE("(u)"))) {
+        p->closed = true;
+        return;
+    }
+    g_variant_get(parameters, "(u)", &p->code);
+    p->received = true;
+}
+
+int gk_portal_open_display(struct gk_portal **out, struct gk_portal_source *source,
+                           const char *connector, bool cursor, int signal_fd)
+{
+    *out = nullptr;
+    *source = (struct gk_portal_source){.fd = -1};
+    if (!connector || !*connector)
+        return -EINVAL;
+    struct gk_portal *p = g_new0(struct gk_portal, 1);
+    p->mutter = true;
+    p->context = g_main_context_new();
+    g_main_context_push_thread_default(p->context);
+    p->signal = g_unix_fd_source_new(signal_fd, G_IO_IN | G_IO_HUP | G_IO_ERR);
+    g_source_set_callback(p->signal, G_SOURCE_FUNC(interrupted), p, nullptr);
+    g_source_attach(p->signal, p->context);
+    GError *error = nullptr;
+    char *address = g_dbus_address_get_for_bus_sync(G_BUS_TYPE_SESSION, nullptr, &error);
+    if (address) {
+        p->bus = g_dbus_connection_new_for_address_sync(
+            address,
+            G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT |
+                G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION,
+            nullptr, nullptr, &error);
+        g_free(address);
+    }
+    int ret = -EIO;
+    if (!p->bus) {
+        fprintf(stderr, "session bus: %s\n", error->message);
+        g_error_free(error);
+        goto fail;
+    }
+    p->response_subscription = g_dbus_connection_signal_subscribe(
+        p->bus, "org.gnome.Mutter.ScreenCast", "org.gnome.Mutter.ScreenCast.Stream",
+        "PipeWireStreamAdded", nullptr, nullptr, G_DBUS_SIGNAL_FLAGS_NONE, mutter_stream_added, p,
+        nullptr);
+    p->closed_subscription = g_dbus_connection_signal_subscribe(
+        p->bus, "org.gnome.Mutter.ScreenCast", "org.gnome.Mutter.ScreenCast.Session", "Closed",
+        nullptr, nullptr, G_DBUS_SIGNAL_FLAGS_NONE, closed, p, nullptr);
+    GVariantBuilder empty;
+    g_variant_builder_init(&empty, G_VARIANT_TYPE_VARDICT);
+    GVariant *reply = g_dbus_connection_call_sync(
+        p->bus, "org.gnome.Mutter.ScreenCast", "/org/gnome/Mutter/ScreenCast",
+        "org.gnome.Mutter.ScreenCast", "CreateSession",
+        g_variant_new("(@a{sv})", g_variant_builder_end(&empty)), G_VARIANT_TYPE("(o)"),
+        G_DBUS_CALL_FLAGS_NONE, 10000, nullptr, &error);
+    if (!reply) {
+        fprintf(stderr, "display session (%s): %s\n", connector, error->message);
+        g_error_free(error);
+        ret = -ENOTSUP;
+        goto fail;
+    }
+    g_variant_get(reply, "(o)", &p->session);
+    g_variant_unref(reply);
+    char *resolved = resolve_mutter_connector(p->bus, connector);
+    GVariantBuilder props;
+    g_variant_builder_init(&props, G_VARIANT_TYPE_VARDICT);
+    g_variant_builder_add(&props, "{sv}", "cursor-mode", g_variant_new_uint32(cursor ? 1U : 0U));
+    reply = g_dbus_connection_call_sync(
+        p->bus, "org.gnome.Mutter.ScreenCast", p->session, "org.gnome.Mutter.ScreenCast.Session",
+        "RecordMonitor", g_variant_new("(s@a{sv})", resolved, g_variant_builder_end(&props)),
+        G_VARIANT_TYPE("(o)"), G_DBUS_CALL_FLAGS_NONE, 10000, nullptr, &error);
+    g_free(resolved);
+    if (!reply) {
+        fprintf(stderr, "display '%s': %s\n", connector, error->message);
+        g_error_free(error);
+        ret = -ENODEV;
+        goto fail;
+    }
+    g_variant_get(reply, "(o)", &p->request);
+    g_variant_unref(reply);
+    reply = g_dbus_connection_call_sync(
+        p->bus, "org.gnome.Mutter.ScreenCast", p->session, "org.gnome.Mutter.ScreenCast.Session",
+        "Start", nullptr, G_VARIANT_TYPE_UNIT, G_DBUS_CALL_FLAGS_NONE, 10000, nullptr, &error);
+    if (!reply) {
+        fprintf(stderr, "start display '%s': %s\n", connector, error->message);
+        g_error_free(error);
+        goto fail;
+    }
+    g_variant_unref(reply);
+    while (!p->received && !p->closed)
+        g_main_context_iteration(p->context, true);
+    if (p->closed || !p->code) {
+        ret = -ECANCELED;
+        goto fail;
+    }
+    source->node = p->code;
+    g_main_context_pop_thread_default(p->context);
+    *out = p;
+    return 0;
+fail:
+    g_main_context_pop_thread_default(p->context);
+    gk_portal_close(&p);
+    return ret;
 }
 
 int gk_portal_open(struct gk_portal **out, struct gk_portal_source *source, uint32_t source_types,
@@ -458,8 +632,11 @@ void gk_portal_close(struct gk_portal **portal)
         }
         if (p->session && g_variant_is_object_path(p->session)) {
             GVariant *reply = g_dbus_connection_call_sync(
-                p->bus, bus_name, p->session, "org.freedesktop.portal.Session", "Close", nullptr,
-                nullptr, G_DBUS_CALL_FLAGS_NONE, 1000, nullptr, nullptr);
+                p->bus, p->mutter ? "org.gnome.Mutter.ScreenCast" : bus_name, p->session,
+                p->mutter ? "org.gnome.Mutter.ScreenCast.Session"
+                          : "org.freedesktop.portal.Session",
+                p->mutter ? "Stop" : "Close", nullptr, nullptr, G_DBUS_CALL_FLAGS_NONE, 1000,
+                nullptr, nullptr);
             g_clear_pointer(&reply, g_variant_unref);
         }
         if (p->response_subscription)

@@ -983,7 +983,8 @@ int gk_capture_open(struct gk_capture **out, struct gk_portal_source source,
     struct gk_capture *c = aligned_alloc(64, aligned);
     int ret = -ENOMEM;
     if (!c) {
-        close(source.fd);
+        if (source.fd >= 0)
+            close(source.fd);
         return ret;
     }
     *c = (struct gk_capture){.options = *options, .wake = -1};
@@ -1031,7 +1032,8 @@ int gk_capture_open(struct gk_capture **out, struct gk_portal_source source,
     c->context = pw_context_new(pw_thread_loop_get_loop(c->loop), nullptr, 0);
     if (!c->context)
         goto fail;
-    c->core = pw_context_connect_fd(c->context, source.fd, nullptr, 0);
+    c->core = source.fd >= 0 ? pw_context_connect_fd(c->context, source.fd, nullptr, 0)
+                             : pw_context_connect(c->context, nullptr, 0);
     if (!c->core) {
         ret = -errno;
         goto fail;

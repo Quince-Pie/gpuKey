@@ -37,7 +37,7 @@ struct options {
     int width, height;
     int64_t duration, static_interval;
     bool cursor, no_drop, realtime, replay;
-    const char *session, *directory;
+    const char *session, *directory, *display_name;
     uint32_t source_types;
     int pipewire_fd;
     uint32_t node;
@@ -50,38 +50,42 @@ static const char *const video_clock_names[] = {"auto", "source", "cycle", "rece
 
 static void usage(FILE *f, bool all)
 {
-    fputs("gpuKey — record a Wayland display or window with GPU AV1\n"
-          "Usage: gpukey [FILE.mp4|FILE.mkv] [options]\n"
-          "       gpukey replay [SECONDS] [options]\n"
-          "       gpukey save [FILE] [--session NAME]\n"
-          "       gpukey devices\n\n"
-          "  gpukey replay 30               keep the last 30 seconds in RAM\n"
-          "  gpukey save                    save a clip while recording continues\n"
-          "  gpukey                         choose a source; save a dated MP4 here\n"
-          "  gpukey demo.mkv --display      choose one display\n"
-          "  gpukey demo.mkv --fps 120      cap capture at 120 frames/second\n"
-          "  gpukey demo.mkv --audio ID --audio ID   record two separate audio tracks\n\n"
-          "Everyday options:\n"
-          "  -o, --output FILE    output path (also accepted as a positional argument)\n"
-          "  --display            choose a display in the desktop sharing dialog\n"
-          "  --window             choose a window in the desktop sharing dialog\n"
-          "  --fps N[/D]          capture cap: 60 by default; e.g. 60000/1001\n"
-          "  --audio ID|NAME      add a device as a separate track; repeat for more\n"
-          "  --duration SECONDS   stop automatically; otherwise Ctrl-C finalizes\n"
-          "  --no-cursor          omit the cursor\n"
-          "  --directory DIR      replay clip directory (current directory)\n"
-          "  --session NAME       named replay session (default)\n"
-          "  --help-all           hardware, quality, budgets and testing controls\n"
-          "  --probe              inspect available VAAPI AV1 devices\n"
-          "  --version            show build and FFmpeg versions\n\n"
-          "Audio is off unless selected. 'gpukey devices' lists inputs and output monitors.\n"
-          "With audio and no filename, a dated Matroska file is chosen for channel support.\n"
-          "Native audio channels are preserved; tracks are not mixed. The extension selects\n"
-          "MP4 (PCM audio) or Matroska (Opus). FPS caps VFR updates; source time is preferred.\n"
-          "Replay uses Matroska by default; Enter also saves when run in a terminal.\n"
-          "Clips include the preceding verified keyframe. Ctrl-C discards unsaved history.\n"
-          "Existing files are never overwritten. Normal recording finalizes on Ctrl-C.\n",
-          f);
+    fputs(
+        "gpuKey — record a Wayland display or window with GPU AV1\n"
+        "Usage: gpukey [FILE.mp4|FILE.mkv] [options]\n"
+        "       gpukey replay [SECONDS] [options]\n"
+        "       gpukey save [FILE] [--session NAME]\n"
+        "       gpukey devices\n\n"
+        "  gpukey replay 30               keep the last 30 seconds in RAM\n"
+        "  gpukey replay 300 -d DP-1 -f 120 -a MIC -a SINK\n"
+        "                                 5-minute 120 Hz replay on DP-1 with two audio tracks\n"
+        "  gpukey save                    save a clip while recording continues\n"
+        "  gpukey                         choose a source; save a dated MP4 here\n"
+        "  gpukey demo.mkv -d DP-1        record display DP-1 directly (or omit name for dialog)\n"
+        "  gpukey demo.mkv -f 120         cap capture at 120 frames/second\n"
+        "  gpukey demo.mkv -a ID -a ID    record two separate audio tracks\n\n"
+        "Everyday options:\n"
+        "  -o, --output FILE        output path (also accepted as a positional argument)\n"
+        "  -d, --display [NAME]     record display NAME (e.g. DP-1), or open display dialog\n"
+        "  -w, --window             choose a window in the desktop sharing dialog\n"
+        "  -f, --fps N[/D]          capture cap: 60 by default; e.g. 120 or 60000/1001\n"
+        "  -a, --audio ID|NAME      add a device as a separate track; repeat for more\n"
+        "  -D, --directory DIR      replay clip directory (current directory)\n"
+        "  --duration SECONDS       stop automatically; otherwise Ctrl-C finalizes\n"
+        "  --no-cursor              omit the cursor\n"
+        "  --session NAME           named replay session (default)\n"
+        "  --help-all               hardware, quality, budgets and testing controls\n"
+        "  --probe                  inspect available VAAPI AV1 devices\n"
+        "  --version                show build and FFmpeg versions\n\n"
+        "Audio is off unless selected. 'gpukey devices' lists displays, inputs and monitors.\n"
+        "With audio and no filename, a dated Matroska file is chosen for channel support.\n"
+        "Native audio channels are preserved; tracks are not mixed. The extension selects\n"
+        "MP4 (PCM audio) or Matroska (Opus). FPS caps VFR updates; source time is preferred.\n"
+        "Replay uses Matroska, 2s static key reuse, compact GPU memory, and auto-scaled RAM\n"
+        "by default; Enter also saves when run in a terminal.\n"
+        "Clips include the preceding verified keyframe. Ctrl-C discards unsaved history.\n"
+        "Existing files are never overwritten. Normal recording finalizes on Ctrl-C.\n",
+        f);
     if (!all)
         return;
     fputs("\nAll controls:\n", f);
@@ -208,12 +212,19 @@ static int parse(int argc, char **argv, struct options *o)
         .directory = ".",
     };
     o->replay = argc > 1 && !strcmp(argv[1], "replay");
+    bool replay_duration_set = false;
     if (o->replay) {
         optind = 2;
         o->media.replay.duration_ns = 30 * GK_NS;
         o->media.replay.bytes = 256U * 1024 * 1024;
         o->media.matroska = true;
         o->frames = UINT64_MAX;
+        if (argc > 2 && argv[2][0] != '-') {
+            if (!seconds(argv[2], &o->media.replay.duration_ns))
+                return invalid_value("replay interval", argv[2], "positive seconds");
+            optind = 3;
+            replay_duration_set = true;
+        }
     }
     o->audio = calloc((size_t)argc, sizeof(*o->audio));
     o->tracks = calloc((size_t)argc, sizeof(*o->tracks));
@@ -271,20 +282,20 @@ static int parse(int argc, char **argv, struct options *o)
     };
     static const struct option opts[] = {
         {"output", required_argument, nullptr, 'o'},
-        {"directory", required_argument, nullptr, DIRECTORY},
+        {"directory", required_argument, nullptr, 'D'},
         {"session", required_argument, nullptr, SESSION},
         {"replay-memory-mib", required_argument, nullptr, REPLAY_MEMORY},
         {"replay-storage", required_argument, nullptr, REPLAY_STORAGE},
         {"help", no_argument, nullptr, 'h'},
         {"help-all", no_argument, nullptr, HELP_ALL},
-        {"display", no_argument, nullptr, DISPLAY},
-        {"window", no_argument, nullptr, WINDOW},
-        {"audio", required_argument, nullptr, AUDIO_AUTO},
+        {"display", optional_argument, nullptr, 'd'},
+        {"window", no_argument, nullptr, 'w'},
+        {"audio", required_argument, nullptr, 'a'},
         {"audio-codec", required_argument, nullptr, AUDIO_CODEC},
         {"list-audio", no_argument, nullptr, LIST_AUDIO},
         {"backend", required_argument, nullptr, BACKEND},
         {"device", required_argument, nullptr, DEVICE},
-        {"fps", required_argument, nullptr, FPS},
+        {"fps", required_argument, nullptr, 'f'},
         {"video-clock", required_argument, nullptr, VIDEO_CLOCK},
         {"bits", required_argument, nullptr, BITS},
         {"qp", required_argument, nullptr, QP},
@@ -323,7 +334,8 @@ static int parse(int argc, char **argv, struct options *o)
     int c;
     uint64_t n;
     bool test_audio = false, container_set = false, source_set = false;
-    while ((c = getopt_long(argc, argv, "ho:", opts, nullptr)) != -1) {
+    bool replay_memory_set = false, static_interval_set = false, gpu_memory_set = false;
+    while ((c = getopt_long(argc, argv, "ho:D:d::wf:a:", opts, nullptr)) != -1) {
         switch (c) {
         case 'h':
         case HELP_ALL:
@@ -336,6 +348,7 @@ static int parse(int argc, char **argv, struct options *o)
             return 1;
         case PROBE:
             return gk_gpu_probe() < 0 ? -1 : 1;
+        case 'D':
         case DIRECTORY:
             if (!o->replay || !*optarg)
                 return invalid_value("--directory", optarg, "a directory in replay mode");
@@ -351,6 +364,7 @@ static int parse(int argc, char **argv, struct options *o)
             if (!o->replay || !number(optarg, 1, SIZE_MAX / 2 / 1048576, &n))
                 return invalid_value("--replay-memory-mib", optarg, "a positive replay budget");
             o->media.replay.bytes = (size_t)n * 1048576;
+            replay_memory_set = true;
             break;
         case REPLAY_STORAGE:
             if (!o->replay ||
@@ -384,6 +398,7 @@ static int parse(int argc, char **argv, struct options *o)
         case DEVICE:
             o->device = optarg;
             break;
+        case 'f':
         case FPS:
             if (!rate(optarg, &o->media.fps_num, &o->media.fps_den))
                 return invalid_value("--fps", optarg, "N or N/D between 1 and 1000000");
@@ -410,14 +425,32 @@ static int parse(int argc, char **argv, struct options *o)
                 return -1;
             o->media.qp = (int)n;
             break;
+        case 'd':
         case DISPLAY:
+        case 'w':
         case WINDOW:
         case SOURCE:
             if (source_set)
                 return fprintf(stderr, "Choose one of --display, --window, or --source.\n"), -1;
             source_set = true;
-            if (c == DISPLAY || c == WINDOW) {
-                o->source_types = c == DISPLAY ? 1 : 2;
+            if (c == 'd' || c == DISPLAY || c == 'w' || c == WINDOW) {
+                o->source_types = (c == 'd' || c == DISPLAY) ? 1 : 2;
+                if (c == 'd' || c == DISPLAY) {
+                    const char *name = optarg;
+                    if (!name && optind < argc && argv[optind][0] != '-') {
+                        const char *next = argv[optind];
+                        int64_t dummy_ns;
+                        bool is_output =
+                            strchr(next, '.') != nullptr || strchr(next, '/') != nullptr;
+                        bool is_replay_sec =
+                            o->replay && !replay_duration_set && seconds(next, &dummy_ns);
+                        if (!is_output && !is_replay_sec)
+                            name = argv[optind++];
+                    }
+                    if (name && !*name)
+                        return invalid_value("--display", name, "a display connector name");
+                    o->display_name = name;
+                }
                 break;
             }
             if (!strcmp(optarg, "monitor"))
@@ -439,6 +472,7 @@ static int parse(int argc, char **argv, struct options *o)
             o->capture.allow_shm = true;
             o->capture.force_shm = true;
             break;
+        case 'a':
         case AUDIO_AUTO:
         case AUDIO:
         case MONITOR:
@@ -466,6 +500,7 @@ static int parse(int argc, char **argv, struct options *o)
             if (!number(optarg, 1, 3600, &n))
                 return -1;
             o->static_interval = (int64_t)n * GK_NS;
+            static_interval_set = true;
             break;
         case STATIC_ENCODING:
             if (strcmp(optarg, "auto") && strcmp(optarg, "always"))
@@ -519,6 +554,7 @@ static int parse(int argc, char **argv, struct options *o)
             if (strcmp(optarg, "retain") && strcmp(optarg, "compact"))
                 return invalid_value("--gpu-memory", optarg, "retain or compact");
             o->media.compact_gpu = !strcmp(optarg, "compact");
+            gpu_memory_set = true;
             break;
         case ENCODE_DEPTH:
             if (!number(optarg, 1, INT32_MAX, &n))
@@ -583,10 +619,25 @@ static int parse(int argc, char **argv, struct options *o)
             return -1;
         }
     }
-    if (o->replay && optind < argc) {
+    if (o->replay && !replay_duration_set && optind < argc) {
         if (!seconds(argv[optind], &o->media.replay.duration_ns))
             return invalid_value("replay interval", argv[optind], "positive seconds");
         ++optind;
+    }
+    if (o->replay) {
+        uint64_t seconds_needed = (uint64_t)((o->media.replay.duration_ns + GK_NS - 1) / GK_NS);
+        if (!replay_memory_set && seconds_needed > 30) {
+            size_t scaled;
+            if (!ckd_mul(&scaled, (size_t)seconds_needed, 8U * 1048576U))
+                o->media.replay.bytes = scaled;
+        }
+        if (!static_interval_set && o->media.replay.duration_ns >= 2 * GK_NS)
+            o->static_interval = 2 * GK_NS;
+#ifdef AV_HAVE_BUFFER_POOL_TRIM
+        if (!gpu_memory_set && !o->test_source &&
+            (o->backend == GK_VAAPI || o->backend == GK_VULKAN))
+            o->media.compact_gpu = true;
+#endif
     }
     if (!o->replay && optind < argc && !o->media.output)
         o->media.output = argv[optind++];
@@ -975,8 +1026,12 @@ static int record(struct options *o, struct gk_gpu *gpu, int signals, struct gk_
             imports[i].surface = VA_INVALID_ID;
     int ret = 0;
     if (source.fd < 0) {
-        fprintf(stderr, "Select the source in the desktop sharing dialog.\n");
-        ret = gk_portal_open(&portal, &source, o->source_types, o->cursor, signals);
+        if (o->display_name) {
+            ret = gk_portal_open_display(&portal, &source, o->display_name, o->cursor, signals);
+        } else {
+            fprintf(stderr, "Select the source in the desktop sharing dialog.\n");
+            ret = gk_portal_open(&portal, &source, o->source_types, o->cursor, signals);
+        }
         if (ret < 0)
             goto done;
     }

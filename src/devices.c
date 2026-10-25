@@ -1,6 +1,7 @@
 #include "devices.h"
 
 #include <errno.h>
+#include <gio/gio.h>
 #include <pipewire/pipewire.h>
 #include <stdckdint.h>
 #include <stdio.h>
@@ -116,8 +117,75 @@ static void label(const char *text)
             putchar(*p);
 }
 
+static void list_displays(void)
+{
+    char *address = g_dbus_address_get_for_bus_sync(G_BUS_TYPE_SESSION, nullptr, nullptr);
+    if (!address)
+        return;
+    GDBusConnection *bus =
+        g_dbus_connection_new_for_address_sync(address,
+                                               G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_CLIENT |
+                                                   G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION,
+                                               nullptr, nullptr, nullptr);
+    g_free(address);
+    if (!bus)
+        return;
+    GVariant *reply = g_dbus_connection_call_sync(
+        bus, "org.gnome.Mutter.DisplayConfig", "/org/gnome/Mutter/DisplayConfig",
+        "org.gnome.Mutter.DisplayConfig", "GetCurrentState", nullptr,
+        G_VARIANT_TYPE("(ua((ssss)a(siiddada{sv})a{sv})a(iiduba(ssss)a{sv})a{sv})"),
+        G_DBUS_CALL_FLAGS_NONE, 1000, nullptr, nullptr);
+    if (reply) {
+        GVariant *monitors = g_variant_get_child_value(reply, 1);
+        if (g_variant_n_children(monitors) > 0) {
+            puts("Displays (use -d NAME or --display NAME):");
+            puts("  CONNECTOR    CURRENT MODE         DESCRIPTION");
+            GVariantIter iter;
+            g_variant_iter_init(&iter, monitors);
+            GVariant *item;
+            while ((item = g_variant_iter_next_value(&iter))) {
+                GVariant *ids = g_variant_get_child_value(item, 0);
+                GVariant *modes = g_variant_get_child_value(item, 1);
+                const char *conn = "", *vendor = "", *product = "", *serial = "";
+                g_variant_get(ids, "(&s&s&s&s)", &conn, &vendor, &product, &serial);
+                const char *current_mode = "disabled";
+                GVariantIter mode_iter;
+                g_variant_iter_init(&mode_iter, modes);
+                GVariant *mode;
+                while ((mode = g_variant_iter_next_value(&mode_iter))) {
+                    const char *mode_id = nullptr;
+                    GVariant *props = g_variant_get_child_value(mode, 6);
+                    gboolean is_current = false;
+                    g_variant_get_child(mode, 0, "&s", &mode_id);
+                    if (g_variant_lookup(props, "is-current", "b", &is_current) && is_current &&
+                        mode_id)
+                        current_mode = mode_id;
+                    g_variant_unref(props);
+                    g_variant_unref(mode);
+                }
+                printf("  %-12s %-20s ", conn, current_mode);
+                if (*vendor) {
+                    label(vendor);
+                    putchar(' ');
+                }
+                label(product);
+                putchar('\n');
+                g_variant_unref(modes);
+                g_variant_unref(ids);
+                g_variant_unref(item);
+            }
+            putchar('\n');
+        }
+        g_variant_unref(monitors);
+        g_variant_unref(reply);
+    }
+    g_dbus_connection_close_sync(bus, nullptr, nullptr);
+    g_object_unref(bus);
+}
+
 int gk_devices_list(void)
 {
+    list_displays();
     pw_init(nullptr, nullptr);
     struct discovery d = {};
     struct pw_context *context = nullptr;

@@ -137,7 +137,7 @@
         in
         {
           packages = packages // {
-            default = packages.gcc;
+            default = amdPackage;
             full = fullPackage;
             amd = amdPackage;
             vaapi-dpb = vaapiPackage;
