@@ -859,10 +859,14 @@ static void audio_global(void *opaque, uint32_t id, uint32_t permissions, const 
     if (c->stopping || atomic_load(&c->error) || strcmp(type, PW_TYPE_INTERFACE_Node) ||
         !gk_device_info(props, &info))
         return;
+    size_t name_len = strlen(info.name);
     for (unsigned i = 0; i < c->options.audio_count; ++i) {
         const struct gk_audio_selection *selection = &c->options.audio[i];
         struct audio_input *a = &c->audio[i];
-        if (strcmp(selection->target, info.serial) && strcmp(selection->target, info.name))
+        bool monitor_alias = info.monitor && !strncmp(selection->target, info.name, name_len) &&
+                             !strcmp(selection->target + name_len, ".monitor");
+        if (strcmp(selection->target, info.serial) && strcmp(selection->target, info.name) &&
+            !monitor_alias)
             continue;
         if (a->selected) {
             if (a->node != id)

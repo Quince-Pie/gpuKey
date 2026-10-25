@@ -643,6 +643,7 @@ static void spawn_recorder(struct fixture *f)
         args[arg++] = f->selection_failure == 3 ? "--audio-node" : "--audio";
         args[arg++] = f->selection_failure == 1   ? "missing-device"
                       : f->selection_failure == 2 ? "gpukey-fixture-mic"
+                      : f->pcm_mode               ? "gpukey-fixture-sink.monitor"
                                                   : "gpukey-fixture-sink";
     }
     if (f->fps_mode) {
