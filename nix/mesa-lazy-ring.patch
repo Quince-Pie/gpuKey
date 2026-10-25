@@ -1,0 +1,79 @@
+--- a/src/gallium/drivers/radeonsi/gfx/si_gfx_screen.c
++++ b/src/gallium/drivers/radeonsi/gfx/si_gfx_screen.c
+@@ -1105,17 +1105,6 @@
+       }
+    }
+ 
+-   if (sscreen->info.gfx_level >= GFX11) {
+-      sscreen->attribute_pos_prim_ring =
+-         si_aligned_buffer_create(&sscreen->b,
+-                                  PIPE_RESOURCE_FLAG_UNMAPPABLE |
+-                                  SI_RESOURCE_FLAG_32BIT |
+-                                  SI_RESOURCE_FLAG_DRIVER_INTERNAL |
+-                                  SI_RESOURCE_FLAG_DISCARDABLE,
+-                                  PIPE_USAGE_DEFAULT,
+-                                  sscreen->info.total_attribute_pos_prim_ring_size,
+-                                  2 * 1024 * 1024);
+-   }
+ 
+    ac_print_nonshadowed_regs(sscreen->info.gfx_level, sscreen->info.family);
+ 
+--- a/src/gallium/drivers/radeonsi/gfx/si_gfx_context.c
++++ b/src/gallium/drivers/radeonsi/gfx/si_gfx_context.c
+@@ -100,6 +100,31 @@
+                          !sscreen->info.has_dedicated_vram) ||
+                         !sscreen->info.ip[AMD_IP_COMPUTE].num_queues ||
+                         !(flags & PIPE_CONTEXT_COMPUTE_ONLY);
++
++   /* Publish the shared graphics ring once, before any graphics context can
++    * read it. Compute queues neither need the allocation nor reference it.
++    * Every graphics context takes this lock during initialization, so later
++    * immutable reads need no additional per-draw synchronization. */
++   if (sctx->is_gfx_queue && sscreen->info.gfx_level >= GFX11) {
++      simple_mtx_lock(&sscreen->tess_ring_lock);
++      if (!sscreen->attribute_pos_prim_ring) {
++         sscreen->attribute_pos_prim_ring =
++            si_aligned_buffer_create(&sscreen->b,
++                                     PIPE_RESOURCE_FLAG_UNMAPPABLE |
++                                     SI_RESOURCE_FLAG_32BIT |
++                                     SI_RESOURCE_FLAG_DRIVER_INTERNAL |
++                                     SI_RESOURCE_FLAG_DISCARDABLE,
++                                     PIPE_USAGE_DEFAULT,
++                                     sscreen->info.total_attribute_pos_prim_ring_size,
++                                     2 * 1024 * 1024);
++      }
++      bool ready = sscreen->attribute_pos_prim_ring != NULL;
++      simple_mtx_unlock(&sscreen->tess_ring_lock);
++      if (!ready) {
++         mesa_loge("can't allocate the graphics attribute ring");
++         return false;
++      }
++   }
+ 
+    if (sctx->is_gfx_queue) {
+       if (sscreen->info.userq_ip_mask & (1 << AMD_IP_GFX))
+--- a/src/gallium/drivers/radeonsi/si_gfx_cs.c
++++ b/src/gallium/drivers/radeonsi/si_gfx_cs.c
+@@ -340,7 +340,7 @@
+    if (unlikely(radeon_uses_secure_bos(ctx->ws))) {
+       is_secure = ctx->ws->cs_is_secure(&ctx->gfx_cs);
+ 
+-      if (is_secure && !ctx->screen->attribute_pos_prim_ring_tmz) {
++      if (ctx->is_gfx_queue && is_secure && !ctx->screen->attribute_pos_prim_ring_tmz) {
+          ctx->screen->attribute_pos_prim_ring_tmz =
+             si_aligned_buffer_create(&ctx->screen->b,
+                                      PIPE_RESOURCE_FLAG_UNMAPPABLE |
+@@ -401,11 +401,11 @@
+                             new_barrier_flags);
+    si_mark_atom_dirty(ctx, &ctx->atoms.s.spi_ge_ring_state);
+ 
+-   if (ctx->screen->attribute_pos_prim_ring && !is_secure) {
++   if (ctx->is_gfx_queue && ctx->screen->attribute_pos_prim_ring && !is_secure) {
+       radeon_add_to_buffer_list(ctx, &ctx->gfx_cs, ctx->screen->attribute_pos_prim_ring,
+                                 RADEON_USAGE_READWRITE | RADEON_PRIO_SHADER_RINGS);
+    }
+-   if (ctx->screen->attribute_pos_prim_ring_tmz && is_secure) {
++   if (ctx->is_gfx_queue && ctx->screen->attribute_pos_prim_ring_tmz && is_secure) {
+       radeon_add_to_buffer_list(ctx, &ctx->gfx_cs, ctx->screen->attribute_pos_prim_ring_tmz,
+                                 RADEON_USAGE_READWRITE | RADEON_PRIO_SHADER_RINGS);
+    }

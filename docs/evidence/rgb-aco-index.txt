@@ -1,0 +1,73 @@
+ACO-only RGB driver — 23 October 2026 UTC
+
+Delivered change
+- rgb-amd uses an ACO-only process-local RADV driver; LLVM and unused compiler
+  tooling are omitted. No recorder or codec algorithm is changed.
+- Driver: /nix/store/896yc4wnz6wn804kdbl1638gl243vskz-mesa-gpukey-rgb-26.2.5
+- Package: /nix/store/4ils1mnbzaj2s92dkwwnyfwzplzv7yk7-gpukey-rgb-amd
+- Recorder executable is byte-identical to the prior 4fsykvy59bv48gl14plaplbgrpizkq9q package.
+- mesa-rgb-reference reproduces the previous 0jq2axwnmxcargkdlmpjjv02m7g4aggx driver.
+- The default backend remains VAAPI; the RGB precision/source-lease tradeoffs remain.
+- tools/measure-gpu-memory.py adds an optional diagnostic smaps mapping walk.
+  Its default timing path does not read smaps. Missing data is explicit, not zero.
+
+Archives
+- rgb-aco-control.tar.gz: the preceding 192-file implementation plus fixed binaries.
+- rgb-aco-evidence.tar.gz: expands to gpukey-efc/ (the working directory's original
+  research name; encode-time VA processing was inspected, not implemented).
+
+Authoritative evidence inside gpukey-efc/
+- confirmation/: 27 fresh rotating eight-second comparisons, three variants across
+  1080p60, portrait60 and 1080p240. Same recorder binary for both Vulkan variants.
+  Fixed VAAPI reference, common producer, CQP 32, depth two and two source buffers.
+  Every output independently decoded and checked for frame identities/color.
+- replay/: one fresh 40-second portrait60 run per variant, 30-second rolling history,
+  two saves after the window advances. First clips: 1,856 distinct consecutive IDs.
+- ram-{vaapi,vulkan,aco}/memory.json: diagnostic three-second mapping walks.
+  smaps-summary.json preserves totals and VMA grouping; no CPU conclusion uses them.
+- aco-native-matrix/: native RGB/10-bit/portrait/forced-keyframe and failure checks.
+- codec-equivalence.log and *-packets.json: four 250-frame cases have identical
+  compressed packet hashes, timings/sizes, and decoded frame hashes across drivers.
+- caps-{llvm,aco}.txt and caps-check-corrected.log: tested AV1 capabilities,
+  formats and modifiers match exactly.
+- samply-{llvm,aco}/: fresh private process captures with symbolication sidecars.
+- profile-analysis.json/txt and analyze-profiles.py: inclusive and leaf CPU-delta
+  analysis. Inclusive percentages overlap; sample deltas are not wall-time timings.
+- tracy-aco/: 360 submissions/retentions, two exports, trace and CSV.
+- latency-{aco,llvm}/: 360-packet API submit-to-receive traces. Not GPU-only or
+  complete capture latency; observed differences do not establish superiority.
+- asan-aco/ and native-aco/: multichannel, replay, static, reconfiguration and
+  missing-PTS checks. Sanitizer run keeps RADV loaded as documented previously.
+- fail-construction.log, retry.log/mkv, fault-validation.log: injected native
+  allocation failure exits cleanly; lazy input-pool construction retries and decodes.
+- smaps-failure-check.log and smaps-denied.json: permission-denied mapping read is recorded while
+  the private child completes normally.
+- verification.log: all 17 x86-64 checks, GCC/Clang and sanitizers pass.
+- aco-dynamic.txt: no LLVM dynamic dependency; ram-aco has no LLVM mapping.
+- confirmation-inputs.sha256, aco-binaries.sha256 and final verification logs.
+- immutable-inputs.log: research files and original frozen clip unchanged.
+
+Exploration retained but excluded from final timing claims
+- comparison/ is the initial partial timing series. The hash gate detected an
+  observer-source edit during a run. confirmation/ restarted with frozen inputs.
+- caps-check.log records a manual compile missing the normal GNU feature flags.
+  The corrected check uses the repository Makefile and passes.
+- RAM samples are mapping walks, can race mapping changes, and depend on sharing
+  with other processes. They are not atomic snapshots or hard memory bounds.
+
+Reproduce
+  nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0
+  nix build .#mesa-rgb-reference
+  nix flake check
+
+Exact native/comparison/profiling commands are preserved in run-confirmation.sh,
+run-confirmation-tail.sh, recorder wrappers, and per-run record scripts. The new
+--smaps-after option is enabled by GPUKEY_RECORDER_SMAPS_AFTER in the comparison
+launcher. Every capture is a private fixture, not a user's desktop/process.
+
+Scope
+RAM improves without changing tested encoded output. CPU relative to the old
+Vulkan build is mixed, and latency traces do not establish a gain. RGB color
+precision still differs from VAAPI; full-scene rate-distortion, game interference,
+energy, other hardware and full source-to-packet latency remain unverified. The
+conditional 87.890625 MiB image target is unchanged. The broader goal stays active.

@@ -1,0 +1,22 @@
+{ echo '['; cat build/gcc-release/audio.json build/gcc-release/capture.json build/gcc-release/control.json build/gcc-release/core.json build/gcc-release/devices.json build/gcc-release/gpu.json build/gcc-release/main.json build/gcc-release/media.json build/gcc-release/pattern.json build/gcc-release/portal.json build/gcc-release/replay.json build/gcc-release/sink.json | paste -sd, -; echo ']'; } > compile_commands.json
+README.txt: OK
+requirements-document.txt: OK
+recorder_concurrency_model_check.py: OK
+recorder_concurrency_model_results.json: OK
+research/working_brief.md: OK
+research/Wayland_GPU_Recorder_Design.md: OK
+research/source_registry.json: OK
+research/sources_core.md: OK
+research/chapter_foundations.md: OK
+research/chapter_gpu.md: OK
+research/chapter_timing.md: OK
+research/chapter_queues.md: OK
+research/chapter_io.md: OK
+research/chapter_operations.md: OK
+research/check_design_arithmetic.py: OK
+research/design_arithmetic_results.json: OK
+research/check_output_model.py: OK
+research/output_model_results.json: OK
+research/build_design.py: OK
+research/verify_design_pdf.py: OK
+research/verification_summary.json: OK

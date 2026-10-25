@@ -1,0 +1,198 @@
+--- a/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc.c
++++ b/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc.c
+@@ -1268,11 +1268,33 @@
+    }
+ }
+ 
++/* These buffers have one owner per AV1 tier-2 encoder, unlike the reusable
++ * per-picture FCB pool. Avoid unused slab entries without changing firmware
++ * payload sizes, domains or fence-based BO lifetime. Preserve the existing
++ * slab classes' minimum virtual-address alignment. */
++static struct si_resource *radeon_enc_singleton(struct radeon_encoder *enc,
++                                               unsigned flags, unsigned size,
++                                               unsigned alignment)
++{
++   if (enc->dpb_type == DPB_TIER_2 &&
++       u_reduce_video_profile(enc->base.profile) == PIPE_VIDEO_FORMAT_AV1)
++      return si_aligned_buffer_create(enc->screen, flags | SI_RESOURCE_FLAG_NO_SUBALLOC,
++                                      PIPE_USAGE_DEFAULT, size, alignment);
++   return si_vid_create_buffer(enc->screen, PIPE_USAGE_DEFAULT, flags, size);
++}
++
+ static int setup_cdf(struct radeon_encoder *enc)
+ {
+    unsigned char *p_cdf = NULL;
+ 
+-   enc->cdf = si_vid_create_buffer(enc->screen, PIPE_USAGE_DEFAULT, 0, VCN_ENC_AV1_DEFAULT_CDF_SIZE);
++   unsigned size = VCN_ENC_AV1_DEFAULT_CDF_SIZE;
++#ifdef GPUKEY_PACKED_WORKSPACE
++   _Static_assert(VCN_ENC_AV1_DEFAULT_CDF_SIZE <= RADEON_ENC_AV1_SESSION_OFFSET,
++                  "CDF overlaps the session region");
++   if (enc->dpb_type == DPB_TIER_2)
++      size = RADEON_ENC_AV1_SESSION_OFFSET + 128 * 1024;
++#endif
++   enc->cdf = radeon_enc_singleton(enc, 0, size, 32 * 1024);
+    if (!enc->cdf) {
+       RADEON_ENC_ERR("Can't create CDF buffer.\n");
+       goto error;
+@@ -1638,9 +1660,11 @@
+       dpb_slots = 0;
+ 
+    radeon_vcn_enc_get_param(enc, picture);
++   if (enc->error)
++      goto error;
+    if (enc->first_frame && setup_dpb(enc, dpb_slots)) {
+-      enc->dpb = si_vid_create_buffer(enc->screen, PIPE_USAGE_DEFAULT,
+-                                      PIPE_RESOURCE_FLAG_UNMAPPABLE, enc->dpb_size);
++      enc->dpb = radeon_enc_singleton(enc, PIPE_RESOURCE_FLAG_UNMAPPABLE,
++                                      enc->dpb_size, 1024 * 1024);
+       if (!enc->dpb) {
+          RADEON_ENC_ERR("Can't create DPB buffer.\n");
+          goto error;
+@@ -1701,8 +1725,17 @@
+    enc->need_feedback = false;
+ 
+    if (!enc->si) {
+-      enc->si = si_vid_create_buffer(enc->screen, PIPE_USAGE_DEFAULT,
+-                                     PIPE_RESOURCE_FLAG_UNMAPPABLE, 128 * 1024);
++#ifdef GPUKEY_PACKED_WORKSPACE
++      if (enc->dpb_type == DPB_TIER_2 &&
++          u_reduce_video_profile(enc->base.profile) == PIPE_VIDEO_FORMAT_AV1) {
++         /* Independent owned references preserve ordinary close/error cleanup.
++          * The CDF occupies the prefix; firmware owns the aligned session tail. */
++         assert(enc->cdf);
++         si_resource_reference(&enc->si, enc->cdf);
++      } else
++#endif
++         enc->si = radeon_enc_singleton(enc, PIPE_RESOURCE_FLAG_UNMAPPABLE,
++                                     128 * 1024, 128 * 1024);
+       if (!enc->si) {
+          RADEON_ENC_ERR("Can't create session buffer.\n");
+          goto error;
+@@ -1713,14 +1746,25 @@
+       enc->need_rc_per_pic = false;
+    }
+ 
++   if (enc->dpb_type == DPB_TIER_2) {
++      unsigned num_refs = 0;
++      for (unsigned i = 0; i < RENCODE_MAX_NUM_RECONSTRUCTED_PICTURES; ++i) {
++         if (!enc->enc_pic.dpb_bufs[i])
++            continue;
++         radeon_enc_create_dpb_aux_buffers(enc, enc->enc_pic.dpb_bufs[i]);
++         if (enc->error)
++            goto error;
++         num_refs = i + 1;
++      }
++      enc->enc_pic.ctx_buf.num_reconstructed_pictures = num_refs;
++   }
+    return;
+ 
+ error:
+-   si_resource_reference(&enc->dpb, NULL);
+-   si_resource_reference(&enc->si, NULL);
+-   si_resource_reference(&enc->cdf, NULL);
+-   si_resource_reference(&enc->roi, NULL);
+-   si_resource_reference(&enc->meta, NULL);
++   /* Preserve resources until destroy closes any initialized firmware session.
++    * No picture commands have been emitted for this failed preparation. */
++   enc->error = true;
++   return;
+ }
+ 
+ static uint32_t radeon_vcn_enc_encode_h264_header(struct radeon_encoder *enc,
+--- a/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc.h
++++ b/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc.h
+@@ -26,6 +26,9 @@
+    radeon_enc_add_buffer(enc, (buf), RADEON_USAGE_WRITE, (domain), (off))
+ #define RADEON_ENC_READWRITE(buf, domain, off)                                                   \
+    radeon_enc_add_buffer(enc, (buf), RADEON_USAGE_READWRITE, (domain), (off))
++
++/* Preserve the session's existing 128 KiB address alignment when packed. */
++#define RADEON_ENC_AV1_SESSION_OFFSET (128 * 1024)
+ #define RADEON_ENC_END()                                                                         \
+    *begin = (&enc->cs.current.buf[enc->cs.current.cdw] - begin) * 4;                             \
+    enc->total_task_size += *begin;                                                               \
+--- a/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc_5_0.c
++++ b/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc_5_0.c
+@@ -16,6 +16,18 @@
+ #define RENCODE_FW_INTERFACE_MINOR_VERSION   10
+ 
+ #define RENCODE_AV1_MIN_TILE_WIDTH                         256
++
++#ifdef GPUKEY_PACKED_WORKSPACE
++static void radeon_enc_av1_workspace_session_info(struct radeon_encoder *enc)
++{
++   assert(enc->si == enc->cdf);
++   RADEON_ENC_BEGIN(enc->cmd.session_info);
++   RADEON_ENC_CS(enc->enc_pic.session_info.interface_version);
++   RADEON_ENC_READWRITE(enc->si->buf, enc->si->domains, RADEON_ENC_AV1_SESSION_OFFSET);
++   RADEON_ENC_CS(0);
++   RADEON_ENC_END();
++}
++#endif
+ 
+ static void radeon_enc_cdf_default_table(struct radeon_encoder *enc)
+ {
+@@ -248,19 +260,12 @@
+ 
+ static void radeon_enc_ctx_tier2(struct radeon_encoder *enc)
+ {
+-   uint32_t num_refs = 0;
+    bool is_h264 = u_reduce_video_profile(enc->base.profile)
+                              == PIPE_VIDEO_FORMAT_MPEG4_AVC;
+    bool is_av1 = u_reduce_video_profile(enc->base.profile)
+                              == PIPE_VIDEO_FORMAT_AV1;
+ 
+-   for (uint32_t i = 0; i < RENCODE_MAX_NUM_RECONSTRUCTED_PICTURES; i++) {
+-      if (enc->enc_pic.dpb_bufs[i]) {
+-         radeon_enc_create_dpb_aux_buffers(enc, enc->enc_pic.dpb_bufs[i]);
+-         num_refs = i + 1;
+-      }
+-   }
+-
++   /* begin_frame validated every required auxiliary buffer before emission. */
+    RADEON_ENC_BEGIN(enc->cmd.ctx);
+    if (enc->dpb) {
+       RADEON_ENC_READWRITE(enc->dpb->buf, enc->dpb->domains, 0);
+@@ -268,7 +273,7 @@
+       RADEON_ENC_CS(0);
+       RADEON_ENC_CS(0);
+    }
+-   RADEON_ENC_CS(num_refs);
++   RADEON_ENC_CS(enc->enc_pic.ctx_buf.num_reconstructed_pictures);
+ 
+    for (uint32_t i = 0; i < RENCODE_MAX_NUM_RECONSTRUCTED_PICTURES; i++) {
+       if (!enc->enc_pic.dpb_bufs[i]) {
+@@ -978,6 +983,10 @@
+       enc->encode_params_codec_spec = radeon_enc_encode_params_hevc;
+       enc->spec_misc = radeon_enc_spec_misc_hevc;
+    } else if (u_reduce_video_profile(enc->base.profile) == PIPE_VIDEO_FORMAT_AV1) {
++#ifdef GPUKEY_PACKED_WORKSPACE
++      if (enc->dpb_type == DPB_TIER_2)
++         enc->session_info = radeon_enc_av1_workspace_session_info;
++#endif
+       enc->cdf_default_table = radeon_enc_cdf_default_table;
+       enc->spec_misc = radeon_enc_spec_misc_av1;
+       enc->tile_config = radeon_enc_tile_config_av1;
+--- a/src/gallium/drivers/radeonsi/si_buffer.c
++++ b/src/gallium/drivers/radeonsi/si_buffer.c
+@@ -115,6 +115,9 @@
+    if (res->b.b.flags & SI_RESOURCE_FLAG_DRIVER_INTERNAL)
+       res->flags |= RADEON_FLAG_DRIVER_INTERNAL;
+ 
++   if (res->b.b.flags & SI_RESOURCE_FLAG_NO_SUBALLOC)
++      res->flags |= RADEON_FLAG_NO_SUBALLOC;
++
+    if (res->b.b.flags & PIPE_RESOURCE_FLAG_SPARSE)
+       res->flags |= RADEON_FLAG_SPARSE;
+ 
+--- a/src/gallium/drivers/radeonsi/si_pipe.h
++++ b/src/gallium/drivers/radeonsi/si_pipe.h
+@@ -113,6 +113,7 @@
+ #define SI_RESOURCE_AUX_PLANE              (PIPE_RESOURCE_FLAG_DRV_PRIV << 5)
+ #define SI_RESOURCE_FLAG_32BIT             (PIPE_RESOURCE_FLAG_DRV_PRIV << 6)
+ #define SI_RESOURCE_FLAG_CLEAR             (PIPE_RESOURCE_FLAG_DRV_PRIV << 7)
++#define SI_RESOURCE_FLAG_NO_SUBALLOC       (PIPE_RESOURCE_FLAG_DRV_PRIV << 8)
+ 
+ #define SI_SQTT_STATE_DIRTY_BIT            BITFIELD_BIT(MESA_SHADER_MESH + 1)
+ 

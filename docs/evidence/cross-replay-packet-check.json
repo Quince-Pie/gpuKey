@@ -1,0 +1,102 @@
+[
+  {
+    "run": "replay-confirmation/portrait60-gpukey-1",
+    "second": false,
+    "packets": 1856,
+    "start_id": 240,
+    "end_id": 2095,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 30939
+  },
+  {
+    "run": "replay-confirmation/portrait60-gpukey-1",
+    "second": true,
+    "packets": 1917,
+    "start_id": 360,
+    "end_id": 2276,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 31948
+  },
+  {
+    "run": "replay-confirmation/portrait60-gsr2-1",
+    "second": false,
+    "packets": 1850,
+    "start_id": 242,
+    "end_id": 2091,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 30830
+  },
+  {
+    "run": "replay-confirmation/portrait60-gsr2-1",
+    "second": true,
+    "packets": 1911,
+    "start_id": 362,
+    "end_id": 2272,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 31849
+  },
+  {
+    "run": "replay-confirmation/portrait60-gsr3-1",
+    "second": false,
+    "packets": 1850,
+    "start_id": 242,
+    "end_id": 2091,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 30833
+  },
+  {
+    "run": "replay-confirmation/portrait60-gsr3-1",
+    "second": true,
+    "packets": 1912,
+    "start_id": 362,
+    "end_id": 2273,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 31866
+  },
+  {
+    "run": "latest-replay/portrait60-gpukey-1",
+    "second": false,
+    "packets": 1856,
+    "start_id": 240,
+    "end_id": 2095,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 30939
+  },
+  {
+    "run": "latest-replay/portrait60-gpukey-1",
+    "second": true,
+    "packets": 1917,
+    "start_id": 360,
+    "end_id": 2276,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 31947
+  },
+  {
+    "run": "latest-replay/portrait60-gsr-1",
+    "second": false,
+    "packets": 1850,
+    "start_id": 242,
+    "end_id": 2091,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 30833
+  },
+  {
+    "run": "latest-replay/portrait60-gsr-1",
+    "second": true,
+    "packets": 1912,
+    "start_id": 362,
+    "end_id": 2273,
+    "gaps": 0,
+    "repeats": 0,
+    "duration_ms": 31866
+  }
+]

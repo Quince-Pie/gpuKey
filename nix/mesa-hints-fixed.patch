@@ -1,0 +1,85 @@
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_cs.h
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_cs.h
+@@ -83,6 +83,9 @@
+    struct amdgpu_cs_buffer     *buffers;
+ };
+ 
++/* This high limit is needed for viewperf2020/catia. */
++#define BUFFER_HASHLIST_SIZE 32768
++
+ struct amdgpu_cs_context {
+    struct drm_amdgpu_cs_chunk_ib chunk_ib[IB_NUM];
+    uint32_t                    *ib_main_addr; /* the beginning of IB before chaining */
+@@ -91,7 +94,9 @@
+ 
+    /* Buffers. */
+    struct amdgpu_buffer_list   buffer_lists[NUM_BO_LIST_TYPES];
+-   int16_t                     *buffer_indices_hashlist;
++   /* Owned by this context across queue handoff. Never shared with the other
++    * context while its frontend/submission worker can still access it. */
++   int16_t buffer_indices_hashlist[BUFFER_HASHLIST_SIZE];
+ 
+    struct amdgpu_winsys_bo     *last_added_bo;
+    unsigned                    last_added_bo_usage;
+@@ -109,9 +114,6 @@
+    /* TMZ: will this command be submitted using the TMZ flag */
+    bool secure;
+ };
+-
+-/* This high limit is needed for viewperf2020/catia. */
+-#define BUFFER_HASHLIST_SIZE 32768
+ 
+ struct amdgpu_cs {
+    struct amdgpu_ib main_ib; /* must be first because this is inherited */
+@@ -137,14 +139,6 @@
+     */
+    struct amdgpu_cs_context csc[2];
+    int current_csc_index;
+-   /* buffer_indices_hashlist[hash(bo)] returns -1 if the bo
+-    * isn't part of any buffer lists or the index where the bo could be found.
+-    * Since 1) hash collisions of 2 different bo can happen and 2) we use a
+-    * single hashlist for the 3 buffer list, this is only a hint.
+-    * amdgpu_lookup_buffer uses this hint to speed up buffers look up.
+-    */
+-   int16_t buffer_indices_hashlist[BUFFER_HASHLIST_SIZE];
+-
+    /* Flush CS. */
+    void (*flush_cs)(void *ctx, unsigned flags, struct pipe_fence_handle **fence);
+    void *flush_data;
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_cs.cpp
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_cs.cpp
+@@ -993,13 +993,11 @@
+    ac_drm_cs_chunk_fence_info_to_data(acs->ctx->user_fence_bo_kms_handle, acs->ip_type * 4,
+                                       (struct drm_amdgpu_cs_chunk_data*)&acs->fence_chunk);
+ 
+-   memset(acs->buffer_indices_hashlist, -1, sizeof(acs->buffer_indices_hashlist));
+-
+    for (unsigned i = 0; i < ARRAY_SIZE(acs->csc); i++) {
+       amdgpu_init_cs_context(ctx->aws, &acs->csc[i], ip_type);
+ 
+-     /* only csc will use for buffer_indices_hashlist. */
+-      acs->csc[i].buffer_indices_hashlist = acs->buffer_indices_hashlist;
++      memset(acs->csc[i].buffer_indices_hashlist, -1,
++             sizeof(acs->csc[i].buffer_indices_hashlist));
+       acs->csc[i].aws = ctx->aws;
+    }
+ 
+@@ -2227,6 +2225,9 @@
+ 
+    /* Wait for any pending ioctl of this CS to complete. */
+    util_queue_fence_wait(&acs->flush_completed);
++   /* The futex fence can finish via a relaxed load. Acquire the completed
++    * worker's list/cache updates before ownership returns to the frontend. */
++   __atomic_thread_fence(__ATOMIC_ACQUIRE);
+ }
+ 
+ static bool amdgpu_pad_ib(struct radeon_cmdbuf *rcs)
+@@ -2374,7 +2375,7 @@
+       amdgpu_cs_context_cleanup(aws, csc_current);
+    }
+ 
+-   memset(csc_current->buffer_indices_hashlist, -1, sizeof(acs->buffer_indices_hashlist));
++   memset(csc_current->buffer_indices_hashlist, -1, sizeof(csc_current->buffer_indices_hashlist));
+ 
+    amdgpu_get_new_ib(aws, rcs, &acs->main_ib, acs);
+    if (rcs->gang_cs)

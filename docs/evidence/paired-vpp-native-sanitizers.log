@@ -1,0 +1,323 @@
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/result.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal.mp4
+device: explicit software AV1 control
+Select the source in the desktop sharing dialog.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-static.mkv
+device: explicit software AV1 control
+Select the source in the desktop sharing dialog.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 1 video inputs, 1 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=514/514/0
+private PipeWire integration: 1 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/missing-pts.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: using monotonic receive timestamps; source capture latency is unknown (--video-clock source requires source PTS)
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/cycle-pts.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: using PipeWire graph-cycle timestamps
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/zero-epoch.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2387/2387/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/same-sequence.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 1 video inputs, 1 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=514/514/0
+private PipeWire integration: 1 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/capped.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 26 video inputs, 26 encoded packets; 0 capture skips, 25 FPS-limited; accepted/written/durable bytes=1713/1713/0
+private PipeWire integration: 26 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/audio.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347864/1347864/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/duration-boundary.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347831/1347831/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/audio-revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+capture: selected audio format was removed (Stale file handle)
+Incomplete recording: 21 video inputs, 21 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=542091/542091/0
+gpukey: Stale file handle. Any partial output has been preserved.
+private PipeWire integration: 21 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/aux.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=308522/308522/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/aux-pcm.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=6149258/6149258/0
+private PipeWire integration: 50 video packets, passed
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 30.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+Select the source in the desktop sharing dialog.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-replay.mkv.second.mkv
+Saved 3.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-replay.mkv.second.mkv
+Saved 3.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/portal-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static-replay.mkv.second.mkv
+Saved 1.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static-replay.mkv.second.mkv
+Saved 1.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/static-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/replay-revoke.mkv
+capture: selected source was removed (Broken pipe)
+Replay stopped: 1 clips saved, 0 failed; unsaved history discarded.
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire replay: 1 independent clips, 1 + 6 audio channels pass
+Audio devices (IDs last until PipeWire restarts; names can be reused):
+  ID           TYPE      DESCRIPTION / NODE NAME
+  No audio devices are visible on this PipeWire connection.
+
+Use: gpukey clip.mkv --audio ID [--audio ID ...]
+Each selected device becomes a separate track; no audio is selected by default.
+Use --display or --window to choose a screen source in the desktop dialog.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu.mp4
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2720/2720/0
+private PipeWire integration: 50 video packets, passed
+fixture: two-stage fixation to modifier 0x0200000000082305
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-fixate.mp4
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2720/2720/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-aux.mkv
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=309248/309248/0
+private PipeWire integration: 50 video packets, passed
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 16 + 16 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-fixate.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-fixate.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-fixate.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-fixate.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-fixate.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-fixate.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 16 + 16 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 2560x2880 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-portrait.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-portrait.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-portrait.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-portrait.mkv.second.mkv
+Saved 1.278 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-portrait.mkv.second.mkv
+Saved 1.278 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-portrait.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 16 + 16 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 1.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 2560x2880 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+capture: using monotonic receive timestamps; source capture latency is unknown (--video-clock source requires source PTS)
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-niri.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-niri.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-niri.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-niri.mkv.second.mkv
+Saved 1.280 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-niri.mkv.second.mkv
+Saved 1.280 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-replay-niri.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 16 + 16 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 30.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+Select the source in the desktop sharing dialog.
+plan: av1_vaapi; 2560x2880 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+capture: using monotonic receive timestamps; source capture latency is unknown (--video-clock source requires source PTS)
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay.mkv
+Saved 1.324 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay.mkv
+Saved 1.324 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay.mkv.second.mkv
+Saved 3.323 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay.mkv.second.mkv
+Saved 3.323 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 0 + 0 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 30.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+Select the source in the desktop sharing dialog.
+plan: av1_vaapi; 2560x2880 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+capture: using monotonic receive timestamps; source capture latency is unknown (--video-clock source requires source PTS)
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay-static.mkv
+Saved 1.324 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay-static.mkv
+Saved 1.324 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay-static.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay-static.mkv.second.mkv
+Saved 3.324 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay-static.mkv.second.mkv
+Saved 3.324 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/gpu-portal-replay-static.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 0 + 0 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 30.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+Select the source in the desktop sharing dialog.
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/three-buffers.mkv
+Saved 1.331 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/three-buffers.mkv
+Saved 1.331 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/three-buffers.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/three-buffers.mkv.second.mkv
+Saved 3.330 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/three-buffers.mkv.second.mkv
+Saved 3.330 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/three-buffers.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 0 + 0 audio channels pass
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 30.000 seconds; encoded RAM budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+Select the source in the desktop sharing dialog.
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/serial.mkv
+Saved 1.332 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/serial.mkv
+Saved 1.332 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/serial.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/serial.mkv.second.mkv
+Saved 3.332 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/serial.mkv.second.mkv
+Saved 3.332 seconds to /tmp/nix-shell.tbAYnC/nix-shell.RLHeQo/tmp.lw2qfMNVj9/serial.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 0 + 0 audio channels pass
+integration: private PipeWire source -> recorder -> independent decoder passed

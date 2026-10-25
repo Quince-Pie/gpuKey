@@ -1,0 +1,2 @@
+{"decoded_frames": 12, "source_frames": 12, "first_identity": 0, "last_identity": 11, "unique_identities": 12, "repeated_identities": 0, "interior_missing_identities": 0, "backward_transitions": 0, "corrupt_markers": [], "patch_count": 6, "patch_mean_absolute_error": 0.13715519807255067, "patch_max_absolute_error": 0.44059999999999633}
+Small-image oracle: all identities and six unoccluded color patches verified.

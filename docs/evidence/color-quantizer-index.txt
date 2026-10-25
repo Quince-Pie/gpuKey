@@ -1,0 +1,89 @@
+Color, producer and quantizer audit — 23 October 2026 UTC
+
+Delivered changes
+- FFmpeg AV1 VAAPI rejects unsupported zero-QIndex pictures during setup and
+  selects the required inferred ONLY_4X4 mode for a supported zero-QIndex header.
+- Vulkan rejects explicitly unsupported QIndex requests instead of silently
+  clamping them, and constrains derived picture quantizers to the device range.
+- The standalone RGB probe supports a uniform color cube and waits for DMA-BUF
+  producer writes before cross-API encoding. The actual recorder already waited.
+- Independent streamed cube generator/analyzer and updated memory/source audit.
+- No new default backend, color profile, memory limit or timing policy.
+
+Final packages
+- /nix/store/133jqqnv1x7slvxxg63d3xp9f0q3s1ls-gpukey-rgb-amd
+- /nix/store/55ghi90wygfy89fcnqw5gs96bjq0qsyr-gpukey-amd
+- Their unwrapped binaries equal the runtime-verified dxp32ic... RGB and
+  p4116rp... VAAPI packages, respectively. final-binaries.sha256 records them.
+- Local build/gcc-release/gpukey and build/gcc-release-rgb/gpukey are rebuilt.
+
+Archives
+- color-quantizer-control.tar.gz: the preceding 192-file implementation.
+- color-quantizer-evidence.tar.gz: expands to gpukey-color/ under /tmp.
+- color-quantizer.sha256: archive and index integrity.
+
+Authoritative evidence in gpukey-color/
+- quantizer-zero-{vaapi,vulkan}/ and quantizer-zero-check.log: both setup failures
+  have the expected capability diagnostic and create no output file.
+- quantizer-valid-{vaapi,vulkan}-{1,32}/: successful private recordings, independent
+  decoding and trace_headers logs. Q=1 uses 1; Q=32 uses I=26 and P=32 as before.
+- software-qp-zero.mkv and software-zero-equality.log: three independently decoded
+  frames equal the source YUV bytes exactly. This is not lossless RGB conversion.
+- native-quantizer-{rgb,vaapi}/ and native-capture-check.log: both actual recorder
+  backends pass capture, 16+16-channel audio, replay, static, reconfiguration and
+  missing-PTS tests. asan-zero.log and asan-zero-vaapi/ cover sanitized Q=0 cleanup.
+- native-fenced-matrix/: RGB8/RGB10, portrait, forced keys, queue-owned/ordinary
+  reconstruction and injected submit/export/view faults. Validation uses the
+  previously documented repaired RGB validation-layer fork, not stock upstream.
+- fenced-equivalence/: twenty current-library and two fixed pre-change library
+  cases, 250 frames each, with identical decoded frames. Current/reference packet
+  hashes also match for each reconstruction mode (final-inputs-check.log).
+- fenced-cube-{64,256}-{limited,full}.{mkv,log,json}: fresh direct RGB color results
+  after the producer wait repair. The 256-level corpus covers 16,777,216 RGB tuples
+  at uniform 8x8 patch centers; it does not cover arbitrary spatial images.
+- cube-vaapi.* and full-cube-vaapi.*: independent BGRA source -> upload -> VPP ->
+  AV1 controls. Their producer/consumer share VAAPI; no external Vulkan read.
+- run-fenced-cubes.sh and run-fenced-equivalence.sh: executed confirmation commands.
+- verification-fenced.log: final GCC/Clang, ASan/UBSan and x86-64 flake checks pass.
+  rgb-clang-corrected-build.log: optional RGB probe also compiles with Clang.
+- final-package-paths.txt, final-package-build.log and final-binaries.sha256.
+- final-inputs-check.log: material's 21 files and original frozen clip unchanged.
+- control-source-verified.log: fixed pre-change implementation manifest passes.
+
+Excluded exploration and failures
+- Initial cube-* direct-RGB and full-cube-{limited,full} results omitted the
+  DMA-BUF producer wait. They are retained, not used for final color conclusions.
+- native-quantizer-matrix/control and queue disagree: the producer sometimes
+  supplied the previous contents of a reused surface. The fixed recorder's event
+  loop already waits on that producer dependency. The standalone test is repaired.
+- quantizer-build.log: first patch used an incorrect FFmpeg enum spelling;
+  quantizer-fixed-build.log records the corrected successful build.
+- native-quantizer-check.log: direct invocation of a nonexecutable script failed;
+  subsequent checks explicitly use Bash.
+- rgb-clang-build.log: the requested target mistakenly named clang-mold in the
+  clang shell. The correct clang target succeeds; this is not a compiler failure.
+
+Research/prototype scope
+- Full-range prototype driver: abgwsvrbgsrl1y946y0n1z8khkcdbc7b.
+  full2020.nix/patch retain its exact capability-subset change. It only advertises
+  the firmware-supported BT.2020/full pair, not unsupported cross-pairs.
+- Source primaries stay BT.709 and transfer stays sRGB. Only matrix/range change.
+- Full-domain RGB MAE: VPP 0.6689, current direct 1.3948, experimental full 0.8486.
+- This private prototype is not integrated into the recorder. Spatial scenes,
+  compression, downstream compatibility and complete lifecycle measurements
+  remain open. It is not an every-metric winner over the retained VPP alternative.
+- Installed Niri source bazsf2g3j9imcrqrw18p3zn9911s7lfm offers RGB only. The
+  producer-native NV12 target needs an upstream interface change.
+- No timing, RAM or VRAM performance claim is made from these diagnostic runs;
+  build jobs overlap some correctness/color checks. No user desktop was captured
+  and no user process or compositor was changed. The broader goal remains active.
+
+Reproduce the usable recorder
+  nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0
+  nix run .#amd -- replay 30 --display --fps 60
+  nix develop .#rgb -c bash /tmp/gpukey-color/run-fenced-cubes.sh
+  nix develop .#rgb -c bash /tmp/gpukey-color/run-fenced-equivalence.sh
+
+The diagnostic scripts intentionally require fresh output destinations. Preserve
+existing evidence and select new names when rerunning. The final decoder oracle
+and corpus generator are tools/analyze-color-cube.py and generate-color-cube.py.

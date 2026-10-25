@@ -1,0 +1,74 @@
+{
+  "stall60": [
+    {
+      "vram_mib": 114.37890625,
+      "gtt_mib": 44.50390625,
+      "samples": 433
+    }
+  ],
+  "idle-stall60": [
+    {
+      "vram_mib": 103.12890625,
+      "gtt_mib": 23.34765625,
+      "samples": 434
+    }
+  ],
+  "return-stall60": [
+    {
+      "vram_mib": 103.12890625,
+      "gtt_mib": 23.34765625,
+      "samples": 226
+    },
+    {
+      "vram_mib": 103.13671875,
+      "gtt_mib": 23.34765625,
+      "samples": 204
+    },
+    {
+      "vram_mib": 114.37890625,
+      "gtt_mib": 44.50390625,
+      "samples": 2
+    },
+    {
+      "vram_mib": 114.38671875,
+      "gtt_mib": 44.50390625,
+      "samples": 1
+    }
+  ],
+  "repeated-bursts": [
+    {
+      "vram_mib": 103.12890625,
+      "gtt_mib": 23.34765625,
+      "samples": 339
+    },
+    {
+      "vram_mib": 103.13671875,
+      "gtt_mib": 23.34765625,
+      "samples": 277
+    },
+    {
+      "vram_mib": 114.38671875,
+      "gtt_mib": 44.50390625,
+      "samples": 5
+    },
+    {
+      "vram_mib": 114.37890625,
+      "gtt_mib": 44.50390625,
+      "samples": 4
+    }
+  ],
+  "repeated_events": {
+    "config": 3,
+    "surface": 19,
+    "surface-free": 19,
+    "context": 2,
+    "sync": 2857,
+    "coded": 8,
+    "begin-change": 38,
+    "encode": 953,
+    "stall-start": 7,
+    "stall-end": 7,
+    "coded-free": 8,
+    "context-free": 2
+  }
+}

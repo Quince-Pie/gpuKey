@@ -1,0 +1,32 @@
+run build/gcc-release/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/gcc-release/tests/media_test
+[libaom-av1 @ 0x5555555b1000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x5555556cb7c0] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio: pcm_f32le, stereo 48 kHz; bounded drift correction; 20 ms final-sample hold
+[libaom-av1 @ 0x5555555b1000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio: libopus, stereo 48 kHz; bounded drift correction; 20 ms final-sample hold
+[opus @ 0x5555556cb7c0] Could not update timestamps for skipped samples.
+[opus @ 0x5555556cb7c0] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x5555557b0e40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555557b0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio: pcm_f32le, stereo 48 kHz; bounded drift correction; 20 ms final-sample hold
+[libaom-av1 @ 0x5555557b0e40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio: pcm_f32le, stereo 48 kHz; bounded drift correction; 20 ms final-sample hold
+selected audio source supplied no samples: No data available
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/gcc-release/tests/portal_test
+TAP version 14
+# random seed: R02S4645b19cf27bd7c632182ae95a78d665
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed

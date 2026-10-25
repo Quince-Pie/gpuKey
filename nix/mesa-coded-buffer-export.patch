@@ -1,0 +1,45 @@
+--- a/src/gallium/frontends/va/buffer.c
++++ b/src/gallium/frontends/va/buffer.c
+@@ -410,8 +410,10 @@
+    if (!buf)
+       return VA_STATUS_ERROR_INVALID_BUFFER;
+ 
+-   /* Only VA surface|image like buffers are supported for now .*/
+-   if (buf->type != VAImageBufferType)
++   /* Coded buffers may expose their write-completion fence through dma-buf.
++    * Mapping/feedback and CPU coherency still use the normal VA buffer API. */
++   if (buf->type != VAImageBufferType &&
++       buf->type != VAEncCodedBufferType)
+       return VA_STATUS_ERROR_UNSUPPORTED_BUFFERTYPE;
+ 
+    if (!out_buf_info)
+@@ -431,6 +433,18 @@
+          return VA_STATUS_ERROR_UNSUPPORTED_MEMORY_TYPE;
+    }
+ 
++   if (buf->type == VAEncCodedBufferType) {
++      if (buf->num_elements != 1 || !buf->size)
++         return VA_STATUS_ERROR_INVALID_PARAMETER;
++      /* Match the encoder picture handler's allocation, before the first
++       * encode submission, so its reservation fence is externally visible. */
++      mtx_lock(&drv->mutex);
++      if (!buf->derived_surface.resource)
++         buf->derived_surface.resource =
++            pipe_buffer_create(screen, PIPE_BIND_VERTEX_BUFFER | PIPE_BIND_SHARED,
++                               PIPE_USAGE_STAGING, buf->size);
++      mtx_unlock(&drv->mutex);
++   }
+    if (!buf->derived_surface.resource)
+       return VA_STATUS_ERROR_INVALID_BUFFER;
+ 
+@@ -466,6 +480,10 @@
+             return VA_STATUS_ERROR_INVALID_BUFFER;
+          }
+ 
++         /* Do not defer submission past the API return once an external
++          * observer can poll the buffer's reservation fences. */
++         drv->has_external_handles = true;
++
+          mtx_unlock(&drv->mutex);
+ 
+          buf_info->handle = (intptr_t)whandle.handle;

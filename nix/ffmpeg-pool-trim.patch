@@ -1,0 +1,123 @@
+--- a/libavutil/buffer.c
++++ b/libavutil/buffer.c
+@@ -325,6 +325,37 @@
+     av_freep(&pool);
+ }
+ 
++size_t av_buffer_pool_trim(AVBufferPool *pool, size_t keep)
++{
++    BufferPoolEntry **link, *entry;
++    size_t released = 0;
++    if (!pool)
++        return 0;
++    ff_mutex_lock(&pool->mutex);
++    link = &pool->pool;
++    while (*link && keep) {
++        link = &(*link)->next;
++        --keep;
++    }
++    entry = *link;
++    *link = NULL;
++    if (entry)
++        atomic_fetch_add_explicit(&pool->refcount, 1, memory_order_relaxed);
++    ff_mutex_unlock(&pool->mutex);
++    if (!entry)
++        return 0;
++    do {
++        BufferPoolEntry *next = entry->next;
++        entry->free(entry->opaque, entry->data);
++        av_free(entry);
++        ++released;
++        entry = next;
++    } while (entry);
++    if (atomic_fetch_sub_explicit(&pool->refcount, 1, memory_order_acq_rel) == 1)
++        buffer_pool_free(pool);
++    return released;
++}
++
+ void av_buffer_pool_uninit(AVBufferPool **ppool)
+ {
+     AVBufferPool *pool;
+--- a/libavutil/buffer.h
++++ b/libavutil/buffer.h
+@@ -303,6 +303,18 @@
+ AVBufferRef *av_buffer_pool_get(AVBufferPool *pool);
+ 
+ /**
++ * Release currently unused pool entries beyond keep. Existing leases are
++ * unaffected. Concurrent gets/returns are supported; the limit describes
++ * the detached snapshot, not a permanent bound on subsequent returns.
++ * As with get(), the caller must own a live pool for entry to this function.
++ * Free callbacks run outside the pool lock. A temporary internal reference
++ * keeps the pool alive even if a callback uninitializes its external owner.
++ * @return the number of entries released.
++ */
++size_t av_buffer_pool_trim(AVBufferPool *pool, size_t keep);
++#define AV_HAVE_BUFFER_POOL_TRIM 1
++
++/**
+  * Query the original opaque parameter of an allocated buffer in the pool.
+  *
+  * @param ref a buffer reference to a buffer returned by av_buffer_pool_get.
+--- a/libavutil/refstruct.c
++++ b/libavutil/refstruct.c
+@@ -218,6 +218,39 @@
+     if (pool->free_entry_cb)
+         pool->free_entry_cb(pool->opaque, get_userdata(ref));
+     av_free(ref);
++}
++
++size_t av_refstruct_pool_trim(AVRefStructPool *pool, size_t keep)
++{
++    RefCount *entry, *previous = NULL;
++    size_t released = 0;
++    if (!pool)
++        return 0;
++    ff_mutex_lock(&pool->mutex);
++    entry = pool->available_entries;
++    while (entry && keep) {
++        previous = entry;
++        entry = entry->opaque.nc;
++        --keep;
++    }
++    if (previous)
++        previous->opaque.nc = NULL;
++    else
++        pool->available_entries = NULL;
++    if (entry)
++        atomic_fetch_add_explicit(&pool->refcount, 1, memory_order_relaxed);
++    ff_mutex_unlock(&pool->mutex);
++    if (!entry)
++        return 0;
++    do {
++        RefCount *next = entry->opaque.nc;
++        pool_free_entry(pool, entry);
++        ++released;
++        entry = next;
++    } while (entry);
++    if (atomic_fetch_sub_explicit(&pool->refcount, 1, memory_order_acq_rel) == 1)
++        pool_free(pool);
++    return released;
+ }
+ 
+ static void pool_return_entry(void *ref_)
+--- a/libavutil/refstruct.h
++++ b/libavutil/refstruct.h
+@@ -279,6 +279,17 @@
+ void *av_refstruct_pool_get(AVRefStructPool *pool);
+ 
+ /**
++ * Release currently unused pool entries beyond keep. Existing leases are
++ * unaffected. Concurrent gets/returns are supported; the limit describes
++ * the detached snapshot, not a permanent bound on subsequent returns.
++ * As with get(), the caller must own a live pool for entry to this function.
++ * Free callbacks run outside the pool lock. A temporary internal reference
++ * keeps the pool alive even if a callback uninitializes its external owner.
++ * @return the number of entries released.
++ */
++size_t av_refstruct_pool_trim(AVRefStructPool *pool, size_t keep);
++
++/**
+  * Mark the pool as being available for freeing. It will actually be freed
+  * only once all the allocated buffers associated with the pool are released.
+  * Thus it is safe to call this function while some of the allocated buffers

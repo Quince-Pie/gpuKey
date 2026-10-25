@@ -1,0 +1,190 @@
+--- a/src/amd/vulkan/radv_video_enc.c
++++ b/src/amd/vulkan/radv_video_enc.c
+@@ -192,118 +192,45 @@
+ }
+ 
+ static void
+-radv_enc_set_emulation_prevention(struct radv_cmd_buffer *cmd_buffer, bool set)
+-{
++radv_enc_code_fixed_bits(struct radv_cmd_buffer *cmd_buffer, unsigned int value, unsigned int num_bits)
++{
++   if (!num_bits)
++      return;
++
+    struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   if (set != enc->emulation_prevention) {
+-      enc->emulation_prevention = set;
+-      enc->num_zeros = 0;
+-   }
+-}
+-
+-static const unsigned index_to_shifts[4] = {24, 16, 8, 0};
+-
+-static void
+-radv_enc_output_one_byte(struct radv_cmd_buffer *cmd_buffer, unsigned char byte)
+-{
+-   struct radv_cmd_stream *cs = cmd_buffer->cs;
++   struct ac_cmdbuf *cs = cmd_buffer->cs->b;
++   enc->bits_output += num_bits;
++   value &= UINT32_MAX >> (32 - num_bits);
++   unsigned free_bits = 32 - enc->bits_in_shifter;
++   if (num_bits < free_bits) {
++      enc->shifter |= value << (free_bits - num_bits);
++      enc->bits_in_shifter += num_bits;
++   } else {
++      cs->buf[cs->cdw++] = enc->shifter | (value >> (num_bits - free_bits));
++      num_bits -= free_bits;
++      enc->shifter = num_bits ? value << (32 - num_bits) : 0;
++      enc->bits_in_shifter = num_bits;
++   }
++}
++
++static void
++radv_enc_reset(struct radv_cmd_buffer *cmd_buffer)
++{
+    struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   if (enc->byte_index == 0)
+-      cs->b->buf[cs->b->cdw] = 0;
+-   cs->b->buf[cs->b->cdw] |= ((unsigned int)(byte) << index_to_shifts[enc->byte_index]);
+-   enc->byte_index++;
+-
+-   if (enc->byte_index >= 4) {
+-      enc->byte_index = 0;
+-      cs->b->cdw++;
+-   }
+-}
+-
+-static void
+-radv_enc_emulation_prevention(struct radv_cmd_buffer *cmd_buffer, unsigned char byte)
+-{
+-   struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   if (enc->emulation_prevention) {
+-      if ((enc->num_zeros >= 2) && ((byte == 0x00) || (byte == 0x01) || (byte == 0x02) || (byte == 0x03))) {
+-         radv_enc_output_one_byte(cmd_buffer, 0x03);
+-         enc->bits_output += 8;
+-         enc->num_zeros = 0;
+-      }
+-      enc->num_zeros = (byte == 0 ? (enc->num_zeros + 1) : 0);
+-   }
+-}
+-
+-static void
+-radv_enc_code_fixed_bits(struct radv_cmd_buffer *cmd_buffer, unsigned int value, unsigned int num_bits)
+-{
+-   struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   unsigned int bits_to_pack = 0;
+-   enc->bits_size += num_bits;
+-
+-   while (num_bits > 0) {
+-      unsigned int value_to_pack = value & (0xffffffff >> (32 - num_bits));
+-      bits_to_pack = num_bits > (32 - enc->bits_in_shifter) ? (32 - enc->bits_in_shifter) : num_bits;
+-
+-      if (bits_to_pack < num_bits)
+-         value_to_pack = value_to_pack >> (num_bits - bits_to_pack);
+-
+-      enc->shifter |= value_to_pack << (32 - enc->bits_in_shifter - bits_to_pack);
+-      num_bits -= bits_to_pack;
+-      enc->bits_in_shifter += bits_to_pack;
+-
+-      while (enc->bits_in_shifter >= 8) {
+-         unsigned char output_byte = (unsigned char)(enc->shifter >> 24);
+-         enc->shifter <<= 8;
+-         radv_enc_emulation_prevention(cmd_buffer, output_byte);
+-         radv_enc_output_one_byte(cmd_buffer, output_byte);
+-         enc->bits_in_shifter -= 8;
+-         enc->bits_output += 8;
+-      }
+-   }
+-}
+-
+-static void
+-radv_enc_reset(struct radv_cmd_buffer *cmd_buffer)
+-{
+-   struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   enc->emulation_prevention = false;
+    enc->shifter = 0;
+    enc->bits_in_shifter = 0;
+    enc->bits_output = 0;
+-   enc->num_zeros = 0;
+-   enc->byte_index = 0;
+-   enc->bits_size = 0;
+-}
+-
+-static void
+-radv_enc_byte_align(struct radv_cmd_buffer *cmd_buffer)
++}
++
++static void
++radv_enc_flush_headers(struct radv_cmd_buffer *cmd_buffer)
+ {
+    struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   unsigned int num_padding_zeros = (32 - enc->bits_in_shifter) % 8;
+-
+-   if (num_padding_zeros > 0)
+-      radv_enc_code_fixed_bits(cmd_buffer, 0, num_padding_zeros);
+-}
+-
+-static void
+-radv_enc_flush_headers(struct radv_cmd_buffer *cmd_buffer)
+-{
+-   struct radv_enc_state *enc = &cmd_buffer->video.enc;
+-   struct radv_cmd_stream *cs = cmd_buffer->cs;
+-   if (enc->bits_in_shifter != 0) {
+-      unsigned char output_byte = (unsigned char)(enc->shifter >> 24);
+-      radv_enc_emulation_prevention(cmd_buffer, output_byte);
+-      radv_enc_output_one_byte(cmd_buffer, output_byte);
+-      enc->bits_output += enc->bits_in_shifter;
+-      enc->shifter = 0;
+-      enc->bits_in_shifter = 0;
+-      enc->num_zeros = 0;
+-   }
+-
+-   if (enc->byte_index > 0) {
+-      cs->b->cdw++;
+-      enc->byte_index = 0;
+-   }
++   struct ac_cmdbuf *cs = cmd_buffer->cs->b;
++   if (enc->bits_in_shifter)
++      cs->buf[cs->cdw++] = enc->shifter;
++   enc->shifter = 0;
++   enc->bits_in_shifter = 0;
+ }
+ 
+ static void
+@@ -1130,7 +1057,6 @@
+ 
+    RADEON_ENC_BEGIN(pdev->vcn_enc_cmds.slice_header);
+    radv_enc_reset(cmd_buffer);
+-   radv_enc_set_emulation_prevention(cmd_buffer, false);
+ 
+    cdw_start = cs->b->cdw;
+ 
+@@ -1383,7 +1309,6 @@
+ 
+    RADEON_ENC_BEGIN(pdev->vcn_enc_cmds.slice_header);
+    radv_enc_reset(cmd_buffer);
+-   radv_enc_set_emulation_prevention(cmd_buffer, false);
+ 
+    cdw_start = cs->b->cdw;
+    radv_enc_code_fixed_bits(cmd_buffer, 0x0, 1);
+--- a/src/amd/vulkan/radv_cmd_buffer.h
++++ b/src/amd/vulkan/radv_cmd_buffer.h
+@@ -475,15 +475,11 @@
+ };
+ 
+ struct radv_enc_state {
++   unsigned shifter;
++   unsigned bits_in_shifter;
++   unsigned bits_output;
+    uint32_t *p_task_size;
+    uint32_t total_task_size;
+-   unsigned shifter;
+-   unsigned bits_in_shifter;
+-   uint32_t num_zeros;
+-   uint32_t byte_index;
+-   unsigned bits_output;
+-   unsigned bits_size;
+-   bool emulation_prevention;
+    unsigned task_id;
+    uint32_t *copy_start;
+    VkVideoEncodeRateControlModeFlagBitsKHR rate_control_mode;

@@ -1,0 +1,133 @@
+--- a/libavcodec/vulkan_encode.c
++++ b/libavcodec/vulkan_encode.c
+@@ -239,7 +239,7 @@
+     return ctx->codec->init_pic_rc(avctx, pic, rc_info, rc_layer);
+ }
+ 
+-static int vulkan_queue_dpb_slot(AVCodecContext *avctx, FFHWBaseEncodePicture *pic, int *initial)
++static int vulkan_queue_dpb_slot(AVCodecContext *avctx, FFHWBaseEncodePicture *pic, unsigned *state)
+ {
+     FFVulkanEncodeContext *ctx = avctx->priv_data;
+     FFVulkanEncodePicture *vp = pic->priv;
+@@ -256,8 +256,13 @@
+                 needed |= ctx->base.next_prev[j] == old && old != pic;
+         }
+         if (!needed) {
+-            if (old)
++            if (old) {
++                /* The first unused slot is overwritten by this picture;
++                 * only other formerly active slots become inactive. */
++                if (chosen >= 0)
++                    *state |= 2U << slot;
+                 ((FFVulkanEncodePicture *)old->priv)->dpb_slot.slotIndex = -1;
++            }
+             ctx->slots[slot] = NULL;
+             if (chosen < 0)
+                 chosen = slot;
+@@ -281,7 +286,7 @@
+                                  VK_IMAGE_USAGE_VIDEO_ENCODE_DPB_BIT_KHR);
+         if (err < 0)
+             return err;
+-        *initial = 1;
++        *state |= 1U;
+     }
+     vp->dpb.view = ctx->queue_dpb_views[chosen];
+     vp->dpb.aspect = VK_IMAGE_ASPECT_COLOR_BIT;
+@@ -306,7 +311,7 @@
+     FFVkBuffer *sd_buf;
+ 
+     int slot_index = -1;
+-    int initial_dpb = 0;
++    unsigned dpb_state = 0;
+     FFVkExecContext *exec;
+     VkCommandBuffer cmd_buf;
+     VkImageMemoryBarrier2 img_bar[37];
+@@ -359,7 +364,7 @@
+     };
+ 
+     if (ctx->queue_dpb) {
+-        slot_index = vulkan_queue_dpb_slot(avctx, base_pic, &initial_dpb);
++        slot_index = vulkan_queue_dpb_slot(avctx, base_pic, &dpb_state);
+         if (slot_index < 0)
+             return slot_index;
+     } else {
+@@ -425,6 +430,22 @@
+     ref_slot[encode_info.referenceSlotCount] = vp->dpb_slot;
+     ref_slot[encode_info.referenceSlotCount].slotIndex = -1;
+ 
++    /* Invalidate exactly those previously active queue-owned slots whose
++     * pictures were retired by this issue. The encode references above stay
++     * unchanged; only BeginVideoCoding sees these null-resource entries. */
++    unsigned begin_slots = encode_info.referenceSlotCount + 1;
++    if (dpb_state & ~1U) {
++        for (unsigned slot = 0; slot < FF_ARRAY_ELEMS(ctx->queue_dpb_frames); slot++) {
++            if (dpb_state & (2U << slot)) {
++                av_assert0(begin_slots < FF_ARRAY_ELEMS(ref_slot));
++                ref_slot[begin_slots++] = (VkVideoReferenceSlotInfoKHR) {
++                    .sType = VK_STRUCTURE_TYPE_VIDEO_REFERENCE_SLOT_INFO_KHR,
++                    .slotIndex = slot,
++                };
++            }
++        }
++    }
++
+     /* Setup picture parameters */
+     err = ctx->codec->init_pic_params(avctx, base_pic,
+                                       &encode_info);
+@@ -438,7 +459,7 @@
+         .pNext = ctx->session_reset ? &rc_info : NULL,
+         .videoSession = ctx->common.session,
+         .videoSessionParameters = ctx->session_params,
+-        .referenceSlotCount = encode_info.referenceSlotCount + 1,
++        .referenceSlotCount = begin_slots,
+         .pReferenceSlots = ref_slot,
+     };
+ 
+@@ -554,7 +575,7 @@
+                             &img_bar[nb_img_bar], &nb_img_bar);
+ 
+     if (ctx->queue_dpb) {
+-        if (initial_dpb) {
++        if (dpb_state & 1U) {
+             AVVkFrame *initial = (AVVkFrame *)ctx->queue_dpb_frames[slot_index]->data[0];
+             err = ff_vk_exec_add_dep_wait_sem(&ctx->s, exec, initial->sem[0], initial->sem_value[0],
+                                               VK_PIPELINE_STAGE_2_VIDEO_ENCODE_BIT_KHR);
+@@ -815,12 +836,38 @@
+     .ready  = &vulkan_encode_ready,
+ };
+ 
++static void vulkan_trim_idle_reconstructions(FFVulkanEncodeContext *ctx)
++{
++    /* Queue-owned images have no per-command frame reference. Empty output
++     * FIFO after successful readout proves completion of every issued encode.
++     * Fatal/partial submission failures must instead wait during full close. */
++    if (!ctx->queue_dpb || av_fifo_can_read(ctx->base.encode_fifo))
++        return;
++    int released = 0;
++    for (int slot = 0; slot < FF_ARRAY_ELEMS(ctx->queue_dpb_frames); slot++) {
++        if (ctx->slots[slot] || !ctx->queue_dpb_frames[slot])
++            continue;
++        ctx->s.vkfn.DestroyImageView(ctx->s.hwctx->act_dev, ctx->queue_dpb_views[slot],
++                                     ctx->s.hwctx->alloc);
++        ctx->queue_dpb_views[slot] = VK_NULL_HANDLE;
++        av_frame_free(&ctx->queue_dpb_frames[slot]);
++        released = 1;
++    }
++    if (released) {
++        AVHWFramesContext *frames = (AVHWFramesContext *)ctx->queue_dpb_context->data;
++        av_buffer_pool_trim(frames->pool, 0);
++    }
++}
++
+ int ff_vulkan_encode_receive_packet(AVCodecContext *avctx, AVPacket *pkt)
+ {
+     FFVulkanEncodeContext *ctx = avctx->priv_data;
+     int ret = ff_hw_base_encode_receive_packet(&ctx->base, avctx, pkt);
+     if (ctx->opts.async_trim)
+         av_buffer_pool_trim(ctx->buf_pool, ctx->opts.async_trim == 1);
++    if (ctx->opts.async_trim == 2 &&
++        (ret >= 0 || ret == AVERROR(EAGAIN) || ret == AVERROR_EOF))
++        vulkan_trim_idle_reconstructions(ctx);
+     return ret;
+ }
+ 

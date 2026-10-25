@@ -1,0 +1,15 @@
+--- a/libavcodec/vaapi_encode.c
++++ b/libavcodec/vaapi_encode.c
+@@ -2224,6 +2224,11 @@
+     VAAPIEncodeContext *ctx = avctx->priv_data;
+     int ret = ff_hw_base_encode_receive_packet(avctx->priv_data, avctx, pkt);
+-    if (ctx->async_trim == 2)
++    if (ctx->async_trim == 2) {
+         av_refstruct_pool_trim(ctx->output_buffer_pool, 0);
++        /* Retired pictures return their surfaces only after completion and
++         * reference retirement. Trim unused entries, never active leases. */
++        if (ret == AVERROR(EAGAIN))
++            av_buffer_pool_trim(ctx->base.recon_frames->pool, 0);
++    }
+     return ret;
+ }

@@ -1,0 +1,47 @@
+import collections, gzip, json, sys
+from pathlib import Path
+profile_path=Path(sys.argv[1])
+profile=json.loads(gzip.decompress(profile_path.read_bytes()))
+syms=json.loads(Path(str(profile_path).removesuffix('.gz')+'.syms.json').read_text())
+strings=syms['string_table']
+modules={(s['debug_name'],s['debug_id'].replace('-','').upper()+'0'):s for s in syms['data']}
+lookups=[]
+for lib in profile['libs']:
+    module=modules.get((lib['debugName'],lib['breakpadId']))
+    if module is None:
+        lookups.append({}); continue
+    resolved={}
+    for address, index in module['known_addresses']:
+        symbol=module['symbol_table'][index]
+        resolved[address]=tuple(strings[f['function']] for f in symbol.get('frames',[])) or (strings[symbol['symbol']],)
+    lookups.append(resolved)
+main=max((t for t in profile['threads'] if t['name']=='gpukey' and t['tid']==t['pid']),key=lambda t:t['samples']['length'])
+frames=[]
+for i,address in enumerate(main['frameTable']['address']):
+    function=main['frameTable']['func'][i]
+    resource=main['funcTable']['resource'][function]
+    library=main['resourceTable']['lib'][resource] if resource>=0 else None
+    fallback=(main['stringArray'][main['funcTable']['name'][function]],)
+    frames.append(lookups[library].get(address,fallback) if library is not None else fallback)
+chains=[]
+for i,frame in enumerate(main['stackTable']['frame']):
+    prefix=main['stackTable']['prefix'][i]
+    assert prefix is None or prefix<i
+    chains.append(frames[frame]+(chains[prefix] if prefix is not None else ()))
+exclusive=collections.Counter(); inclusive=collections.Counter(); exclusive_cpu=collections.Counter(); inclusive_cpu=collections.Counter(); total=0; cpu=0
+samples=main['samples']
+for i,stack in enumerate(samples['stack']):
+    if stack is None or not samples['threadCPUDelta'][i]: continue
+    weight=samples['weight'][i]; total+=weight; cpu+=samples['threadCPUDelta'][i]
+    names=chains[stack]; exclusive[names[0]]+=weight
+    delta=samples["threadCPUDelta"][i]
+    exclusive_cpu[names[0]]+=delta
+    for name in set(names):
+        inclusive[name]+=weight
+        inclusive_cpu[name]+=delta
+result={'thread':main['tid'],'active_sample_weight':total,'reported_cpu_delta_us':cpu,
+        'exclusive_cpu_us':[{'function':name,'cpu_us':value,'percent':100*value/cpu} for name,value in exclusive_cpu.most_common(20)],
+        'inclusive_cpu_us':[{'function':name,'cpu_us':value,'percent':100*value/cpu} for name,value in inclusive_cpu.most_common(25)],
+        'exclusive':[{'function':name,'samples':count,'percent':100*count/total} for name,count in exclusive.most_common(20)],
+        'inclusive':[{'function':name,'samples':count,'percent':100*count/total} for name,count in inclusive.most_common(25)]}
+print(json.dumps(result,indent=2))

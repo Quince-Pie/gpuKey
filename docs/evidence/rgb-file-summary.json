@@ -1,0 +1,554 @@
+{
+  "hd240/control": [
+    {
+      "run": 1,
+      "cpu_ms": 146.153,
+      "rss_mib": 37.17578125,
+      "vram_mib": 36.390625,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 14.26953125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.025822831,
+      "source_frames": 1919,
+      "decoded_frames": 1919,
+      "unique_frames": 1919,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 123.380343,
+        "engine-enc": 6217.92578
+      },
+      "unavailable_fdinfo": {
+        "3413546": {
+          "FileNotFoundError": 2
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cpu_ms": 150.393,
+      "rss_mib": 36.55859375,
+      "vram_mib": 36.390625,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 14.26953125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.021553733,
+      "source_frames": 1918,
+      "decoded_frames": 1917,
+      "unique_frames": 1917,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 117.676912,
+        "engine-enc": 6216.347163
+      },
+      "unavailable_fdinfo": {
+        "3414230": {
+          "FileNotFoundError": 2
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cpu_ms": 149.869,
+      "rss_mib": 36.43359375,
+      "vram_mib": 36.390625,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 14.26953125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.021363552,
+      "source_frames": 1918,
+      "decoded_frames": 1917,
+      "unique_frames": 1917,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 120.924722,
+        "engine-enc": 6217.782819
+      },
+      "unavailable_fdinfo": {
+        "3414521": {
+          "FileNotFoundError": 5
+        }
+      }
+    }
+  ],
+  "hd240/rgb": [
+    {
+      "run": 1,
+      "cpu_ms": 117.597,
+      "rss_mib": 51.13671875,
+      "vram_mib": 28.84765625,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 14.078125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.036862623,
+      "source_frames": 1917,
+      "decoded_frames": 1916,
+      "unique_frames": 1916,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 2,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.090033,
+        "engine-enc": 6077.190721
+      },
+      "unavailable_fdinfo": {
+        "3413448": {
+          "FileNotFoundError": 5
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cpu_ms": 130.172,
+      "rss_mib": 51.875,
+      "vram_mib": 28.84765625,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 14.078125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.0411068,
+      "source_frames": 1921,
+      "decoded_frames": 1920,
+      "unique_frames": 1920,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.087937,
+        "engine-enc": 6095.865105
+      },
+      "unavailable_fdinfo": {
+        "3414329": {
+          "FileNotFoundError": 6
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cpu_ms": 122.487,
+      "rss_mib": 51.5546875,
+      "vram_mib": 28.84765625,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 14.078125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.034842768,
+      "source_frames": 1919,
+      "decoded_frames": 1918,
+      "unique_frames": 1918,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.092927,
+        "engine-enc": 6091.713653
+      },
+      "unavailable_fdinfo": {
+        "3414423": {
+          "FileNotFoundError": 7
+        }
+      }
+    }
+  ],
+  "hd60/control": [
+    {
+      "run": 1,
+      "cpu_ms": 61.746,
+      "rss_mib": 36.08984375,
+      "vram_mib": 32.6328125,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 8.23046875,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.03337431,
+      "source_frames": 480,
+      "decoded_frames": 480,
+      "unique_frames": 480,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 29.747654,
+        "engine-enc": 1552.002642
+      },
+      "unavailable_fdinfo": {
+        "3413738": {
+          "FileNotFoundError": 5
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cpu_ms": 61.182,
+      "rss_mib": 36.2109375,
+      "vram_mib": 32.6328125,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 8.23046875,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.027718434,
+      "source_frames": 480,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 29.7885,
+        "engine-enc": 1552.391014
+      },
+      "unavailable_fdinfo": {
+        "3413834": {
+          "FileNotFoundError": 5
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cpu_ms": 61.967,
+      "rss_mib": 36.4453125,
+      "vram_mib": 32.6328125,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 8.23046875,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.020991135,
+      "source_frames": 479,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 30.353447,
+        "engine-enc": 1558.435446
+      },
+      "unavailable_fdinfo": {
+        "3414713": {
+          "FileNotFoundError": 5
+        }
+      }
+    }
+  ],
+  "hd60/rgb": [
+    {
+      "run": 1,
+      "cpu_ms": 54.965,
+      "rss_mib": 52.12109375,
+      "vram_mib": 28.84375,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 8.08203125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.036672421,
+      "source_frames": 480,
+      "decoded_frames": 480,
+      "unique_frames": 480,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.091033,
+        "engine-enc": 1526.009609
+      },
+      "unavailable_fdinfo": {
+        "3413643": {
+          "FileNotFoundError": 7
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cpu_ms": 58.135,
+      "rss_mib": 51.50390625,
+      "vram_mib": 28.84375,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 8.08203125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.037282251,
+      "source_frames": 480,
+      "decoded_frames": 480,
+      "unique_frames": 480,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.088369,
+        "engine-enc": 1542.577942
+      },
+      "unavailable_fdinfo": {
+        "3413932": {
+          "FileNotFoundError": 6
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cpu_ms": 54.232,
+      "rss_mib": 51.7421875,
+      "vram_mib": 28.84375,
+      "shared_at_peak_mib": 16.875,
+      "gtt_mib": 8.08203125,
+      "producer_buffers": 2,
+      "producer_payload_mib": 16.875,
+      "elapsed_seconds": 8.026449911,
+      "source_frames": 479,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.090202,
+        "engine-enc": 1538.35797
+      },
+      "unavailable_fdinfo": {
+        "3414618": {
+          "FileNotFoundError": 6
+        }
+      }
+    }
+  ],
+  "portrait60/control": [
+    {
+      "run": 1,
+      "cpu_ms": 79.544,
+      "rss_mib": 38.046875,
+      "vram_mib": 103.43359375,
+      "shared_at_peak_mib": 57.5,
+      "gtt_mib": 23.34765625,
+      "producer_buffers": 2,
+      "producer_payload_mib": 57.5,
+      "elapsed_seconds": 8.037214567,
+      "source_frames": 480,
+      "decoded_frames": 480,
+      "unique_frames": 480,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 49.161754,
+        "engine-enc": 4447.336028
+      },
+      "unavailable_fdinfo": {
+        "3413344": {
+          "FileNotFoundError": 2
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cpu_ms": 84.499,
+      "rss_mib": 38.09765625,
+      "vram_mib": 103.43359375,
+      "shared_at_peak_mib": 57.5,
+      "gtt_mib": 23.34765625,
+      "producer_buffers": 2,
+      "producer_payload_mib": 57.5,
+      "elapsed_seconds": 8.028053928,
+      "source_frames": 480,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 49.960367,
+        "engine-enc": 4437.267678
+      },
+      "unavailable_fdinfo": {
+        "3414033": {
+          "FileNotFoundError": 7
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cpu_ms": 79.392,
+      "rss_mib": 37.375,
+      "vram_mib": 103.43359375,
+      "shared_at_peak_mib": 57.5,
+      "gtt_mib": 23.34765625,
+      "producer_buffers": 2,
+      "producer_payload_mib": 57.5,
+      "elapsed_seconds": 8.023955088,
+      "source_frames": 479,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.18426613044215742,
+      "patch_max": 0.44059999999999633,
+      "sampled_engine_ms": {
+        "engine-compute": 48.871615,
+        "engine-enc": 4437.479554
+      },
+      "unavailable_fdinfo": {
+        "3414907": {
+          "FileNotFoundError": 4
+        }
+      }
+    }
+  ],
+  "portrait60/rgb": [
+    {
+      "run": 1,
+      "cpu_ms": 82.663,
+      "rss_mib": 52.31640625,
+      "vram_mib": 91.5546875,
+      "shared_at_peak_mib": 57.5,
+      "gtt_mib": 23.2421875,
+      "producer_buffers": 2,
+      "producer_payload_mib": 57.5,
+      "elapsed_seconds": 8.032798195,
+      "source_frames": 480,
+      "decoded_frames": 480,
+      "unique_frames": 480,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.103508,
+        "engine-enc": 4417.365181
+      },
+      "unavailable_fdinfo": {
+        "3413234": {
+          "FileNotFoundError": 5
+        }
+      }
+    },
+    {
+      "run": 2,
+      "cpu_ms": 83.438,
+      "rss_mib": 53.08984375,
+      "vram_mib": 91.5546875,
+      "shared_at_peak_mib": 57.5,
+      "gtt_mib": 23.2421875,
+      "producer_buffers": 2,
+      "producer_payload_mib": 57.5,
+      "elapsed_seconds": 8.024012387,
+      "source_frames": 479,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.087418,
+        "engine-enc": 4420.94059
+      },
+      "unavailable_fdinfo": {
+        "3414128": {
+          "FileNotFoundError": 7
+        }
+      }
+    },
+    {
+      "run": 3,
+      "cpu_ms": 82.588,
+      "rss_mib": 52.7421875,
+      "vram_mib": 91.5546875,
+      "shared_at_peak_mib": 57.5,
+      "gtt_mib": 23.2421875,
+      "producer_buffers": 2,
+      "producer_payload_mib": 57.5,
+      "elapsed_seconds": 8.029047137,
+      "source_frames": 480,
+      "decoded_frames": 479,
+      "unique_frames": 479,
+      "repeats": 0,
+      "gaps": 0,
+      "backwards": 0,
+      "source_empty": 0,
+      "source_coalesced": 0,
+      "patch_mae": 0.5000000000000013,
+      "patch_max": 1.4405999999999892,
+      "sampled_engine_ms": {
+        "engine-compute": 0.089341,
+        "engine-enc": 4417.96792
+      },
+      "unavailable_fdinfo": {
+        "3414811": {
+          "FileNotFoundError": 7
+        }
+      }
+    }
+  ]
+}

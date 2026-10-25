@@ -1,0 +1,34 @@
+diff --git a/src/gallium/winsys/amdgpu/drm/amdgpu_bo.c b/src/gallium/winsys/amdgpu/drm/amdgpu_bo.c
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_bo.c
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_bo.c
+@@ -816,8 +816,13 @@ struct pb_slab *amdgpu_bo_slab_alloc(void *priv, unsigned heap, unsigned entry_size,
+ 
+    assert(entry_size <= max_entry_size);
+ 
+-   /* The slab size is twice the size of the largest possible entry. */
+-   unsigned slab_size = max_entry_size * 2;
++   /* Sparse media heaps should not reserve 2 MiB for a handful of small
++    * resources in each size/flags class. Retain the existing allocator and
++    * fence-based reuse, but provision small classes in four-entry chunks
++    * (at least 64 KiB). Large classes retain the original allocation size.
++    * This trades huge-page coverage for lower reserved memory in small heaps. */
++   unsigned slab_size = MAX2(64 * 1024,
++      MIN2(max_entry_size * 2, util_next_power_of_two(entry_size * 4)));
+ 
+    if (!util_is_power_of_two_nonzero(entry_size)) {
+       assert(util_is_power_of_two_nonzero(entry_size * 4 / 3));
+@@ -834,10 +839,11 @@ struct pb_slab *amdgpu_bo_slab_alloc(void *priv, unsigned heap, unsigned entry_size,
+          slab_size = util_next_power_of_two(entry_size * 5);
+    }
+ 
+-   /* The largest slab should have the same size as the PTE fragment
+-    * size to get faster address translation.
++   /* Keep large slabs eligible for PTE fragments. Small heaps use ordinary
++    * page mappings; amdgpu_get_optimal_alignment still validates alignment.
+     */
+-   slab_size = MAX2(slab_size, aws->info.pte_fragment_size);
++   if (slab_size >= max_entry_size * 2)
++      slab_size = MAX2(slab_size, aws->info.pte_fragment_size);
+ 
+    flags |= RADEON_FLAG_NO_INTERPROCESS_SHARING |
+             RADEON_FLAG_NO_SUBALLOC |

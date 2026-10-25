@@ -1,0 +1,109 @@
+Synchronous Vulkan transfers, lazy upload pools, and standby staging reclamation — 24 October 2026 UTC
+
+Contract and mechanism
+- Preserve AV1 settings, pixel accuracy, reference semantics, native DMA-BUF
+  behavior, completed-prefix recovery and explicit memory policy.
+- Preceding VAAPI-DPB checkpoint (227 files) is frozen and verified in
+  docs/evidence/vaapi-dpb-control.tar.gz, docs/evidence/vaapi-dpb-evidence.tar.gz
+  and docs/evidence/vaapi-dpb.sha256, with its source snapshot in
+  /tmp/gpukey-before-upload.
+- In libavutil/hwcontext_vulkan.c, vulkan_transfer_frame previously waited on
+  downloads (!upload) but returned immediately on uploads (upload), keeping a
+  software-frame clone (sw_frame_deps) and the host-mapped or pooled FFVkBuffer
+  (buf_deps) attached to two FRAME_TRANSFER execution slots until wraparound or
+  teardown. That left swf->buf[0] with refcount > 1 on return, pinned two
+  simultaneous GTT host-pointer imports (21.10 MiB at 8-bit portrait, 42.19 MiB
+  at 10-bit portrait) or two fp->tmp buffers, and retained both across standby.
+- nix/ffmpeg-vulkan-transfer.patch waits for exec completion on both transfer
+  directions before returning, omits the redundant execution-context sw_frame
+  and buf dependency clones, and trims fp->tmp in vulkan_frame_free_cb when an
+  AVVkFrame is freed.
+- src/media.c sets fc->initial_pool_size = 0, enables queue_dpb = 1 on uploaded
+  Vulkan when supported, extends compact_inputs (when !direct) and
+  release_idle_inputs to GK_VULKAN with one writable spare while
+  m->last && !m->prepared and zero spares in standby, frees m->staging in
+  compact standby when !m->prepared and restores it via ensure_staging, and
+  collects completed output before the pre-send pending-packet check on
+  uploaded paths (!m->source.dmabuf). No struct field is added: media/options
+  remain 2,280/192 bytes on x86-64.
+- Naive zero-spare active trimming on uploaded Vulkan is preserved and rejected:
+  it causes 129 input-frame allocations and 131 trims across 239 frames due to
+  per-frame VkImage churn, whereas the selected one-spare active / zero-spare
+  standby policy performs 4 input-frame allocations (2 initial + 2 restored
+  after standby), 5 reconstruction allocations and 5 standby trims.
+
+Fixed and final store paths
+- Fixed RGB package: /nix/store/4dfa9hh26w59r20pwhcsl8841d667c1c-gpukey-rgb-amd
+- Fixed VAAPI-DPB package: /nix/store/qz9znwylcb8jf5q9z4i85w1n1d95q72f-gpukey-vaapi-dpb-amd
+- Fixed FFmpeg RGB: /nix/store/8aibcdw1pgfi7mq1xqr39j46mn3b9ynk-ffmpeg-gpukey-vulkan-rgb-9.0.2
+- Final RGB package: /nix/store/93sawk9pg2bp1im42906lbizz55zfp3i-gpukey-rgb-amd
+- Final full RGB package: /nix/store/sbk285yp9hk1zrmj74d4hr9kgsnb74sd-gpukey-rgb-full-amd
+- Final VAAPI-DPB package: /nix/store/livs4j7rr8n41rfxrakys6fnz80j99g9-gpukey-vaapi-dpb-amd
+- Final AMD package: /nix/store/8r7cxxwjh9v617122xdmq8yqy9lnj3py-gpukey-amd
+- Final FFmpeg RGB: /nix/store/kk6m56axdmkx9rxf40skl699z43kj5h6-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib
+- Vulkanupload GCC/Clang checks:
+  /nix/store/wcjghznaxch4js8g0p34d1dqm8dqa19w-gpukey-vulkan-upload-check-1
+  /nix/store/r06pammzkg50lh80yymz3jk924pk38jp-gpukey-vulkan-upload-check-1
+
+Evidence under /tmp/gpukey-upload after extraction
+- transfer_probe.c, transfer_fdinfo.c, churn_probe.c: diagnostic probes exposing
+  post-transfer swf refcount > 1, 2x GTT retention (44.199 MiB), and per-frame
+  av_frame_make_writable reallocation churn in unpatched vulkan_transfer_frame.
+- media-naive-zero-spare.c, gpukey-naive-zero-spare, hwframe-count-trace.c,
+  churn-trace/: three-way fixed (247 gets), naive zero-spare (134 gets, 129
+  input gets, 131 trims), and selected one-spare (9 gets: 4 input, 5 recon,
+  5 standby trims) comparison.
+- probes/, probe-analysis.json: exploratory 10-case pause/resume comparisons
+  across vk8, vk10, va8 and va10 (fixed, naive zero-spare, and candidate).
+- smaps-probes/: eight standby smaps snapshots at 5.5 s verifying 10.55-10.60 MiB
+  (8-bit) and 21.10-21.15 MiB (10-bit) anonymous RAM/RSS reduction from freeing
+  m->staging in standby on both VAAPI and Vulkan.
+- upload-check-candidate/, upload-check-control/: extracted-source GCC/Clang
+  normal, ASan/UBSan and old-source negative-control checks.
+- c23-verify.log: all 24 x86-64 flake checks pass (GCC/Clang ld/mold/wild,
+  tracy, formatting, command-hints, vaapi-dpb, encode-bits, pool-lifetimes,
+  vulkan-execution, vulkan-upload, vulkan-upload-clang).
+- native-verification.log, vulkan-dpb-and-hold.log, vulkan-dpb-check/,
+  concurrent-cycles/: release and ASan/UBSan unit/CLI/integration suites,
+  250-picture 8/10-bit Vulkan validation-layer DPB retirement/restoration and
+  framemd5 equality checks, forced staging packet-hold checks, and 16
+  concurrent encoder lifetimes.
+- upload-restore-fault.c, fault-injections.log, fault-*/: ASan/UBSan and release
+  fault injections failing m->staging restoration (VAAPI and Vulkan) or
+  resumed Vulkan upload-image allocation after standby; all exit with code 1,
+  pass sanitizers, and preserve all completed pre-standby pictures (22 under
+  ASan, 64 in release).
+- samply/, tracy/, profiles.log, profile-analysis.*: final-source Samply and
+  Tracy profiles on --shm-portal-replay with two independently decoded exports
+  each.
+- run-confirmation.sh, confirmation/, replay-confirmation/, confirmation.log,
+  confirmation-analysis.*, confirmation-inputs.sha256,
+  confirmation-inputs-verified.log: 36 rotating lifecycle runs across six
+  2560x2880/60 cases plus two 40-second rolling replay runs (38 primary runs).
+- check-targets.py, target-arithmetic.log: conditional uploaded memory target
+  arithmetic for portrait 8/10-bit, 4K10 and odd 1x1 dimensions.
+
+Confirmed results and limits
+- Uploaded Vulkan 8-bit (2560x2880/60): peak VRAM 166.742 -> 56.852 MiB
+  (-109.891 MiB, -65.9%), standby VRAM 166.734 -> 13.184 MiB (-153.551 MiB,
+  -92.1%), peak GTT 90.173 -> 33.793 MiB (-56.380 MiB), standby GTT
+  23.188 -> 2.086 MiB (-21.102 MiB, -91.0%), resumed GTT 72.552 -> 23.242 MiB.
+- Uploaded Vulkan 10-bit (2560x2880/60): peak VRAM 318.586 -> 109.762 MiB
+  (-208.824 MiB, -65.5%), standby VRAM 318.561 -> 23.730 MiB (-294.831 MiB,
+  -92.5%), peak GTT 121.815 -> 44.341 MiB (-77.474 MiB), standby GTT
+  44.281 -> 2.086 MiB (-42.195 MiB, -95.3%), resumed GTT 107.750 -> 23.242 MiB.
+- Uploaded VAAPI 8/10-bit (2560x2880/60): peak and resumed GTT both fall by
+  21.15625 MiB (58.566 / 48.020 -> 37.410 / 26.863 MiB at 8-bit;
+  72.629 / 51.535 -> 51.473 / 30.379 MiB at 10-bit).
+- Native DMA-BUF Direct-RGB Vulkan (2560x2880/60): unchanged at 91.555 MiB
+  active / 70.406 MiB standby VRAM and 23.242 / 2.086 MiB GTT, CPU
+  45.747 +/- 4.519 -> 45.331 +/- 4.812 ms.
+- Standby smaps anonymous RAM falls by 10.551 MiB (va8), 21.102 MiB (va10),
+  10.602 MiB (vk8) and 21.152 MiB (vk10).
+- Forty-second uploaded Vulkan 8-bit replay exports match at 1,745,859 bytes
+  and decode independently twice.
+- Whole-process CPU and lifetime peak RSS on CPU-conversion workloads remain
+  mixed; default retain and one-second cadence remain available.
+- Reproduce with:
+  nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0 --shm --gpu-memory compact --static-interval 2
+  or nix run .#vaapi-dpb-amd -- replay 30 --display --fps 60 --shm --gpu-memory compact --static-interval 2

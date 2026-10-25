@@ -1,0 +1,9 @@
+error (ignored): SQLite database '/home/quince/.cache/nix/eval-cache-v6/13313c640d4212f0253a942f563d251c42228cf1f4a54a20d8783ee39b32a7d5.sqlite' is busy
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+plan: av1_vaapi; 320x240 10-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+plan: av1_vaapi; 320x240 10-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+GPU color: 8-bit, depth 2, persistent modifier import, seven RGB/YUV endpoints; max error 0.4406 codes
+GPU color: 10-bit, depth 2, persistent modifier import, seven RGB/YUV endpoints; max error 0.6747 codes
+GPU color: 8-bit, depth 1, persistent modifier import, seven RGB/YUV endpoints; max error 0.4406 codes
+GPU color: 10-bit, depth 1, persistent modifier import, seven RGB/YUV endpoints; max error 0.6747 codes

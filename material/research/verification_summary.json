@@ -1,0 +1,17 @@
+{
+  "research_date": "2026-10-19",
+  "design_pages": 61,
+  "body_words": 22120,
+  "source_identifiers": 108,
+  "citation_resolution": "108 cited identifiers resolve; none missing or unused",
+  "abstract_checks": "All three executed successfully; deliberately broken variants produce counterexamples",
+  "visual_review": "All page layouts reviewed via rendered contact sheets; dense GPU, queue and I/O sections additionally reviewed at full-page size. Final changed pages re-rendered and inspected.",
+  "pdf_automated_qa": "No text outside defined page bounds and no replacement glyphs detected; 61 pages rendered.",
+  "scope_limits": [
+    "No GPU device exposed",
+    "No native recorder or C23 queue implemented",
+    "No GPU, storage-performance, codec-quality or player-compatibility measurements",
+    "Finite Python checks do not prove weak-memory, kernel or GPU behavior"
+  ],
+  "python_tested": "3.12.14"
+}

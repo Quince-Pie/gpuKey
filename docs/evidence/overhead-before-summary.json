@@ -1,0 +1,463 @@
+{
+  "thread": "1867569.2",
+  "active_sample_weight": 4065,
+  "reported_cpu_delta_us": 4028508,
+  "exclusive_cpu_us": [
+    {
+      "function": "g_source_ref",
+      "cpu_us": 1370248,
+      "percent": 34.013783763120244
+    },
+    {
+      "function": "_syscall_cancel_arch",
+      "cpu_us": 742931,
+      "percent": 18.441840006275275
+    },
+    {
+      "function": "g_source_unref_internal",
+      "cpu_us": 644397,
+      "percent": 15.995922063453765
+    },
+    {
+      "function": "g_mutex_unlock",
+      "cpu_us": 587314,
+      "percent": 14.578945852906337
+    },
+    {
+      "function": "__pthread_rwlock_rdlock",
+      "cpu_us": 223458,
+      "percent": 5.546917121673831
+    },
+    {
+      "function": "g_mutex_lock",
+      "cpu_us": 156924,
+      "percent": 3.895337926597142
+    },
+    {
+      "function": "g_source_set_ready_time",
+      "cpu_us": 75999,
+      "percent": 1.8865297028080867
+    },
+    {
+      "function": "__pthread_rwlock_unlock",
+      "cpu_us": 63230,
+      "percent": 1.5695637193720355
+    },
+    {
+      "function": "g_main_context_unref",
+      "cpu_us": 60870,
+      "percent": 1.5109812367258548
+    },
+    {
+      "function": "clock_gettime",
+      "cpu_us": 12976,
+      "percent": 0.3221043622105256
+    },
+    {
+      "function": "do_lookup_x",
+      "cpu_us": 12050,
+      "percent": 0.2991181846976598
+    },
+    {
+      "function": "g_source_iter_next",
+      "cpu_us": 10898,
+      "percent": 0.2705219897788462
+    },
+    {
+      "function": "g_wakeup_signal",
+      "cpu_us": 6893,
+      "percent": 0.1711055308814082
+    },
+    {
+      "function": "g_get_monotonic_time",
+      "cpu_us": 6084,
+      "percent": 0.15102365441498442
+    },
+    {
+      "function": "std::_Rb_tree_decrement(std::_Rb_tree_node_base*)",
+      "cpu_us": 5409,
+      "percent": 0.13426807145474207
+    },
+    {
+      "function": "g_main_context_prepare_unlocked",
+      "cpu_us": 4985,
+      "percent": 0.12374308304712316
+    },
+    {
+      "function": "g_main_context_iterate_unlocked.isra.0",
+      "cpu_us": 4166,
+      "percent": 0.1034129757220291
+    },
+    {
+      "function": "g_get_monotonic_time_ns",
+      "cpu_us": 4151,
+      "percent": 0.10304062943402371
+    },
+    {
+      "function": "0xffffffff8da000ad",
+      "cpu_us": 3998,
+      "percent": 0.09924269729636878
+    },
+    {
+      "function": "sysprof_collector_get",
+      "cpu_us": 2987,
+      "percent": 0.0741465574848058
+    }
+  ],
+  "inclusive_cpu_us": [
+    {
+      "function": "main",
+      "cpu_us": 3957232,
+      "percent": 98.23070973174188
+    },
+    {
+      "function": "_libc_start_main_alias_2",
+      "cpu_us": 3957232,
+      "percent": 98.23070973174188
+    },
+    {
+      "function": "start",
+      "cpu_us": 3957232,
+      "percent": 98.23070973174188
+    },
+    {
+      "function": "_libc_start_call_main",
+      "cpu_us": 3957232,
+      "percent": 98.23070973174188
+    },
+    {
+      "function": "g_main_context_iteration",
+      "cpu_us": 2955917,
+      "percent": 73.37498150680103
+    },
+    {
+      "function": "g_main_context_iterate_unlocked.isra.0",
+      "cpu_us": 2538263,
+      "percent": 63.00752040209427
+    },
+    {
+      "function": "g_source_iter_next",
+      "cpu_us": 2025543,
+      "percent": 50.280227816352856
+    },
+    {
+      "function": "gk_portal_wait",
+      "cpu_us": 2010175,
+      "percent": 49.8987466327484
+    },
+    {
+      "function": "g_source_ref",
+      "cpu_us": 1370248,
+      "percent": 34.013783763120244
+    },
+    {
+      "function": "gk_portal_closed",
+      "cpu_us": 1354055,
+      "percent": 33.6118235336755
+    },
+    {
+      "function": "g_main_context_prepare_unlocked",
+      "cpu_us": 1153892,
+      "percent": 28.643160197274028
+    },
+    {
+      "function": "g_main_context_check_unlocked",
+      "cpu_us": 1025196,
+      "percent": 25.448528338531286
+    },
+    {
+      "function": "_syscall_cancel_arch",
+      "cpu_us": 742931,
+      "percent": 18.441840006275275
+    },
+    {
+      "function": "g_source_unref_internal",
+      "cpu_us": 644397,
+      "percent": 15.995922063453765
+    },
+    {
+      "function": "g_source_set_ready_time",
+      "cpu_us": 611819,
+      "percent": 15.187235572077801
+    },
+    {
+      "function": "g_mutex_unlock",
+      "cpu_us": 587314,
+      "percent": 14.578945852906337
+    },
+    {
+      "function": "_libc_read",
+      "cpu_us": 278732,
+      "percent": 6.91898836988781
+    },
+    {
+      "function": "__pthread_rwlock_rdlock",
+      "cpu_us": 223458,
+      "percent": 5.546917121673831
+    },
+    {
+      "function": "g_rw_lock_reader_lock",
+      "cpu_us": 223458,
+      "percent": 5.546917121673831
+    },
+    {
+      "function": "g_mutex_lock",
+      "cpu_us": 156924,
+      "percent": 3.895337926597142
+    },
+    {
+      "function": "epoll_wait",
+      "cpu_us": 152653,
+      "percent": 3.789318526859075
+    },
+    {
+      "function": "gk_control_service",
+      "cpu_us": 152653,
+      "percent": 3.789318526859075
+    },
+    {
+      "function": "g_wakeup_signal",
+      "cpu_us": 140791,
+      "percent": 3.4948670823044163
+    },
+    {
+      "function": "g_wakeup_acknowledge",
+      "cpu_us": 137133,
+      "percent": 3.404064234202836
+    },
+    {
+      "function": "_GI___write",
+      "cpu_us": 133898,
+      "percent": 3.3237615514230083
+    }
+  ],
+  "exclusive": [
+    {
+      "function": "g_source_ref",
+      "samples": 1328,
+      "percent": 32.66912669126691
+    },
+    {
+      "function": "_syscall_cancel_arch",
+      "samples": 723,
+      "percent": 17.785977859778598
+    },
+    {
+      "function": "g_source_unref_internal",
+      "samples": 626,
+      "percent": 15.399753997539975
+    },
+    {
+      "function": "g_mutex_unlock",
+      "samples": 569,
+      "percent": 13.997539975399754
+    },
+    {
+      "function": "__pthread_rwlock_rdlock",
+      "samples": 220,
+      "percent": 5.412054120541206
+    },
+    {
+      "function": "g_mutex_lock",
+      "samples": 152,
+      "percent": 3.7392373923739237
+    },
+    {
+      "function": "g_source_set_ready_time",
+      "samples": 75,
+      "percent": 1.845018450184502
+    },
+    {
+      "function": "get_cpu_topology",
+      "samples": 72,
+      "percent": 1.7712177121771218
+    },
+    {
+      "function": "g_main_context_unref",
+      "samples": 62,
+      "percent": 1.5252152521525215
+    },
+    {
+      "function": "__pthread_rwlock_unlock",
+      "samples": 62,
+      "percent": 1.5252152521525215
+    },
+    {
+      "function": "util_set_thread_affinity",
+      "samples": 54,
+      "percent": 1.3284132841328413
+    },
+    {
+      "function": "clock_gettime",
+      "samples": 13,
+      "percent": 0.3198031980319803
+    },
+    {
+      "function": "g_source_iter_next",
+      "samples": 12,
+      "percent": 0.2952029520295203
+    },
+    {
+      "function": "do_lookup_x",
+      "samples": 8,
+      "percent": 0.1968019680196802
+    },
+    {
+      "function": "g_get_monotonic_time",
+      "samples": 6,
+      "percent": 0.14760147601476015
+    },
+    {
+      "function": "g_main_context_iterate_unlocked.isra.0",
+      "samples": 5,
+      "percent": 0.12300123001230012
+    },
+    {
+      "function": "dl_start",
+      "samples": 4,
+      "percent": 0.0984009840098401
+    },
+    {
+      "function": "g_get_monotonic_time_ns",
+      "samples": 4,
+      "percent": 0.0984009840098401
+    },
+    {
+      "function": "0xffffffff8da000ad",
+      "samples": 4,
+      "percent": 0.0984009840098401
+    },
+    {
+      "function": "dl_relocate_object_no_relro",
+      "samples": 3,
+      "percent": 0.07380073800738007
+    }
+  ],
+  "inclusive": [
+    {
+      "function": "main",
+      "samples": 3995,
+      "percent": 98.2779827798278
+    },
+    {
+      "function": "_libc_start_main_alias_2",
+      "samples": 3995,
+      "percent": 98.2779827798278
+    },
+    {
+      "function": "start",
+      "samples": 3995,
+      "percent": 98.2779827798278
+    },
+    {
+      "function": "_libc_start_call_main",
+      "samples": 3995,
+      "percent": 98.2779827798278
+    },
+    {
+      "function": "g_main_context_iteration",
+      "samples": 2870,
+      "percent": 70.60270602706026
+    },
+    {
+      "function": "g_main_context_iterate_unlocked.isra.0",
+      "samples": 2469,
+      "percent": 60.7380073800738
+    },
+    {
+      "function": "g_source_iter_next",
+      "samples": 1966,
+      "percent": 48.364083640836405
+    },
+    {
+      "function": "gk_portal_wait",
+      "samples": 1947,
+      "percent": 47.896678966789665
+    },
+    {
+      "function": "g_source_ref",
+      "samples": 1328,
+      "percent": 32.66912669126691
+    },
+    {
+      "function": "gk_portal_closed",
+      "samples": 1318,
+      "percent": 32.42312423124231
+    },
+    {
+      "function": "g_main_context_prepare_unlocked",
+      "samples": 1126,
+      "percent": 27.699876998769987
+    },
+    {
+      "function": "g_main_context_check_unlocked",
+      "samples": 989,
+      "percent": 24.329643296432966
+    },
+    {
+      "function": "_syscall_cancel_arch",
+      "samples": 723,
+      "percent": 17.785977859778598
+    },
+    {
+      "function": "g_source_unref_internal",
+      "samples": 626,
+      "percent": 15.399753997539975
+    },
+    {
+      "function": "g_source_set_ready_time",
+      "samples": 591,
+      "percent": 14.538745387453874
+    },
+    {
+      "function": "g_mutex_unlock",
+      "samples": 569,
+      "percent": 13.997539975399754
+    },
+    {
+      "function": "_libc_read",
+      "samples": 272,
+      "percent": 6.691266912669127
+    },
+    {
+      "function": "__pthread_rwlock_rdlock",
+      "samples": 220,
+      "percent": 5.412054120541206
+    },
+    {
+      "function": "g_rw_lock_reader_lock",
+      "samples": 220,
+      "percent": 5.412054120541206
+    },
+    {
+      "function": "gk_gpu_open",
+      "samples": 156,
+      "percent": 3.837638376383764
+    },
+    {
+      "function": "probe_modifiers",
+      "samples": 156,
+      "percent": 3.837638376383764
+    },
+    {
+      "function": "vaapi_device_connect",
+      "samples": 155,
+      "percent": 3.8130381303813037
+    },
+    {
+      "function": "vaInitialize",
+      "samples": 155,
+      "percent": 3.8130381303813037
+    },
+    {
+      "function": "av_hwdevice_ctx_create",
+      "samples": 155,
+      "percent": 3.8130381303813037
+    },
+    {
+      "function": "g_mutex_lock",
+      "samples": 152,
+      "percent": 3.7392373923739237
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_cs.h
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_cs.h
+@@ -108,6 +108,9 @@
+ 
+    /* TMZ: will this command be submitted using the TMZ flag */
+    bool secure;
++   /* Only the recorder of this context can trust an untouched negative hint.
++    * The submit worker searches its own list even when another epoch cleared it. */
++   bool hash_negative_valid;
+ };
+ 
+ /* This high limit is needed for viewperf2020/catia. */
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_cs.cpp
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_cs.cpp
+@@ -579,13 +579,13 @@
+    int num_buffers = list->num_buffers;
+    struct amdgpu_cs_buffer *buffers = list->buffers;
+    unsigned hash = bo->unique_id & (BUFFER_HASHLIST_SIZE-1);
+-   int i = csc->buffer_indices_hashlist[hash];
++   int i = __atomic_load_n(&csc->buffer_indices_hashlist[hash], __ATOMIC_RELAXED);
+ 
+    /* not found or found */
+-   if (i < 0)
++   if (i < 0 && csc->hash_negative_valid)
+       return NULL;
+ 
+-   if (i < num_buffers && buffers[i].bo == bo)
++   if (i >= 0 && i < num_buffers && buffers[i].bo == bo)
+       return &buffers[i];
+ 
+    /* Hash collision, look for the BO in the list of buffers linearly. */
+@@ -600,7 +600,8 @@
+           *         AAAAAAAAAAABBBBBBBBBBBBBBCCCCCCCC
+           * will collide here: ^ and here:   ^,
+           * meaning that we should get very few collisions in the end. */
+-         csc->buffer_indices_hashlist[hash] = i & 0x7fff;
++         __atomic_store_n(&csc->buffer_indices_hashlist[hash], (int16_t)(i & 0x7fff),
++                          __ATOMIC_RELAXED);
+          return &buffers[i];
+       }
+    }
+@@ -643,7 +644,8 @@
+    buffer->usage = 0;
+ 
+    unsigned hash = bo->unique_id & (BUFFER_HASHLIST_SIZE-1);
+-   csc->buffer_indices_hashlist[hash] = idx & 0x7fff;
++   __atomic_store_n(&csc->buffer_indices_hashlist[hash], (int16_t)(idx & 0x7fff),
++                    __ATOMIC_RELAXED);
+    return buffer;
+ }
+ 
+@@ -1000,6 +1002,7 @@
+ 
+      /* only csc will use for buffer_indices_hashlist. */
+       acs->csc[i].buffer_indices_hashlist = acs->buffer_indices_hashlist;
++      acs->csc[i].hash_negative_valid = true;
+       acs->csc[i].aws = ctx->aws;
+    }
+ 
+@@ -2227,6 +2230,9 @@
+ 
+    /* Wait for any pending ioctl of this CS to complete. */
+    util_queue_fence_wait(&acs->flush_completed);
++   /* The futex fence can finish via a relaxed load. Acquire the completed
++    * worker's list/cache updates before ownership returns to the frontend. */
++   __atomic_thread_fence(__ATOMIC_ACQUIRE);
+ }
+ 
+ static bool amdgpu_pad_ib(struct radeon_cmdbuf *rcs)
+@@ -2330,6 +2336,25 @@
+ 
+       amdgpu_cs_sync_flush(rcs);
+ 
++      /* The previous worker has finished and the new job is not published yet.
++       * Clear only the current working set when small. Other stale positive
++       * hints are harmless: every hit is checked against the caller's list.
++       * The worker cannot treat negatives as definitive after this reset. */
++      size_t count = 0;
++      for (unsigned kind = 0; kind < NUM_BO_LIST_TYPES; ++kind)
++         count += csc_current->buffer_lists[kind].num_buffers;
++      if (count > 256) {
++         memset(acs->buffer_indices_hashlist, -1, sizeof(acs->buffer_indices_hashlist));
++      } else {
++         for (unsigned kind = 0; kind < NUM_BO_LIST_TYPES; ++kind) {
++            const struct amdgpu_buffer_list *list = &csc_current->buffer_lists[kind];
++            for (unsigned i = 0; i < list->num_buffers; ++i)
++               acs->buffer_indices_hashlist[list->buffers[i].bo->unique_id &
++                                           (BUFFER_HASHLIST_SIZE - 1)] = -1;
++         }
++      }
++      csc_current->hash_negative_valid = false;
++
+       csc_current->chunk_ib[IB_MAIN].ib_bytes *= 4; /* Convert from dwords to bytes. */
+       csc_current->chunk_ib[IB_GANG_MAIN].ib_bytes *= 4;
+       if (acs->noop && acs->ip_type == AMD_IP_GFX) {
+@@ -2344,6 +2369,7 @@
+ 
+       amdgpu_csc_swap(acs);
+       csc_current = amdgpu_csc_get_current(acs);
++      csc_current->hash_negative_valid = true;
+       struct amdgpu_cs_context *csc_submitted = amdgpu_csc_get_submitted(acs);
+ 
+       if (aws->info.userq_ip_mask & BITFIELD_BIT(acs->ip_type)) {
+@@ -2374,7 +2400,8 @@
+       amdgpu_cs_context_cleanup(aws, csc_current);
+    }
+ 
+-   memset(csc_current->buffer_indices_hashlist, -1, sizeof(acs->buffer_indices_hashlist));
++   /* A no-op flush may overlap submission. Keep its old positive hints;
++    * list bounds and pointer checks reject them without a shared reset. */
+ 
+    amdgpu_get_new_ib(aws, rcs, &acs->main_ib, acs);
+    if (rcs->gang_cs)

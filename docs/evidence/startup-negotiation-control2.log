@@ -1,0 +1,7 @@
+fixture: two-stage fixation to modifier 0x0200000000082305
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: /dev/dri/renderD128: Mesa Gallium driver 26.1.8 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+capture: source configuration changed; finalize this segment and restart (Stale file handle)
+Replay stopped: 0 clips saved, 0 failed; unsaved history discarded.
+gpukey: Stale file handle. Any partial output has been preserved.

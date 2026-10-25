@@ -1,0 +1,42 @@
+{
+  "long-portrait": {
+    "elapsed_s": 40.025066164,
+    "cpu_ms": 403.657,
+    "rss_mib": 45.77734375,
+    "submitted": 2400,
+    "skipped": 0,
+    "wakeups": 2400,
+    "fallbacks": 0,
+    "memory_mib": {
+      "total-vram": 105.328125,
+      "total-gtt": 26.86328125
+    },
+    "producer": {
+      "produced": 2401,
+      "empty_processes": 0,
+      "coalesced_ticks": 0,
+      "peak_source_buffers": 2,
+      "peak_source_bytes": 60293120
+    }
+  },
+  "long-hd240": {
+    "elapsed_s": 40.015309828,
+    "cpu_ms": 639.484,
+    "rss_mib": 44.50390625,
+    "submitted": 9600,
+    "skipped": 0,
+    "wakeups": 9599,
+    "fallbacks": 0,
+    "memory_mib": {
+      "total-vram": 38.28515625,
+      "total-gtt": 15.33203125
+    },
+    "producer": {
+      "produced": 9601,
+      "empty_processes": 0,
+      "coalesced_ticks": 0,
+      "peak_source_buffers": 2,
+      "peak_source_bytes": 17694720
+    }
+  }
+}

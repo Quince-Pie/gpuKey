@@ -1,0 +1,95 @@
+Surface-owned reusable VAAPI reconstructions — 24 October 2026 UTC
+
+Contract and mechanism
+- Preserve AV1 settings, input format/timing, reference semantics, source buffer
+  count, replay ownership, completed-prefix recovery and explicit memory policy.
+- Fixed source: preceding 220-file checkpoint, /tmp/gpukey-before-va-dpb.
+- The original driver keeps idle DPB buffers separately from FFmpeg's surface
+  pool. Trimming only that pool cannot reclaim the driver-owned images.
+- The first surface-owned candidate lost cross-surface reuse and raised active
+  VRAM to about 135.21 MiB. It is preserved, not presented as the winner.
+- The revision preserves reuse. Active entry: id/order_hint/buffer. Idle entry:
+  zero id/owner_surface_id/borrowed buffer. Empty: no buffer. No new record field.
+- Surface deletion clears its live/idle DPB entry before destroying the buffer;
+  context deletion leaves surface-owned buffers alive until their surface dies.
+- FFmpeg's standby policy trims only unused reconstruction pool leases after
+  receive returns EAGAIN. gpuKey enters standby after complete GPU readout and
+  CPU ownership of the validated independent key.
+- Encoder shutdown/reinitialization remains an open alternative for longer idle
+  periods; keeping a live reference is a policy, not a universal memory bound.
+
+Fixed/final paths
+- Fixed package: asy315yaqbdrwcfd8arv7wj7d8yarzf8-gpukey-amd.
+- Fixed driver: qkqg6qvw6fssxkpw1c3f7k4s06xc2gws-mesa-gpukey-hints-26.2.5.
+- Final tested package: qz9znwylcb8jf5q9z4i85w1n1d95q72f-gpukey-vaapi-dpb-amd.
+- Final tested driver: dmvpki16f3xkriasqsj8wadjnyfbxr84-mesa-gpukey-vaapi-surface-dpb-26.2.5.
+- FFmpeg: 8s36gdzmdnwi1nnapif6wvrvxa0f8i3l-ffmpeg-gpukey-vaapi-dpb-9.0.2-lib.
+
+Evidence under /tmp/gpukey-va-dpb after extraction
+- first-ownership.patch, first-build-paths.txt, make-first-patches.py and probes/:
+  four-way original/driver/library/combined probe. Driver-only does not recover
+  idle memory; naive ownership increases the active image count.
+- reuse-v2.patch, reuse-v2-build-paths.txt and reuse-probes/: successful preserved-
+  reuse prototype; about 103.44 MiB active and 71.08984375 MiB standby combined.
+- make-reuse-patches.py and revised-build-paths.txt: final construction and packages.
+- owner-check.log: initial extractor accidentally stopped at an inner break.
+- owner-v2-check.log: strict GCC warning on an uninitialized test array.
+- owner-v3-check.log: initial successful normal/ASan ownership check and expected
+  old-source rejection of the new ownership property (not general incorrectness).
+- final-owner-check.log: stricter source-flow warning. The final source performs
+  one unconditional current-surface lookup; actual signed/byte types are preserved.
+- revised-build.log and Nix vaapi-dpb/vaapi-dpb-clang checks: final GCC/Clang and
+  ASan/UBSan operations. Full reference capacity, large IDs, self/cross-surface
+  reuse, empty-slot transfer, allocation failure, invalid/live-foreign contexts,
+  encoder-close-before-surface-destruction, and balanced allocation ownership.
+- concurrent-cycles/, reuse-concurrent-cycles/, final-concurrent-cycles/: four
+  workers, sixteen encoder lifetimes each, 8/10-bit pixels and repeated standby.
+- native-final/, native-asan/, native-and-build.log: seven capture cases per
+  build including multichannel audio, replay, reconfiguration and missing PTS.
+- allocation-trace/: restore allocations distinguish 11,796,480-byte input,
+  22,183,936-byte coded output, and two 11,059,200-byte reconstructions.
+- recon-failure-{0,1}/ and recon-failure.log: first/second reconstruction allocation
+  failure after standby; explicit error, clean app sanitizer checks and 64/65
+  decoded completed pictures. The whole driver is not sanitizer-instrumented.
+- c23-verify.log: full C23 compiler/linker, GCC/Clang sanitizers and applicable
+  x86-64 flake checks pass. ARM execution is unverified.
+- samply/, tracy/, profiles.log: final capture/standby/resume profiles, two
+  independently decoded replay exports each. Kernel profiling policy unchanged.
+- confirmation/: 24 rotating lifecycles without an external profiler, with
+  recorder statistics/timing histograms enabled: portrait motion, long
+  and short pauses, and requested 1080p/1000 FPS overload. Actual rates and
+  missing identities must be reported; requested rate is not delivered rate.
+- publication-confirmation/: twelve traces use actual producer publication,
+  not nominal PTS, and include pre-send preparation/restoration work.
+- replay-confirmation/: two forty-second rolling histories with two late saves.
+- confirmation-analysis.*: final values, sample variation and observed tails.
+- no-stats/: twelve additional motion/pause comparisons remove --stats, with
+  no external profiler. The same external memory observer remains in both.
+- exact-control/ and final-concurrent-cycles/: deterministic 8/10-bit equality
+  comparison; check-exact-pictures.sh records bytes, decoded pictures and timing.
+- check-targets.py: independent arithmetic for portrait, 4K10 and odd dimensions.
+
+Limits and reproduction
+- Confirmed combined standby saving: 21.09375 MiB. Both producer images remain
+  allocated and counted. Dense conditional target: 66.796875 MiB; remaining
+  observed gap: 4.29296875 MiB. Alignment/workspace/driver overhead is not free.
+- All 38 primary and 12 --stats-free comparisons pass. CPU/RSS and resume delay
+  are mixed; mean long-pause publication-to-packet delay is 10.4570 -> 11.1617 ms,
+  short-pause 9.0401 -> 8.6299 ms (three runs each, variation in validation.md).
+  Without --stats, moving CPU is 284.142 -> 289.888 ms and long-pause CPU is
+  51.312 -> 53.270 ms, with standby VRAM 92.18359375 -> 71.08984375 MiB.
+- Both long replay runs export 1,313,236 bytes and independently decode twice.
+- Deterministic equality passes for all 384 pictures, packet bytes and timing
+  in sixteen 8/10-bit streams. This is scoped coverage, not universal quality.
+- Samply: 294 main-thread samples, 45,625 us CPU delta; receive 35.8% inclusive.
+  Tracy: two repeats, two exports, standby-output release 68,670 ns.
+- Source-based checks preserve actual field widths; extracted library operations
+  use the library's normal conversion/sign warning allowances, with other
+  warnings including uninitialized access enabled.
+- vaapi-dpb-control.tar.gz is the preceding 220-file source; vaapi-dpb-evidence.tar.gz
+  contains scripts, logs, profiles, clips and controls; vaapi-dpb.sha256 and
+  implementation.sha256 record archive and source/docs hashes.
+- Use nix run .#vaapi-dpb-amd -- replay 30 --display --fps 60 --gpu-memory compact --static-interval 2
+- Default retain remains available. The broad all-metric goal is active.
+- Current upstream GitLab source was inaccessible; claims concern the pinned
+  Mesa 26.2.5/FFmpeg 9.0.2 sources and tested hardware, not universal novelty.

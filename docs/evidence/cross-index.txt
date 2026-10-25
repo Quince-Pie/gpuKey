@@ -1,0 +1,132 @@
+Cross-recorder verification — 23 October 2026 UTC
+
+Deliverable
+- A consumer-neutral private portal/PipeWire source, independently decoded image
+  identities, source allocation accounting, native replay tests and color-patch
+  controls. The existing recorder hot path is unchanged in this continuation.
+- tools/benchmark-recorder.sh supports gpukey and gsr file/replay lifecycles.
+- tools/analyze-recorder.py checks visible identities and unoccluded BT.709 patches.
+- tools/summarize-recorders.py preserves per-run variation, actual source counts,
+  output coverage, unavailable reads and sampled engine counters.
+- tools/measure-gpu-memory.py adds timed child-only stopping and GPU busy counters.
+- The ordinary regression source retains zero-size DMA-BUF coverage. External
+  mode supplies explicit extents/damage and advances without Header requests.
+- Portal responses are now directed to their requesting bus peer, matching the
+  actual portal implementation; the early-response race test remains.
+
+Pinned artifacts
+- Measured gpuKey:
+  /nix/store/q7rkq342smywmjd4c3iv4syh1qw9lvrz-gpukey-amd
+- Current package, executable verified byte-identical to the measured one:
+  /nix/store/x3dhcvqqr330cj4aw8rw94b9005jrjvm-gpukey-amd
+- Common driver:
+  /nix/store/qkqg6qvw6fssxkpw1c3f7k4s06xc2gws-mesa-gpukey-hints-26.2.5
+- Installed exploratory GSR 6.1.3 (FFmpeg 9.0.1):
+  /nix/store/s7435bkfs2k1xf14rdg6lfqknsqahndk-gpu-screen-recorder-6.1.3
+- Clean GSR 6.1.4 / separately corrected limited-range matrix control:
+  /nix/store/9zymh15wh0fcasl6cwxgrgfzhhm81lsc-gpu-screen-recorder-6.1.4
+  /nix/store/v8qbp3awwsyldmskfk639lbvywlrvq5f-gpu-screen-recorder-bt709-control-6.1.4
+- Current upstream snapshot, GCC 16.2 / FFmpeg 9.0.2:
+  /nix/store/s1z3ylqw8w1aj2qfil1a4jd0s937v5dl-gpu-screen-recorder-upstream-ee2c6ca-6.1.5
+  ee2c6ca1e03e4432652fe9492b3a405f654b45ac, 2026-10-23T12:34:09+02:00
+- The upstream query also found release 6.1.5, dated 21 October. Its tag and the
+  later current commit are separately retained; no assumption that 6.1.4 was
+  current survived that check. The local editable GSR checkout was untouched.
+- Source/build expressions, exact source exports, patches, revisions, executable
+  hashes and original input manifests are retained in cross-evidence.tar.gz.
+- cross-control.tar.gz preserves the preceding 170-file implementation and binary.
+
+Evidence in cross-evidence.tar.gz
+- confirmation/: 45 runs of GSR 6.1.4 depth 3/depth 2 and gpuKey depth 2.
+  HD60, portrait60, HD240; two-to-eight and fixed-two source offers. Eight-second
+  process lifecycles, three rotating repetitions, reversed case order.
+- color-confirmation/: twelve fresh paired runs with only GSR's limited-range
+  matrix constants corrected. Improved patch fidelity does not reverse CPU/RSS
+  results, but full spatial/temporal quality equivalence remains unproved.
+- latest-confirmation/: eighteen fresh rotating runs against the current upstream
+  snapshot, portrait60 and HD240, fixed-two source offer, both GSR depths.
+- replay-confirmation/: three 40-second runs, 30-second history, two late saves.
+- latest-replay/: two fresh 40-second runs against the current upstream snapshot.
+- All 80 confirmation runs complete. No builds/profilers or other deliberate
+  benchmark jobs overlap their timed portions. Control-client CPU is separate.
+- replay-packet-check.json validates all ten exported clips: independently
+  decoded identities, first key at PTS zero and strictly increasing packet PTS.
+- Every run preserves recorder logs, complete-child CPU/RSS, sampled DRM counters,
+  source allocation/count/timing report, clips, decoder metadata and picture IDs.
+- Native/source/module hashes and per-run commands remain alongside results.
+- Matrix summaries report actual repeats/gaps and patch errors, not nominal FPS
+  as a substitute for content. Replays' frame counts refer to saved clips.
+- verification.log: GCC/Clang, application ASan/UBSan, all sixteen x86-64 checks.
+- native-verification.log: application/fixture native GPU, audio, replay and
+  teardown integration under Clang ASan/UBSan; external libraries are not all
+  sanitizer-instrumented.
+- external-sanitizer-boundary/: native consumer-neutral source at 320x128.
+- observer-controls/: graceful interrupt, ignored interrupt requiring exact-child
+  kill, nonfinite stop-time rejection. These are correctness tests, not timings.
+- oracle-repeat/, oracle-corrupt/: known repeated frames and broken complementary
+  pixel marker. Eleven duplicates are detected; the corrupt marker is rejected.
+- oracle-small/: separately generated 256x64 lossless control, twelve distinct
+  image IDs, six unoccluded color patches. Native AV1 minimum sizes differ.
+- oracle-refinement/: large-size and negative controls retain exactly the prior
+  identity/error/color results after the small-image oracle correction.
+
+Latest scoped results
+- Portrait60 eight-second CPU means ± sample SD:
+  gpuKey 93.009 ± 18.631 ms; GSR depth 3 155.639 ± 15.803 ms;
+  GSR depth 2 192.231 ± 3.105 ms. RSS 37.901/68.803/67.987 MiB means.
+- HD240 CPU means ± sample SD:
+  gpuKey 179.955 ± 22.920 ms; GSR depth 3 258.141 ± 15.688 ms;
+  GSR depth 2 267.469 ± 2.312 ms.
+- Final long replay, gpuKey / upstream GSR depth 3:
+  CPU 416.047/746.827 ms; RSS 44.754/76.160 MiB;
+  sampled VRAM 103.434/113.715 MiB, both with 57.5 MiB shared;
+  sampled GTT 23.348/71.305 MiB. Single long confirmations, not variance estimates.
+- gpuKey accepts/encodes all 2399 source images in that timed-child run, no skips
+  or FPS limiting; both late exports decode; live payload peaks at 8091514 bytes.
+- Total video-engine busy time follows actual encoded work. Per-picture values
+  remain close in the matched-depth portrait runs. Sampling does not measure
+  energy, instantaneous peaks, capture-to-packet latency or game interference.
+- Source allocations are independent of imported-image counts. The source's
+  eight-buffer offer gives GSR 230 MiB and gpuKey 57.5 MiB at portrait resolution;
+  fixed-two tests preserve the same source storage for both. Do not double-count
+  shared memory or infer complete physical usage from one process counter.
+
+Retained failures and corrected evaluators
+- explore-gsr/: broadcast portal mock, unsuitable for compatibility timing.
+  The real portal directs its response; the mock was corrected from that source.
+- explore-gsr-directed/: zero-size DMA-BUF chunks are treated by GSR as cursor
+  updates. External mode provides explicit extents; original regressions remain.
+- fixture-directed-build.log: unused parameter after an initial mock edit;
+  corrected build and all compiler checks pass.
+- raw-timing-probe.*: rawvideo/null validation initially used a guessed encoder
+  time base. Original packet PTS was strictly increasing. The demux time base
+  removes artificial DTS warnings and preserves 1896 marker pictures.
+- confirmation-tools/: exact original tools used by that first matrix.
+- external-sanitizer-small/: native 256x64 rejected by the reported hardware size
+  limits, not counted as a performance result. Native 320x128 and independent
+  software 256x64 checks cover the corrected small-image oracle.
+
+Reproduction (inside nix develop, from the repository root)
+- make PROFILE=release build/gcc-release/tests/capture_fixture
+- GPUKEY_RECORDER_DRIVER=DRIVER tools/benchmark-recorder.sh gpukey BINARY FIXTURE NEW_DIR
+- Substitute gsr and its binary for the other consumer. Default QP32/depth2;
+  GPUKEY_RECORDER_DEPTH=3 reproduces GSR's normal depth.
+- GPUKEY_FIXTURE_SIZE=2560x2880 GPUKEY_FIXTURE_RATE=60 GPUKEY_FIXTURE_SECONDS=8
+  select the case; GPUKEY_FIXTURE_BUFFER_MAX=2 fixes the source pool at two.
+- GPUKEY_RECORDER_MODE=replay GPUKEY_FIXTURE_SECONDS=40 adds two late saves.
+- python3 tools/analyze-recorder.py NEW_DIR
+- python3 tools/summarize-recorders.py MATRIX_DIR
+- confirmation.sh, final-comparisons.sh, latest-confirmation.sh and
+  latest-replay.sh preserve exact ordering, binaries, settings and checks.
+- GSR Nix build expressions use the pinned workspace nixpkgs and archived clean
+  exports. Their /tmp paths are the paths recorded in this experiment.
+
+Remaining work
+- Direct RGB encode is the next large representation challenger: native modifier
+  queries, exact conversion, source/last-image ownership, queue progress and
+  failure recovery must be demonstrated. Both VAAPI and Vulkan routes remain open.
+- 98.4375 MiB remains the conditional D=1 image target. Removing the conversion
+  image would target 87.890625 MiB only if source buffering and other costs hold.
+- Full-scene rate-distortion, static/HDR/multi-audio cross-recorder workloads,
+  other GPUs, power, game impact and matched end-to-end latency remain open.
+- The active every-metric optimization goal is not complete.

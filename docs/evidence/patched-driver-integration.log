@@ -1,0 +1,65 @@
+src/capture.c: In function ‘video_process’:
+src/capture.c:399:64: warning: conversion to ‘unsigned int’ from ‘int32_t’ {aka ‘int’} may change the sign of the result [-Wsign-conversion]
+  399 |             if (b->datas[i].chunk && (b->datas[i].chunk->flags & SPA_CHUNK_FLAG_CORRUPTED)) {
+      |                                                                ^
+src/capture.c: In function ‘audio_process’:
+src/capture.c:538:27: warning: conversion to ‘unsigned int’ from ‘int32_t’ {aka ‘int’} may change the sign of the result [-Wsign-conversion]
+  538 |             (chunk->flags & SPA_CHUNK_FLAG_CORRUPTED)) {
+      |                           ^
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+plan: av1_vaapi; 320x240 10-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+GPU color: 8-bit, persistent modifier import, seven independent RGB/YUV endpoints; max error 0.4406 codes
+GPU color: 10-bit, persistent modifier import, seven independent RGB/YUV endpoints; max error 3.0000 codes
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 packets; 0 capture skips; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 packets; 0 capture skips; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 1 video inputs, 1 packets; 0 capture skips; accepted/written/durable bytes=514/514/0
+private PipeWire integration: 1 video packets, passed
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 packets; 0 capture skips; accepted/written/durable bytes=2720/2720/0
+private PipeWire integration: 50 video packets, passed
+integration: private PipeWire source -> recorder -> independent decoder passed
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+plan: av1_vaapi; 320x240 10-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+GPU color: 8-bit, persistent modifier import, seven independent RGB/YUV endpoints; max error 0.4406 codes
+GPU color: 10-bit, persistent modifier import, seven independent RGB/YUV endpoints; max error 0.6747 codes
+device: /dev/dri/renderD128: Mesa Gallium driver 26.2.5 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 321x241 10-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+audio: pcm_f32le, stereo 48 kHz; bounded drift correction; 20 ms final-sample hold
+Completed: 90 video inputs, 90 packets; 0 capture skips; accepted/written/durable bytes=590315/590315/590315
+{
+    "programs": [
+
+    ],
+    "stream_groups": [
+
+    ],
+    "streams": [
+        {
+            "codec_name": "av1",
+            "pix_fmt": "yuv420p10le",
+            "color_range": "tv",
+            "color_space": "bt709",
+            "color_transfer": "iec61966-2-1",
+            "duration": "1.501500"
+        },
+        {
+            "codec_name": "pcm_f32le",
+            "duration": "1.501500"
+        }
+    ]
+}

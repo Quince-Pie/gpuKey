@@ -1,0 +1,328 @@
+--- a/libavcodec/hw_base_encode.c
++++ b/libavcodec/hw_base_encode.c
+@@ -562,6 +562,8 @@
+     AVFrame *frame = ctx->frame;
+     int err;
+ 
++    ctx->async_fd = -1;
++
+     av_assert0(ctx->op && ctx->op->init && ctx->op->issue &&
+                ctx->op->output && ctx->op->free);
+ 
+@@ -581,6 +583,11 @@
+     err = ff_encode_get_frame(avctx, frame);
+     if (err == AVERROR_EOF) {
+         frame = NULL;
++    } else if (err == AVERROR(EAGAIN) && ctx->async_encode &&
++               ctx->async_readout && ctx->op->ready) {
++        // No input is not an end-of-stream request. An already issued picture
++        // may nevertheless have completed since the last receive call.
++        goto process;
+     } else if (err < 0)
+         return err;
+ 
+@@ -588,6 +595,7 @@
+     if (err < 0)
+         return err;
+ 
++process:
+     if (!ctx->pic_start) {
+         if (ctx->end_of_stream)
+             return AVERROR_EOF;
+@@ -616,8 +624,14 @@
+             return err;
+ 
+         // More frames can be buffered
+-        if (av_fifo_can_write(ctx->encode_fifo) && !ctx->end_of_stream)
+-            return AVERROR(EAGAIN);
++        if (av_fifo_can_write(ctx->encode_fifo) && !ctx->end_of_stream) {
++            if (!ctx->async_readout || !ctx->op->ready)
++                return AVERROR(EAGAIN);
++            av_fifo_peek(ctx->encode_fifo, &pic, 1, 0);
++            err = ctx->op->ready(avctx, pic);
++            if (err <= 0)
++                return err < 0 ? err : AVERROR(EAGAIN);
++        }
+ 
+         av_fifo_read(ctx->encode_fifo, &pic, 1);
+         ctx->encode_order = pic->encode_order + 1;
+--- a/libavcodec/hw_base_encode.h
++++ b/libavcodec/hw_base_encode.h
+@@ -115,6 +115,8 @@
+     int (*issue)(AVCodecContext *avctx, FFHWBaseEncodePicture *pic);
+     // Get the output AVPacket.
+     int (*output)(AVCodecContext *avctx, FFHWBaseEncodePicture *pic, AVPacket *pkt);
++    // Nonblocking query: 1 when output is ready, 0 while pending, or an error.
++    int (*ready)(AVCodecContext *avctx, FFHWBaseEncodePicture *pic);
+     // Free the picture structure.
+     int (*free)(AVCodecContext *avctx, FFHWBaseEncodePicture *pic);
+ }  FFHWEncodePictureOperation;
+@@ -220,6 +222,11 @@
+     // Max number of frame buffered in encoder.
+     int             async_depth;
+ 
++    // Allow completed output to be collected without another input frame.
++    int             async_readout;
++    // Borrowed readiness fd, valid after receive returned EAGAIN; -1 otherwise.
++    int             async_fd;
++
+     /** Tail data of a pic, now only used for av1 repeat frame header. */
+     AVPacket        *tail_pkt;
+ } FFHWBaseEncodeContext;
+--- a/libavcodec/vaapi_encode.c
++++ b/libavcodec/vaapi_encode.c
+@@ -16,8 +16,16 @@
+  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+  */
+ 
++#ifndef _GNU_SOURCE
++#define _GNU_SOURCE
++#endif
++
+ #include <inttypes.h>
++#include <errno.h>
+ #include <string.h>
++#include <fcntl.h>
++#include <unistd.h>
++#include <va/va_drmcommon.h>
+ 
+ #include "config.h"
+ 
+@@ -135,6 +143,35 @@
+                                           buffer, buffer_size);
+ }
+ 
++static int vaapi_encode_ready(AVCodecContext *avctx, FFHWBaseEncodePicture *base_pic)
++{
++#if VA_CHECK_VERSION(1, 9, 0)
++    VAAPIEncodeContext *ctx = avctx->priv_data;
++    VAAPIEncodePicture *pic = base_pic->priv;
++    VAStatus status;
++
++    av_assert0(base_pic->encode_issued);
++    ctx->base.async_fd = ctx->async_events ? pic->output_buffer_ref->fd : -1;
++    if (base_pic->encode_complete)
++        return 1;
++    status = vaSyncBuffer(ctx->hwctx->display, pic->output_buffer, 0);
++    if (status == VA_STATUS_SUCCESS) {
++        // The same retirement as the blocking wait; output no longer needs
++        // another synchronization call after this successful completion query.
++        av_frame_free(&base_pic->input_image);
++        base_pic->encode_complete = 1;
++        return 1;
++    }
++    if (status == VA_STATUS_ERROR_TIMEDOUT)
++        return 0;
++    av_log(avctx, AV_LOG_ERROR, "Failed to query output buffer completion: %d (%s).\n",
++           status, vaErrorStr(status));
++    return AVERROR(EIO);
++#else
++    return AVERROR(ENOSYS);
++#endif
++}
++
+ static int vaapi_encode_wait(AVCodecContext *avctx, FFHWBaseEncodePicture *base_pic)
+ {
+ #if VA_CHECK_VERSION(1, 9, 0)
+@@ -321,7 +358,7 @@
+         err = AVERROR(ENOMEM);
+         goto fail;
+     }
+-    pic->output_buffer = *pic->output_buffer_ref;
++    pic->output_buffer = pic->output_buffer_ref->id;
+     av_log(avctx, AV_LOG_DEBUG, "Output buffer is %#x.\n",
+            pic->output_buffer);
+ 
+@@ -731,7 +768,7 @@
+     int ret;
+ 
+     if (ctx->coded_buffer_ref) {
+-        output_buffer_prev = *ctx->coded_buffer_ref;
++        output_buffer_prev = ctx->coded_buffer_ref->id;
+         ret = vaapi_encode_get_coded_buffer_size(avctx, output_buffer_prev);
+         if (ret < 0)
+             goto end;
+@@ -2058,10 +2095,13 @@
+ {
+     AVCodecContext   *avctx = opaque.nc;
+     VAAPIEncodeContext *ctx = avctx->priv_data;
+-    VABufferID *buffer_id_ref = obj;
+-    VABufferID buffer_id = *buffer_id_ref;
++    VAAPIEncodeBuffer *buffer = obj;
++    VABufferID buffer_id = buffer->id;
+ 
+-    vaDestroyBuffer(ctx->hwctx->display, buffer_id);
++    if (buffer->fd >= 0)
++        close(buffer->fd);
++    if (buffer_id != VA_INVALID_ID)
++        vaDestroyBuffer(ctx->hwctx->display, buffer_id);
+ 
+     av_log(avctx, AV_LOG_DEBUG, "Freed output buffer %#x\n", buffer_id);
+ }
+@@ -2071,9 +2111,12 @@
+     AVCodecContext   *avctx = opaque.nc;
+     FFHWBaseEncodeContext *base_ctx = avctx->priv_data;
+     VAAPIEncodeContext         *ctx = avctx->priv_data;
+-    VABufferID *buffer_id = obj;
++    VAAPIEncodeBuffer *buffer = obj;
+     VAStatus vas;
+ 
++    buffer->id = VA_INVALID_ID;
++    buffer->fd = -1;
++
+     // The output buffer size is fixed, so it needs to be large enough
+     // to hold the largest possible compressed frame.  We assume here
+     // that the uncompressed frame plus some header data is an upper
+@@ -2081,14 +2124,38 @@
+     vas = vaCreateBuffer(ctx->hwctx->display, ctx->va_context,
+                          VAEncCodedBufferType,
+                          3 * base_ctx->surface_width * base_ctx->surface_height +
+-                         (1 << 16), 1, 0, buffer_id);
++                         (1 << 16), 1, 0, &buffer->id);
+     if (vas != VA_STATUS_SUCCESS) {
+         av_log(avctx, AV_LOG_ERROR, "Failed to create bitstream "
+                "output buffer: %d (%s).\n", vas, vaErrorStr(vas));
+         return AVERROR(ENOMEM);
+     }
+ 
+-    av_log(avctx, AV_LOG_DEBUG, "Allocated output buffer %#x\n", *buffer_id);
++    if (ctx->async_events) {
++        VABufferInfo info = { .mem_type = VA_SURFACE_ATTRIB_MEM_TYPE_DRM_PRIME };
++        vas = vaAcquireBufferHandle(ctx->hwctx->display, buffer->id, &info);
++        if (vas == VA_STATUS_ERROR_UNSUPPORTED_BUFFERTYPE ||
++            vas == VA_STATUS_ERROR_UNSUPPORTED_MEMORY_TYPE ||
++            vas == VA_STATUS_ERROR_UNIMPLEMENTED) {
++            // Capability fallback, before the first input has been accepted.
++            ctx->async_events = 0;
++        } else if (vas != VA_STATUS_SUCCESS) {
++            return AVERROR(EIO);
++        } else {
++            int saved_errno = 0;
++            if (info.mem_type == VA_SURFACE_ATTRIB_MEM_TYPE_DRM_PRIME && info.handle <= INT_MAX) {
++                buffer->fd = fcntl((int)info.handle, F_DUPFD_CLOEXEC, 0);
++                saved_errno = errno;
++            }
++            vas = vaReleaseBufferHandle(ctx->hwctx->display, buffer->id);
++            if (vas != VA_STATUS_SUCCESS)
++                return AVERROR(EIO);
++            if (buffer->fd < 0)
++                return saved_errno ? AVERROR(saved_errno) : AVERROR(ENOSYS);
++        }
++    }
++
++    av_log(avctx, AV_LOG_DEBUG, "Allocated output buffer %#x\n", buffer->id);
+ 
+     return 0;
+ }
+@@ -2145,6 +2212,7 @@
+     .issue  = &vaapi_encode_issue,
+ 
+     .output = &vaapi_encode_output,
++    .ready  = &vaapi_encode_ready,
+ 
+     .free   = &vaapi_encode_free,
+ };
+@@ -2162,6 +2230,8 @@
+     VAStatus vas;
+     int err;
+ 
++    // Read-only AVOptions are not initialized by av_opt_set_defaults().
++    base_ctx->async_fd = -1;
+     err = ff_hw_base_encode_init(avctx, base_ctx);
+     if (err < 0)
+         goto fail;
+@@ -2257,7 +2327,7 @@
+     }
+ 
+     ctx->output_buffer_pool =
+-        av_refstruct_pool_alloc_ext(sizeof(VABufferID), 0, avctx,
++        av_refstruct_pool_alloc_ext(sizeof(VAAPIEncodeBuffer), AV_REFSTRUCT_POOL_FLAG_FREE_ON_INIT_ERROR, avctx,
+                                     &vaapi_encode_alloc_output_buffer, NULL,
+                                     vaapi_encode_free_output_buffer, NULL);
+     if (!ctx->output_buffer_pool) {
+@@ -2336,6 +2406,18 @@
+     }
+ #endif
+ 
++    if (!base_ctx->async_encode)
++        ctx->async_events = 0;
++    if (ctx->async_events) {
++        // Resolve export support during initialization, not after a frame is
++        // committed. The reusable buffer is retained by the existing pool.
++        VAAPIEncodeBuffer *probe = av_refstruct_pool_get(ctx->output_buffer_pool);
++        if (!probe)
++            return AVERROR(ENOMEM);
++        av_refstruct_unref(&probe);
++        base_ctx->async_readout = 1;
++    }
++
+     return 0;
+ 
+ fail:
+@@ -2358,6 +2440,10 @@
+         vaapi_encode_free(avctx, pic);
+     }
+ 
++    base_ctx->async_fd = -1;
++    // A hidden/non-independent picture may still own a buffered coded range
++    // after an error. Release it while the pool and VA context remain alive.
++    av_refstruct_unref(&ctx->coded_buffer_ref);
+     av_refstruct_pool_uninit(&ctx->output_buffer_pool);
+ 
+     if (ctx->va_context != VA_INVALID_ID) {
+--- a/libavcodec/vaapi_encode.h
++++ b/libavcodec/vaapi_encode.h
+@@ -62,6 +62,11 @@
+     void           *codec_slice_params;
+ } VAAPIEncodeSlice;
+ 
++typedef struct VAAPIEncodeBuffer {
++    VABufferID id;
++    int fd; // Owned duplicate; VA export lock is released before CPU mapping.
++} VAAPIEncodeBuffer;
++
+ typedef struct VAAPIEncodePicture {
+ #if VA_CHECK_VERSION(1, 0, 0)
+     // ROI regions.
+@@ -77,7 +82,7 @@
+     VABufferID     *param_buffers;
+ 
+     /* Refcounted via the refstruct-API */
+-    VABufferID     *output_buffer_ref;
++    VAAPIEncodeBuffer *output_buffer_ref;
+     VABufferID      output_buffer;
+ 
+     void           *codec_picture_params;
+@@ -203,6 +208,7 @@
+ 
+     // Pool of (reusable) bitstream output buffers.
+     struct AVRefStructPool *output_buffer_pool;
++    int             async_events;
+ 
+     // Global parameters which will be applied at the start of the
+     // sequence (includes rate control parameters below).
+@@ -259,7 +265,7 @@
+      * Buffered coded data of a pic if it is an non-independent frame.
+      * This is a RefStruct reference.
+      */
+-    VABufferID     *coded_buffer_ref;
++    VAAPIEncodeBuffer *coded_buffer_ref;
+ 
+     // Surface alignment required by driver.
+     int             surface_alignment_width;
+@@ -352,6 +358,15 @@
+ 
+ 
+ #define VAAPI_ENCODE_COMMON_OPTIONS \
++    { "async_events", "Expose a persistent dma-buf output readiness fd when supported", \
++      OFFSET(common.async_events), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS }, \
++    { "async_output_fd", "Borrowed completion fd after receive returns EAGAIN", \
++      OFFSET(common.base.async_fd), AV_OPT_TYPE_INT, { .i64 = -1 }, -1, INT_MAX, \
++      FLAGS | AV_OPT_FLAG_READONLY }, \
++    { "async_readout", \
++      "Collect completed asynchronous output without waiting for more input", \
++      OFFSET(common.base.async_readout), AV_OPT_TYPE_BOOL, \
++      { .i64 = 0 }, 0, 1, FLAGS }, \
+     { "low_power", \
+       "Use low-power encoding mode (only available on some platforms; " \
+       "may not support all encoding features)", \

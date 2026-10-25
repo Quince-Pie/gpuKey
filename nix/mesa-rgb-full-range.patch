@@ -1,0 +1,17 @@
+--- a/src/amd/vulkan/radv_video.c
++++ b/src/amd/vulkan/radv_video.c
+@@ -603,9 +603,9 @@
+          rgb_caps->yChromaOffsets = VK_VIDEO_ENCODE_RGB_CHROMA_OFFSET_MIDPOINT_BIT_VALVE |
+                                     VK_VIDEO_ENCODE_RGB_CHROMA_OFFSET_COSITED_EVEN_BIT_VALVE;
+-         if (pdev->info.vcn_ip_version >= VCN_5_0_0) {
+-            /* FW bug: only BT709/Limited and BT2020/Full works, so we only expose BT709/Limited */
+-            rgb_caps->rgbModels = VK_VIDEO_ENCODE_RGB_MODEL_CONVERSION_YCBCR_709_BIT_VALVE;
+-            rgb_caps->rgbRanges = VK_VIDEO_ENCODE_RGB_RANGE_COMPRESSION_NARROW_RANGE_BIT_VALVE;
+-         }
++         /* Explicit full-range build: expose only the other supported pair.
++          * VCN 5 cannot support the cross-product of both model/range masks.
++          * The ordinary build continues to expose BT709/Limited there. */
++         rgb_caps->rgbModels = VK_VIDEO_ENCODE_RGB_MODEL_CONVERSION_YCBCR_2020_BIT_VALVE;
++         rgb_caps->rgbRanges = VK_VIDEO_ENCODE_RGB_RANGE_COMPRESSION_FULL_RANGE_BIT_VALVE;
+       }
+    }

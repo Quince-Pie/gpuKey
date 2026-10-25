@@ -1,0 +1,4 @@
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+bash: line 1: 1708350 Segmentation fault         (core dumped) /tmp/gpukey-before-startup-fix/media_empty_test vaapi
+control exit status: 139

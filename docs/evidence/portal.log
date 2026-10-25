@@ -1,0 +1,8 @@
+TAP version 14
+# random seed: R02Saa4881179e3e2e89cb978116f4225537
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed

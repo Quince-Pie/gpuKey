@@ -1,0 +1,108 @@
+--- a/src/gallium/auxiliary/vl/vl_compositor.c
++++ b/src/gallium/auxiliary/vl/vl_compositor.c
+@@ -29,6 +29,7 @@
+ 
+ #include "vl_compositor_gfx.h"
+ #include "vl_compositor_cs.h"
++#include "vl_defines.h"
+ 
+ static bool
+ init_shaders(struct vl_compositor *c)
+@@ -765,24 +766,45 @@
+    }
+ }
+ 
+-void
++bool
+ vl_compositor_convert_rgb_to_yuv(struct vl_compositor_state *s,
+                                  struct vl_compositor *c,
+                                  unsigned layer,
+-                                 struct pipe_resource *src_res,
++                                 struct pipe_video_buffer *src,
+                                  struct pipe_video_buffer *dst,
+                                  struct u_rect *src_rect,
+                                  struct u_rect *dst_rect)
+ {
+-   struct pipe_sampler_view *sv, sv_templ;
++   /* Cache only views owned by this context's source buffer. Cross-context
++    * callers and buffers without this optional method keep the original
++    * temporary-view path, with matching creation/release context. */
++   struct pipe_resource *resources[VL_NUM_COMPONENTS] = {0};
++   src->get_resources(src, resources);
++   if (!resources[0])
++      return false;
++   /* The video-buffer helper replicates single-component formats into all
++    * channels. The original RGB path uses the ordinary format swizzle. */
++   bool temporary = src->context != s->pipe || !src->get_sampler_view_planes ||
++                    util_format_get_nr_components(resources[0]->format) == 1;
++   struct pipe_sampler_view *sv;
++   if (temporary) {
++      struct pipe_sampler_view templ;
++      memset(&templ, 0, sizeof(templ));
++      u_sampler_view_default_template(&templ, resources[0], resources[0]->format);
++      sv = s->pipe->create_sampler_view(s->pipe, resources[0], &templ);
++   } else {
++      struct pipe_sampler_view **views = src->get_sampler_view_planes(src);
++      sv = views ? views[0] : NULL;
++   }
++   if (!sv)
++      return false;
++   bool success = false;
+    struct pipe_surface *dst_surfaces;
+ 
++   if (!init_shaders(c))
++      goto cleanup;
+    dst_surfaces = dst->get_surfaces(dst);
+ 
+-   memset(&sv_templ, 0, sizeof(sv_templ));
+-   u_sampler_view_default_template(&sv_templ, src_res, src_res->format);
+-   sv = s->pipe->create_sampler_view(s->pipe, src_res, &sv_templ);
+-
+    set_rgb_to_yuv_layer(s, c, 0, sv, src_rect, NULL, VL_COMPOSITOR_PLANE_Y);
+    vl_compositor_set_layer_dst_area(s, 0, dst_rect);
+    vl_compositor_render(s, c, &dst_surfaces[0], NULL, false);
+@@ -804,7 +826,11 @@
+       }
+    }
+ 
+-   s->pipe->sampler_view_release(s->pipe, sv);
++   success = true;
++cleanup:
++   if (temporary)
++      s->pipe->sampler_view_release(s->pipe, sv);
++   return success;
+ }
+ 
+ void
+--- a/src/gallium/auxiliary/vl/vl_compositor.h
++++ b/src/gallium/auxiliary/vl/vl_compositor.h
+@@ -345,11 +345,11 @@
+ /**
+ + * convert rgb to yuv
+ + */
+-void
++bool
+ vl_compositor_convert_rgb_to_yuv(struct vl_compositor_state *state,
+                                  struct vl_compositor *compositor,
+                                  unsigned layer,
+-                                 struct pipe_resource *src_res,
++                                 struct pipe_video_buffer *src,
+                                  struct pipe_video_buffer *dst,
+                                  struct u_rect *src_rect,
+                                  struct u_rect *dst_rect);
+--- a/src/gallium/auxiliary/vl/vl_compositor_proc.c
++++ b/src/gallium/auxiliary/vl/vl_compositor_proc.c
+@@ -163,10 +163,9 @@
+                                       deinterlace);
+       } else {
+          /* RGB -> YUV */
+-         struct pipe_resource *resources[VL_NUM_COMPONENTS];
+-         src->get_resources(src, resources);
+-         vl_compositor_convert_rgb_to_yuv(&proc->cstate, &proc->compositor, 0, resources[0],
+-                                          dst, &param->src_region, &param->dst_region);
++         if (!vl_compositor_convert_rgb_to_yuv(&proc->cstate, &proc->compositor, 0, src,
++                                               dst, &param->src_region, &param->dst_region))
++            return 1;
+       }
+    } else {
+       /* YUV/RGB -> RGB */

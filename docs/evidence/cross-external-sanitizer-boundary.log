@@ -1,0 +1,2 @@
+gsr private capture and independent AV1 decoding passed: /tmp/gpukey-cross/external-sanitizer-boundary
+{"decoded_frames": 234, "source_frames": 237, "first_identity": 1, "last_identity": 235, "unique_identities": 234, "repeated_identities": 0, "interior_missing_identities": 1, "backward_transitions": 0, "corrupt_markers": [], "patch_count": 6, "patch_mean_absolute_error": 1.0391501952048967, "patch_max_absolute_error": 3.0}

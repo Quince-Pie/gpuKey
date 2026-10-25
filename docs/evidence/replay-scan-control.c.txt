@@ -1,0 +1,943 @@
+#include "replay.h"
+
+#include <errno.h>
+#include <libavcodec/avcodec.h>
+#include <libavutil/intreadwrite.h>
+#include <libavutil/mem.h>
+#include <pthread.h>
+#include <stdbit.h>
+#include <stdckdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/eventfd.h>
+#include <tracy/TracyC.h>
+#include <unistd.h>
+
+enum { BLOCK_PACKETS = 256, KEY = 1U << 31, NO_BLOCK = UINT32_MAX };
+static constexpr uint64_t no_position = UINT64_MAX;
+static constexpr int64_t opus_preroll_ns = 80000000;
+
+/* All other AVPacket fields are derived from stream configuration, or are
+ * irrelevant encoder statistics. Offsets preserve CPU sub-buffer ownership. */
+struct packet {
+    AVBufferRef *buffer;
+    int64_t pts;
+    uint32_t offset, size, stream_flags;
+    uint16_t duration, skip_end; /* Audio sample counts; video duration is derived. */
+};
+static_assert(sizeof(struct packet) == 32);
+struct block {
+    _Atomic uint32_t refs;
+    uint32_t used, next;
+    uint64_t keys[BLOCK_PACKETS / 64];
+    int64_t max_end_ns;
+    size_t bytes;
+    struct packet packets[BLOCK_PACKETS];
+};
+struct snapshot {
+    struct block **blocks;
+    uint32_t *ids;
+    size_t count, packets;
+    char *path;
+    struct gk_replay_result result;
+};
+enum work_state { IDLE, QUEUED, RUNNING, DONE };
+struct gk_replay {
+    const AVFormatContext *format;
+    struct gk_replay_options options;
+    struct block **blocks;
+    uint32_t *available;
+    uint32_t capacity, unused, available_count, head, tail, spare;
+    uint64_t keep_key, next_key;
+    int64_t last_key_ns;
+    int64_t block_started_ns;
+    int64_t *last_pts, *ends;
+    size_t live_bytes, owned_bytes;
+    struct gk_ring released;
+    int wake;
+    pthread_t worker;
+    pthread_mutex_t mutex;
+    pthread_cond_t changed;
+    bool thread_started, mutex_ready, cond_ready, stopping, sealed;
+    enum work_state state;
+    struct snapshot job;
+    struct gk_replay_stats stats;
+};
+
+static uint64_t position(uint32_t id, unsigned slot)
+{
+    return (uint64_t)id << 32 | slot;
+}
+static struct packet *at(const struct gk_replay *r, uint64_t pos)
+{
+    return &r->blocks[(uint32_t)(pos >> 32)]->packets[(uint32_t)pos];
+}
+static int64_t time_ns(const struct gk_replay *r, const struct packet *p)
+{
+    return av_rescale_q(p->pts, r->format->streams[p->stream_flags & ~KEY]->time_base,
+                        (AVRational){1, 1000000000});
+}
+
+/* Only the owner reads links/key masks. Export views contain sealed blocks and
+ * never traverse mutable live-list bookkeeping. */
+static uint64_t following_key(const struct gk_replay *r, uint64_t after)
+{
+    uint32_t id = (uint32_t)(after >> 32), slot = (uint32_t)after + 1;
+    while (id != NO_BLOCK) {
+        const struct block *b = r->blocks[id];
+        for (unsigned word = slot / 64; word < BLOCK_PACKETS / 64; ++word) {
+            uint64_t bits = b->keys[word];
+            if (slot % 64)
+                bits &= UINT64_MAX << (slot % 64);
+            if (bits)
+                return position(id, word * 64 + stdc_trailing_zeros(bits));
+            slot = (word + 1) * 64;
+        }
+        id = b->next;
+        slot = 0;
+    }
+    return no_position;
+}
+
+static void free_payloads(struct gk_replay *r, uint32_t id)
+{
+    struct block *b = r->blocks[id];
+    r->owned_bytes -= b->bytes;
+    for (unsigned i = 0; i < b->used; ++i)
+        av_buffer_unref(&b->packets[i].buffer);
+    if (r->spare == NO_BLOCK) {
+        *b = (struct block){};
+        atomic_init(&b->refs, 0);
+        r->spare = id;
+        r->owned_bytes += sizeof(*b);
+    } else {
+        free(b);
+        r->blocks[id] = nullptr;
+        r->available[r->available_count++] = id;
+    }
+}
+static void recycle(struct gk_replay *r)
+{
+    uint64_t id;
+    while (gk_ring_pop(&r->released, &id))
+        free_payloads(r, (uint32_t)id);
+}
+static void owner_release(struct gk_replay *r, uint32_t id)
+{
+    if (atomic_fetch_sub_explicit(&r->blocks[id]->refs, 1, memory_order_acq_rel) == 1)
+        free_payloads(r, id);
+}
+
+static int new_block(struct gk_replay *r)
+{
+    if (r->live_bytes > r->options.bytes - sizeof(struct block))
+        return -ENOBUFS;
+    uint32_t id;
+    if (r->spare != NO_BLOCK) {
+        id = r->spare;
+        r->spare = NO_BLOCK;
+    } else {
+        if (r->available_count)
+            id = r->available[--r->available_count];
+        else if (r->unused < r->capacity)
+            id = r->unused++;
+        else
+            return -ENOBUFS;
+        r->blocks[id] = calloc(1, sizeof(struct block));
+        if (!r->blocks[id]) {
+            r->available[r->available_count++] = id;
+            return -ENOMEM;
+        }
+        r->owned_bytes += sizeof(struct block);
+    }
+    struct block *b = r->blocks[id];
+    atomic_init(&b->refs, 1);
+    b->next = NO_BLOCK;
+    b->max_end_ns = INT64_MIN;
+    b->bytes = sizeof(*b);
+    if (r->tail != NO_BLOCK)
+        r->blocks[r->tail]->next = id;
+    else
+        r->head = id;
+    r->tail = id;
+    r->sealed = false;
+    r->live_bytes += sizeof(*b);
+    return 0;
+}
+
+static void trim(struct gk_replay *r)
+{
+    if (r->keep_key == no_position)
+        return;
+    int64_t end = r->ends[0];
+    for (unsigned i = 1; i < r->format->nb_streams; ++i)
+        if (r->ends[i] < end)
+            end = r->ends[i];
+    if (end < r->options.duration_ns)
+        return;
+    int64_t cut = end - r->options.duration_ns;
+    for (;;) {
+        if (r->next_key == no_position)
+            r->next_key = following_key(r, r->keep_key);
+        if (r->next_key == no_position || time_ns(r, at(r, r->next_key)) > cut)
+            break;
+        r->keep_key = r->next_key;
+        r->next_key = no_position;
+    }
+    int64_t floor = time_ns(r, at(r, r->keep_key)) - opus_preroll_ns;
+    uint32_t key_block = (uint32_t)(r->keep_key >> 32);
+    while (r->head != key_block && r->head != r->tail && r->blocks[r->head]->max_end_ns < floor) {
+        uint32_t id = r->head;
+        r->head = r->blocks[id]->next;
+        r->live_bytes -= r->blocks[id]->bytes;
+        owner_release(r, id);
+    }
+}
+
+/* A conservative prefix check complements the full AV1 parser: a temporal unit
+ * whose first frame is hidden/inter/show-existing cannot become a replay start
+ * merely because a later displayed frame was reported as a keyframe. */
+static int obu_prefix(const uint8_t *data, size_t size, bool *reduced, bool *sequence,
+                      bool require_frame)
+{
+    size_t at_byte = 0;
+    while (at_byte < size) {
+        uint8_t header = data[at_byte++];
+        if (header & 0x81 || !(header & 2))
+            return -EPROTO;
+        unsigned type = (header >> 3) & 15;
+        if (header & 4) {
+            if (at_byte == size || data[at_byte++] != 0)
+                return -ENOTSUP; /* This recording plan is a single base layer. */
+        }
+        uint64_t length = 0;
+        unsigned shift;
+        for (shift = 0; shift < 56; shift += 7) {
+            if (at_byte == size)
+                return -EPROTO;
+            uint8_t byte = data[at_byte++];
+            length |= (uint64_t)(byte & 127) << shift;
+            if (!(byte & 128))
+                break;
+        }
+        if (shift == 56 || length > size - at_byte)
+            return -EPROTO;
+        if (type == 1) {
+            if (!length)
+                return -EPROTO;
+            *reduced = (data[at_byte] & 8) != 0;
+            *sequence = true;
+        }
+        if (type == 3 || type == 6) {
+            if (!require_frame)
+                return -EPROTO;
+            return *sequence && length && (*reduced || (data[at_byte] & 0xf0) == 0x10) ? 0
+                                                                                       : -ENOTSUP;
+        }
+        if (type == 4 || type == 7 || type == 8)
+            return -ENOTSUP;
+        at_byte += (size_t)length;
+    }
+    return require_frame ? -EPROTO : 0;
+}
+
+static int verified_key(const AVCodecParameters *par, const AVPacket *pkt)
+{
+    bool reduced = false, sequence = false;
+    if (par->extradata_size) {
+        unsigned skip = par->extradata[0] == 0x81 ? 4 : 0;
+        if (par->extradata_size < (int)skip ||
+            obu_prefix(par->extradata + skip, (size_t)par->extradata_size - skip, &reduced,
+                       &sequence, false) < 0)
+            return -EPROTO;
+    }
+    int ret = obu_prefix(pkt->data, (size_t)pkt->size, &reduced, &sequence, true);
+    if (ret < 0)
+        return ret;
+    AVCodecParserContext *parser = av_parser_init(AV_CODEC_ID_AV1);
+    AVCodecContext *ctx = avcodec_alloc_context3(nullptr);
+    if (!parser || !ctx) {
+        av_parser_close(parser);
+        avcodec_free_context(&ctx);
+        return -ENOMEM;
+    }
+    ret = avcodec_parameters_to_context(ctx, par);
+    if (ret >= 0) {
+        parser->flags |= PARSER_FLAG_COMPLETE_FRAMES;
+        uint8_t *output;
+        int size;
+        int consumed = av_parser_parse2(parser, ctx, &output, &size, pkt->data, pkt->size, pkt->pts,
+                                        pkt->dts, 0);
+        ret = consumed == pkt->size && size == pkt->size && parser->key_frame == 1 ? 0 : -ENOTSUP;
+    }
+    av_parser_close(parser);
+    avcodec_free_context(&ctx);
+    return ret;
+}
+
+/* A CPU reference costs its full allocation, not merely its compressed prefix.
+ * A conservative fixed allowance accounts for the reference/allocator objects;
+ * encoder, muxer, sink and export-index workspaces are reported separately. */
+static size_t charge(const AVBufferRef *buffer)
+{
+    return buffer->size + sizeof(AVBufferRef) + 128;
+}
+
+int gk_replay_add(struct gk_replay *r, AVPacket *pkt)
+{
+    if (pkt->size <= 0 || !pkt->data || pkt->stream_index < 0 ||
+        (unsigned)pkt->stream_index >= r->format->nb_streams || pkt->pts == AV_NOPTS_VALUE ||
+        pkt->dts != pkt->pts || pkt->duration < 0 ||
+        (pkt->stream_index && pkt->duration > UINT16_MAX) ||
+        (pkt->flags & (AV_PKT_FLAG_CORRUPT | AV_PKT_FLAG_DISCARD)))
+        return -EPROTO;
+    if (!pkt->stream_index && pkt->pts < 0)
+        return -ERANGE;
+    unsigned stream = (unsigned)pkt->stream_index;
+    if (pkt->pts <= r->last_pts[stream])
+        return -ERANGE;
+    recycle(r);
+    trim(r);
+    AVBufferRef *buffer = pkt->buf;
+    uint32_t offset = 0;
+    bool copied = r->options.copy_packets || (!stream && r->options.copy_video) || !buffer;
+    if (!copied) {
+        uintptr_t base = (uintptr_t)buffer->data, ptr = (uintptr_t)pkt->data;
+        copied = ptr < base || ptr - base > UINT32_MAX || ptr - base > buffer->size ||
+                 (size_t)pkt->size + AV_INPUT_BUFFER_PADDING_SIZE > buffer->size - (ptr - base);
+        if (!copied)
+            offset = (uint32_t)(ptr - base);
+    }
+    if (copied) {
+        buffer = av_buffer_alloc((size_t)pkt->size + AV_INPUT_BUFFER_PADDING_SIZE);
+        if (!buffer)
+            return -ENOMEM;
+        memcpy(buffer->data, pkt->data, (size_t)pkt->size);
+        memset(buffer->data + pkt->size, 0, AV_INPUT_BUFFER_PADDING_SIZE);
+    }
+    int ret = 0;
+    bool key = !stream && (pkt->flags & AV_PKT_FLAG_KEY);
+    if (key) {
+        AVPacket probe = *pkt;
+        probe.data = buffer->data + offset;
+        ret = verified_key(r->format->streams[0]->codecpar, &probe);
+        if (ret < 0)
+            goto fail;
+    } else if (!stream && r->keep_key == no_position) {
+        ret = -ENOTSUP;
+        goto fail;
+    }
+    size_t side_size = 0;
+    const uint8_t *skip = av_packet_get_side_data(pkt, AV_PKT_DATA_SKIP_SAMPLES, &side_size);
+    if (skip && (side_size < 10 || AV_RL32(skip + 4) > UINT16_MAX)) {
+        ret = -EPROTO;
+        goto fail;
+    }
+    const uint8_t *extra = av_packet_get_side_data(pkt, AV_PKT_DATA_NEW_EXTRADATA, &side_size);
+    const AVCodecParameters *par = r->format->streams[stream]->codecpar;
+    if (extra &&
+        (side_size != (size_t)par->extradata_size || memcmp(extra, par->extradata, side_size))) {
+        ret = -ESTALE;
+        goto fail;
+    }
+    if (par->codec_id == AV_CODEC_ID_PCM_F32LE &&
+        ((uint64_t)pkt->duration * (unsigned)par->ch_layout.nb_channels * 4 !=
+             (unsigned)pkt->size ||
+         (skip && (AV_RL32(skip) || AV_RL32(skip + 4))))) {
+        ret = -EPROTO;
+        goto fail;
+    }
+    int64_t packet_end, end;
+    if (ckd_add(&packet_end, pkt->pts, stream ? pkt->duration : 0) ||
+        (end = av_rescale_q(packet_end, r->format->streams[stream]->time_base,
+                            (AVRational){1, 1000000000})) == INT64_MIN ||
+        buffer->size > SIZE_MAX - sizeof(AVBufferRef) - 128) {
+        ret = -EOVERFLOW;
+        goto fail;
+    }
+    /* The encoder requests a RAP every two seconds and replay permits at most
+     * a two-second static-repeat interval. A larger gap violates that plan;
+     * fail explicitly instead of retaining an unbounded dependency history. */
+    if (!stream && r->keep_key != no_position && end - r->last_key_ns > 4 * GK_NS) {
+        ret = -ESTALE;
+        goto fail;
+    }
+    if (!stream)
+        for (unsigned i = 1; i < r->format->nb_streams; ++i)
+            if (end > GK_NS && r->ends[i] < end - GK_NS) {
+                ret = -ENODATA;
+                goto fail;
+            }
+    int64_t start = stream ? av_rescale_q(pkt->pts, r->format->streams[stream]->time_base,
+                                          (AVRational){1, 1000000000})
+                           : end;
+    size_t bytes = charge(buffer);
+    size_t block_cost = r->tail == NO_BLOCK || r->sealed ||
+                                r->blocks[r->tail]->used == BLOCK_PACKETS ||
+                                (start >= r->block_started_ns &&
+                                 (uint64_t)start - (uint64_t)r->block_started_ns >= (uint64_t)GK_NS)
+                            ? sizeof(struct block)
+                            : 0;
+    if (bytes > r->options.bytes || block_cost > r->options.bytes - bytes ||
+        r->live_bytes > r->options.bytes - bytes - block_cost) {
+        ret = -ENOBUFS;
+        goto fail;
+    }
+    if (block_cost && (ret = new_block(r)) < 0)
+        goto fail;
+    if (block_cost)
+        r->block_started_ns = start;
+    struct block *b = r->blocks[r->tail];
+    unsigned slot = b->used++;
+    struct packet *p = &b->packets[slot];
+    *p = (struct packet){.buffer = buffer,
+                         .pts = pkt->pts,
+                         .offset = offset,
+                         .size = (uint32_t)pkt->size,
+                         .duration = stream ? (uint16_t)pkt->duration : 0,
+                         .stream_flags = stream | (key ? KEY : 0),
+                         .skip_end = skip ? (uint16_t)AV_RL32(skip + 4) : 0};
+    if (!copied)
+        pkt->buf = nullptr;
+    else
+        r->stats.copied_bytes += p->size;
+    if (key) {
+        b->keys[slot / 64] |= UINT64_C(1) << (slot % 64);
+        if (r->keep_key == no_position)
+            r->keep_key = position(r->tail, slot);
+        r->last_key_ns = end;
+    }
+    b->bytes += bytes;
+    r->live_bytes += bytes;
+    r->owned_bytes += bytes;
+    r->last_pts[stream] = p->pts;
+    if (end > b->max_end_ns)
+        b->max_end_ns = end;
+    r->ends[stream] = end;
+    ++r->stats.packets;
+    if (r->live_bytes > r->stats.peak_live_bytes)
+        r->stats.peak_live_bytes = r->live_bytes;
+    if (r->owned_bytes > r->stats.peak_owned_bytes)
+        r->stats.peak_owned_bytes = r->owned_bytes;
+    av_packet_unref(pkt);
+    trim(r);
+    return 0;
+fail:
+    if (copied)
+        av_buffer_unref(&buffer);
+    return ret;
+}
+
+struct export_stream {
+    size_t begin, count, cursor;
+    int64_t start, end;
+};
+struct export_state {
+    const struct gk_replay *replay;
+    const struct snapshot *snapshot;
+    uint64_t *order;
+    struct export_stream *streams;
+    uint32_t *heap;
+    unsigned heap_count;
+};
+static const struct packet *saved_packet(const struct export_state *e, uint64_t pos)
+{
+    return &e->snapshot->blocks[(uint32_t)(pos >> 32)]->packets[(uint32_t)pos];
+}
+static const struct packet *stream_packet(const struct export_state *e, unsigned stream,
+                                          size_t offset)
+{
+    const struct export_stream *s = &e->streams[stream];
+    return saved_packet(e, e->order[s->begin + s->cursor + offset]);
+}
+static bool earlier(const struct export_state *e, unsigned a, unsigned b)
+{
+    return av_compare_ts(stream_packet(e, a, 0)->pts - e->streams[a].start,
+                         e->replay->format->streams[a]->time_base,
+                         stream_packet(e, b, 0)->pts - e->streams[b].start,
+                         e->replay->format->streams[b]->time_base) < 0;
+}
+static void heap_down(struct export_state *e, unsigned at_index)
+{
+    for (;;) {
+        unsigned left = at_index * 2 + 1;
+        if (left >= e->heap_count)
+            return;
+        unsigned child = left;
+        if (left + 1 < e->heap_count && earlier(e, e->heap[left + 1], e->heap[left]))
+            child = left + 1;
+        if (!earlier(e, e->heap[child], e->heap[at_index]))
+            return;
+        uint32_t value = e->heap[at_index];
+        e->heap[at_index] = e->heap[child];
+        e->heap[child] = value;
+        at_index = child;
+    }
+}
+
+static int export_clip(struct gk_replay *r, struct snapshot *view)
+{
+    TracyCZoneN(zone, "replay.export", true);
+    const unsigned tracks = r->format->nb_streams;
+    struct export_state e = {.replay = r, .snapshot = view};
+    AVFormatContext *mux = nullptr;
+    AVIOContext *io = nullptr;
+    AVPacket *packet = nullptr;
+    struct gk_sink *sink = nullptr;
+    struct gk_sink_stats sink_stats = {};
+    bool video_written = false;
+    int ret = -ENOMEM;
+    e.streams = calloc(tracks, sizeof(*e.streams));
+    e.heap = calloc(tracks, sizeof(*e.heap));
+    e.order = av_malloc_array(view->packets, sizeof(*e.order));
+    packet = av_packet_alloc();
+    if (!e.streams || !e.heap || !e.order || !packet)
+        goto cleanup;
+    ret = avformat_alloc_output_context2(&mux, nullptr, r->options.matroska ? "matroska" : "mp4",
+                                         nullptr);
+    if (ret < 0)
+        goto cleanup;
+    for (unsigned i = 0; i < tracks; ++i) {
+        AVStream *out = avformat_new_stream(mux, nullptr);
+        const AVStream *in = r->format->streams[i];
+        if (!out) {
+            ret = -ENOMEM;
+            goto cleanup;
+        }
+        if ((ret = avcodec_parameters_copy(out->codecpar, in->codecpar)) < 0 ||
+            (ret = av_dict_copy(&out->metadata, in->metadata, 0)) < 0)
+            goto cleanup;
+        out->time_base = in->time_base;
+        out->avg_frame_rate = in->avg_frame_rate;
+        out->r_frame_rate = in->r_frame_rate;
+        e.streams[i].start =
+            av_rescale_q(view->result.start_ns, (AVRational){1, 1000000000}, in->time_base);
+        e.streams[i].end =
+            av_rescale_q(view->result.end_ns, (AVRational){1, 1000000000}, in->time_base);
+    }
+    /* Materialize exact per-stream indices once. The merge then reads each
+     * packet once and gives av_write_frame explicitly ordered DTS. */
+    for (size_t b = 0; b < view->count; ++b)
+        for (unsigned j = 0; j < view->blocks[b]->used; ++j)
+            ++e.streams[view->blocks[b]->packets[j].stream_flags & ~KEY].count;
+    size_t offset = 0;
+    for (unsigned i = 0; i < tracks; ++i) {
+        e.streams[i].begin = offset;
+        offset += e.streams[i].count;
+        e.streams[i].count = 0;
+    }
+    for (size_t b = 0; b < view->count; ++b)
+        for (unsigned j = 0; j < view->blocks[b]->used; ++j) {
+            struct export_stream *s = &e.streams[view->blocks[b]->packets[j].stream_flags & ~KEY];
+            e.order[s->begin + s->count++] = position((uint32_t)b, j);
+        }
+    for (unsigned i = 0; i < tracks; ++i) {
+        struct export_stream *s = &e.streams[i];
+        AVCodecParameters *par = mux->streams[i]->codecpar;
+        int64_t threshold = s->start;
+        if (par->codec_id == AV_CODEC_ID_OPUS)
+            threshold -= 3840;
+        while (s->cursor + 1 < s->count && stream_packet(&e, i, 1)->pts <= threshold)
+            ++s->cursor;
+        if (i == 0) {
+            while (s->cursor < s->count && stream_packet(&e, i, 0)->pts < s->start)
+                ++s->cursor;
+        } else if (par->codec_id == AV_CODEC_ID_PCM_F32LE) {
+            while (s->cursor < s->count &&
+                   stream_packet(&e, i, 0)->pts + stream_packet(&e, i, 0)->duration <= s->start)
+                ++s->cursor;
+        } else if (par->codec_id != AV_CODEC_ID_OPUS) {
+            ret = -ENOTSUP;
+            goto cleanup;
+        }
+        if (s->cursor == s->count || stream_packet(&e, i, 0)->pts >= s->end) {
+            ret = -ENODATA;
+            goto cleanup;
+        }
+        if (i == 0 && !(stream_packet(&e, i, 0)->stream_flags & KEY)) {
+            ret = -EPROTO;
+            goto cleanup;
+        }
+        if (par->codec_id == AV_CODEC_ID_OPUS) {
+            int64_t preskip = s->start - stream_packet(&e, i, 0)->pts;
+            if (preskip < 0 || preskip > UINT16_MAX || par->extradata_size < 19 ||
+                memcmp(par->extradata, "OpusHead", 8)) {
+                ret = -EPROTO;
+                goto cleanup;
+            }
+            par->initial_padding = (int)preskip;
+            AV_WL16(par->extradata + 10, (uint16_t)preskip);
+        }
+        e.heap[e.heap_count++] = i;
+    }
+    for (unsigned i = e.heap_count / 2; i > 0; --i)
+        heap_down(&e, i - 1);
+    ret = gk_sink_open(&sink, view->path, &r->options.sink);
+    if (ret < 0)
+        goto cleanup;
+    uint8_t *buffer = av_malloc(65536);
+    if (!buffer) {
+        ret = -ENOMEM;
+        goto cleanup;
+    }
+    io = avio_alloc_context(buffer, 65536, 1, sink, nullptr, gk_sink_write, nullptr);
+    if (!io) {
+        av_free(buffer);
+        ret = -ENOMEM;
+        goto cleanup;
+    }
+    mux->pb = io;
+    mux->flags |= AVFMT_FLAG_CUSTOM_IO;
+    mux->avoid_negative_ts = AVFMT_AVOID_NEG_TS_DISABLED;
+    AVDictionary *options = nullptr;
+    if (r->options.matroska)
+        av_dict_set(&options, "cluster_time_limit", "1000", 0);
+    else {
+        av_dict_set(&options, "movflags", "delay_moov+default_base_moof+frag_keyframe", 0);
+        av_dict_set(&options, "video_track_timescale", "1000000", 0);
+        av_dict_set(&options, "frag_duration", "1000000", 0);
+    }
+    av_dict_set(&mux->metadata, "GPUKEY_REPLAY", "encoded snapshot; keyframe-aligned start", 0);
+    av_dict_set_int(&mux->metadata, "GPUKEY_REPLAY_START_NS", view->result.start_ns, 0);
+    av_dict_set_int(&mux->metadata, "GPUKEY_REPLAY_END_NS", view->result.end_ns, 0);
+    av_dict_set_int(&mux->metadata, "GPUKEY_TRIGGER_NS", view->result.requested_end_ns, 0);
+    ret = avformat_write_header(mux, &options);
+    if (ret >= 0 && av_dict_count(options))
+        ret = -ENOTSUP;
+    av_dict_free(&options);
+    if (ret < 0)
+        goto cleanup;
+    while (e.heap_count) {
+        unsigned track = e.heap[0];
+        struct export_stream *s = &e.streams[track];
+        const AVStream *in = r->format->streams[track];
+        AVStream *out = mux->streams[track];
+        const struct packet *p = stream_packet(&e, track, 0);
+        int64_t pts = p->pts, end = pts + p->duration;
+        uint32_t skip_end = p->skip_end, data_offset = 0;
+        uint32_t size = p->size;
+        if (!track) {
+            end = s->cursor + 1 < s->count ? stream_packet(&e, track, 1)->pts : s->end;
+            if (end > s->end)
+                end = s->end;
+        } else {
+            if (end > s->end) {
+                if (out->codecpar->codec_id == AV_CODEC_ID_OPUS)
+                    skip_end += (uint32_t)(end - s->end);
+                end = s->end;
+            }
+            if (out->codecpar->codec_id == AV_CODEC_ID_PCM_F32LE) {
+                uint64_t stride = (uint64_t)(unsigned)out->codecpar->ch_layout.nb_channels * 4;
+                if (pts < s->start) {
+                    data_offset = (uint32_t)((uint64_t)(s->start - pts) * stride);
+                    pts = s->start;
+                }
+                uint64_t bytes = (uint64_t)(end - pts) * stride;
+                if (data_offset > size || bytes > size - data_offset) {
+                    ret = -EPROTO;
+                    goto cleanup;
+                }
+                size = (uint32_t)bytes;
+            }
+        }
+        int64_t output_pts = av_rescale_q(pts - s->start, in->time_base, out->time_base);
+        int64_t output_end = av_rescale_q(end - s->start, in->time_base, out->time_base);
+        if (end > pts && output_end > output_pts) {
+            packet->buf = av_buffer_ref(p->buffer);
+            if (!packet->buf) {
+                ret = -ENOMEM;
+                goto cleanup;
+            }
+            packet->data = p->buffer->data + p->offset + data_offset;
+            packet->size = (int)size;
+            packet->pts = packet->dts = output_pts;
+            packet->duration = output_end - output_pts;
+            packet->stream_index = (int)track;
+            packet->flags = (p->stream_flags & KEY) || track ? AV_PKT_FLAG_KEY : 0;
+            if (skip_end) {
+                uint8_t *side = av_packet_new_side_data(packet, AV_PKT_DATA_SKIP_SAMPLES, 10);
+                if (!side) {
+                    ret = -ENOMEM;
+                    goto cleanup;
+                }
+                memset(side, 0, 10);
+                AV_WL32(side + 4, skip_end);
+            }
+            ret = av_write_frame(mux, packet);
+            av_packet_unref(packet);
+            if (ret < 0)
+                goto cleanup;
+            video_written |= track == 0;
+        }
+        ++s->cursor;
+        if (s->cursor == s->count || stream_packet(&e, track, 0)->pts >= s->end)
+            e.heap[0] = e.heap[--e.heap_count];
+        heap_down(&e, 0);
+    }
+    if (!video_written) {
+        ret = -ERANGE;
+        goto cleanup;
+    }
+    ret = av_write_trailer(mux);
+    avio_flush(io);
+    if (ret >= 0 && io->error < 0)
+        ret = io->error;
+cleanup:
+    av_packet_free(&packet);
+    avformat_free_context(mux);
+    if (io)
+        av_freep(&io->buffer);
+    avio_context_free(&io);
+    int finished = gk_sink_close(&sink, &sink_stats);
+    if (ret >= 0)
+        ret = finished;
+    view->result.bytes = sink_stats.written;
+    av_free(e.order);
+    free(e.streams);
+    free(e.heap);
+    TracyCZoneEnd(zone);
+    return ret;
+}
+
+static void *export_worker(void *opaque)
+{
+    struct gk_replay *r = opaque;
+    pthread_mutex_lock(&r->mutex);
+    for (;;) {
+        while (r->state != QUEUED && !r->stopping)
+            pthread_cond_wait(&r->changed, &r->mutex);
+        if (r->state != QUEUED)
+            break;
+        r->state = RUNNING;
+        pthread_mutex_unlock(&r->mutex);
+        int gate = 0;
+        if (r->options.test_gate > 0) {
+            int ignored = gk_notify(r->options.test_started);
+            (void)ignored;
+            char byte;
+            ssize_t n;
+            do {
+                n = read(r->options.test_gate, &byte, 1);
+            } while (n < 0 && errno == EINTR);
+            if (n != 1)
+                gate = n < 0 ? -errno : -ECANCELED;
+        }
+        r->job.result.error = gate < 0 ? gate : export_clip(r, &r->job);
+        for (size_t i = 0; i < r->job.count; ++i)
+            if (atomic_fetch_sub_explicit(&r->job.blocks[i]->refs, 1, memory_order_acq_rel) == 1) {
+                bool pushed = gk_ring_push(&r->released, r->job.ids[i]);
+                if (!pushed)
+                    abort(); /* Queue capacity covers every possible block exactly once. */
+            }
+        free(r->job.blocks);
+        free(r->job.ids);
+        free(r->job.path);
+        r->job.blocks = nullptr;
+        r->job.ids = nullptr;
+        r->job.path = nullptr;
+        pthread_mutex_lock(&r->mutex);
+        r->state = DONE;
+        int ignored = gk_notify(r->wake);
+        (void)ignored;
+    }
+    pthread_mutex_unlock(&r->mutex);
+    return nullptr;
+}
+
+int gk_replay_open(struct gk_replay **out, const AVFormatContext *format,
+                   const struct gk_replay_options *options)
+{
+    *out = nullptr;
+    if (!format || !format->nb_streams || format->nb_streams >= KEY || options->duration_ns <= 0 ||
+        options->bytes < 1048576 || options->bytes > SIZE_MAX / 2 ||
+        options->bytes * 2 / sizeof(struct block) > UINT32_MAX / 4)
+        return -EINVAL;
+    for (unsigned i = 0; i < format->nb_streams; ++i) {
+        const AVStream *s = format->streams[i];
+        if (s->time_base.num <= 0 || s->time_base.den <= 0 ||
+            av_cmp_q(s->time_base, (AVRational){1, 1000000000}) < 0 ||
+            (!i && s->codecpar->codec_id != AV_CODEC_ID_AV1) ||
+            (i && (s->codecpar->sample_rate != 48000 || s->codecpar->ch_layout.nb_channels <= 0 ||
+                   av_cmp_q(s->time_base, (AVRational){1, 48000}) != 0 ||
+                   (s->codecpar->codec_id != AV_CODEC_ID_PCM_F32LE &&
+                    (s->codecpar->codec_id != AV_CODEC_ID_OPUS || !options->matroska)))))
+            return -ENOTSUP;
+    }
+    struct gk_replay *r = aligned_alloc(alignof(struct gk_replay), sizeof(*r));
+    if (!r)
+        return -ENOMEM;
+    *r = (struct gk_replay){.format = format,
+                            .options = *options,
+                            .wake = -1,
+                            .head = NO_BLOCK,
+                            .tail = NO_BLOCK,
+                            .spare = NO_BLOCK,
+                            .keep_key = no_position,
+                            .next_key = no_position};
+    r->capacity = (uint32_t)(options->bytes * 2 / sizeof(struct block)) + 3;
+    r->blocks = calloc(r->capacity, sizeof(*r->blocks));
+    r->available = calloc(r->capacity, sizeof(*r->available));
+    r->last_pts = calloc(format->nb_streams, sizeof(*r->last_pts));
+    r->ends = calloc(format->nb_streams, sizeof(*r->ends));
+    int ret = -ENOMEM;
+    if (!r->blocks || !r->available || !r->last_pts || !r->ends)
+        goto fail;
+    for (unsigned i = 0; i < format->nb_streams; ++i)
+        r->last_pts[i] = r->ends[i] = INT64_MIN;
+    ret = gk_ring_init(&r->released, stdc_bit_ceil(r->capacity));
+    if (ret < 0)
+        goto fail;
+    r->wake = eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
+    if (r->wake < 0) {
+        ret = -errno;
+        goto fail;
+    }
+    ret = pthread_mutex_init(&r->mutex, nullptr);
+    if (ret) {
+        ret = -ret;
+        goto fail;
+    }
+    r->mutex_ready = true;
+    ret = pthread_cond_init(&r->changed, nullptr);
+    if (ret) {
+        ret = -ret;
+        goto fail;
+    }
+    r->cond_ready = true;
+    ret = pthread_create(&r->worker, nullptr, export_worker, r);
+    if (ret) {
+        ret = -ret;
+        goto fail;
+    }
+    r->thread_started = true;
+    *out = r;
+    return 0;
+fail:
+    gk_replay_close(&r, nullptr);
+    return ret;
+}
+
+int gk_replay_save(struct gk_replay *r, const char *path, int64_t endpoint_ns)
+{
+    pthread_mutex_lock(&r->mutex);
+    bool busy = r->state != IDLE;
+    pthread_mutex_unlock(&r->mutex);
+    if (busy)
+        return -EBUSY;
+    if (!path || !*path || endpoint_ns <= 0 || r->keep_key == no_position)
+        return -EAGAIN;
+    int64_t end = endpoint_ns;
+    for (unsigned i = 1; i < r->format->nb_streams; ++i)
+        if (r->ends[i] < end)
+            end = r->ends[i];
+    if (end <= 0)
+        return -EAGAIN;
+    int64_t target = end > r->options.duration_ns ? end - r->options.duration_ns : 0;
+    uint64_t key = r->keep_key;
+    for (uint64_t next = following_key(r, key); next != no_position;
+         next = following_key(r, next)) {
+        if (time_ns(r, at(r, next)) > target)
+            break;
+        key = next;
+    }
+    int64_t start = time_ns(r, at(r, key));
+    if (start >= end)
+        return -EAGAIN;
+    struct snapshot view = {
+        .path = strdup(path),
+        .result = {.start_ns = start, .end_ns = end, .requested_end_ns = endpoint_ns}};
+    for (uint32_t id = r->head; id != NO_BLOCK; id = r->blocks[id]->next)
+        ++view.count;
+    view.blocks = calloc(view.count, sizeof(*view.blocks));
+    view.ids = calloc(view.count, sizeof(*view.ids));
+    if (!view.path || !view.blocks || !view.ids) {
+        free(view.path);
+        free(view.blocks);
+        free(view.ids);
+        return -ENOMEM;
+    }
+    size_t i = 0;
+    for (uint32_t id = r->head; id != NO_BLOCK; id = r->blocks[id]->next) {
+        struct block *b = r->blocks[id];
+        view.blocks[i] = b;
+        view.ids[i++] = id;
+        view.packets += b->used;
+        atomic_fetch_add_explicit(&b->refs, 1, memory_order_relaxed);
+    }
+    /* Once published, even the tail's unused slots remain immutable. A new live
+     * block ensures an indefinitely paused exporter cannot accumulate new data. */
+    r->sealed = true;
+    pthread_mutex_lock(&r->mutex);
+    r->job = view;
+    r->state = QUEUED;
+    pthread_cond_signal(&r->changed);
+    pthread_mutex_unlock(&r->mutex);
+    return 0;
+}
+
+bool gk_replay_poll(struct gk_replay *r, struct gk_replay_result *result)
+{
+    if (!r)
+        return false;
+    gk_drain_event(r->wake);
+    pthread_mutex_lock(&r->mutex);
+    bool done = r->state == DONE;
+    if (done) {
+        r->stats.last = r->job.result;
+        if (r->job.result.error < 0)
+            ++r->stats.failed;
+        else {
+            ++r->stats.saved;
+            r->stats.saved_bytes += r->job.result.bytes;
+        }
+        *result = r->job.result;
+        r->state = IDLE;
+    }
+    pthread_mutex_unlock(&r->mutex);
+    if (done)
+        gk_drain_event(r->wake); /* Publication may have followed the first drain. */
+    recycle(r);
+    return done;
+}
+
+int gk_replay_fd(const struct gk_replay *r)
+{
+    return r->wake;
+}
+
+void gk_replay_close(struct gk_replay **replay, struct gk_replay_stats *stats)
+{
+    struct gk_replay *r = *replay;
+    if (!r)
+        return;
+    if (r->thread_started) {
+        pthread_mutex_lock(&r->mutex);
+        r->stopping = true;
+        pthread_cond_signal(&r->changed);
+        pthread_mutex_unlock(&r->mutex);
+        pthread_join(r->worker, nullptr);
+        struct gk_replay_result result;
+        (void)gk_replay_poll(r, &result);
+    }
+    if (stats)
+        *stats = r->stats;
+    for (uint32_t id = 0; id < r->unused; ++id)
+        if (r->blocks[id]) {
+            for (unsigned j = 0; j < r->blocks[id]->used; ++j)
+                av_buffer_unref(&r->blocks[id]->packets[j].buffer);
+            free(r->blocks[id]);
+        }
+    free(r->blocks);
+    free(r->available);
+    free(r->last_pts);
+    free(r->ends);
+    gk_ring_destroy(&r->released);
+    if (r->wake >= 0)
+        close(r->wake);
+    if (r->cond_ready)
+        pthread_cond_destroy(&r->changed);
+    if (r->mutex_ready)
+        pthread_mutex_destroy(&r->mutex);
+    free(r);
+    *replay = nullptr;
+}

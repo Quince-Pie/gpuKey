@@ -1,0 +1,53 @@
+--- a/libavutil/hwcontext_vulkan.c
++++ b/libavutil/hwcontext_vulkan.c
+@@ -2443,7 +2443,10 @@
+ 
+ static void vulkan_frame_free_cb(void *opaque, uint8_t *data)
+ {
+-    vulkan_frame_free(opaque, (AVVkFrame*)data);
++    AVHWFramesContext *hwfc = opaque;
++    VulkanFramesPriv *fp = hwfc->hwctx;
++    vulkan_frame_free(hwfc, (AVVkFrame*)data);
++    av_buffer_pool_trim(fp->tmp, 0);
+ }
+ 
+ static int alloc_bind_mem(AVHWFramesContext *hwfc, AVVkFrame *f,
+@@ -4967,24 +4970,8 @@
+     if (err < 0)
+         goto end;
+ 
+-    /* No need to declare buf deps for synchronous transfers (downloads) */
+-    if (upload) {
+-        /* Add the software frame backing the buffers if we're host mapping */
+-        if (host_mapped) {
+-            err = ff_vk_exec_add_dep_sw_frame(&p->vkctx, exec, swf);
+-            if (err < 0) {
+-                ff_vk_exec_discard_deps(&p->vkctx, exec);
+-                goto end;
+-            }
+-        }
+-
+-        /* Add the buffers as a dependency */
+-        err = ff_vk_exec_add_dep_buf(&p->vkctx, exec, bufs, nb_bufs, 1);
+-        if (err < 0) {
+-            ff_vk_exec_discard_deps(&p->vkctx, exec);
+-            goto end;
+-        }
+-    }
++    /* Both transfer directions wait for completion before returning, so caller
++     * frames and local staging buffers stay live without exec-retained clones. */
+ 
+     ff_vk_frame_barrier(&p->vkctx, exec, hwf, img_bar, &nb_img_bar,
+                         VK_PIPELINE_STAGE_2_ALL_COMMANDS_BIT,
+@@ -5027,9 +5014,9 @@
+     err = ff_vk_exec_submit(&p->vkctx, exec);
+     if (err < 0) {
+         ff_vk_exec_discard_deps(&p->vkctx, exec);
+-    } else if (!upload) {
++    } else {
+         ff_vk_exec_wait(&p->vkctx, exec);
+-        if (!host_mapped)
++        if (!upload && !host_mapped)
+             err = copy_buffer_data(hwfc, bufs[0], swf, region, planes, 0);
+     }
+ 

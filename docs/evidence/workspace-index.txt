@@ -1,0 +1,70 @@
+AV1 workspace continuation — 21 October 2026
+
+Authoritative source and assumptions: IMPLEMENTATION.md, docs/dependencies.md,
+docs/memory-targets.md, and docs/validation.md in the delivered workspace.
+The original user clip was not modified.
+
+Control and candidates
+- Fixed recorder: /nix/store/64lbdzi0r249br2d6l2aipc04s2nnc85-gpukey-0.1.0/bin/gpukey
+- Control: /nix/store/9wl7r7ajh4asqd2iy2arm18hixjy8brn-mesa-gpukey-events-26.2.5
+- Selected dedicated: /nix/store/5dfy2jyma82s0cc04mg962nf3kng2kbw-mesa-gpukey-workspace-26.2.5
+- Packed pair: /nix/store/ysprqqlgfsfgg2p0q24p92im58yfnhfk-mesa-gpukey-workspace-packed-26.2.5
+- Whole 2 MiB: /nix/store/q3l8h10jvjpaim7rm6jqmxs69n9mwqjw-mesa-gpukey-workspace-whole-26.2.5
+Driver changes preserve AV1 payloads, image/reference counts, QP and output capacity.
+The whole candidate falls back to separate SDB + packed pair for larger SDBs.
+
+Performance, without simultaneous builds or profiling
+- comparison/: three runs, five workloads, control/direct/packed; binary hashes.
+- confirmation/: fresh three runs, five workloads, control/direct/whole.
+- saturation/: fresh three twenty-second saturated runs, same three drivers.
+- final-long/: packaged forty-second portrait/60 replay, all 2400 frames,
+  two late saves after eviction. final-long-summary.json holds completed-child
+  CPU/RSS and sampled client-deduplicated DRM memory alongside raw counters.
+The throughput ranking reversed. Dedicated buffers are selected for consistent
+fixed VRAM reduction; no general CPU, throughput, latency or power win is claimed.
+
+Correctness/failure evidence
+- fcb-control*: real injected allocation failure makes the control exit 139.
+- direct-failures/, packed-failures/, whole-failures/: eight failed/healthy
+  lifetimes per allocation/map case with descriptor checks and healthy color.
+- clang-failures/: selected-driver fault suite with the Clang-built probe/hook.
+- contexts-final-*/: final barrier-based four-worker, sixteen-lifetime,
+  128-frame independent 8/10-bit pixel/order oracle for each driver.
+- codecs-verified/: authoritative H.264 I/P/B, HEVC I/P, AV1 CQP/QVBR
+  120-frame decoded hashes and encoded-payload hashes for all four drivers.
+- vpp-final/: 576 raw transition matches and both bit depths/layouts.
+- hardware-verified.log: completed codec, VPP and graphics tests.
+- native-sanitizers.log: Clang ASan/UBSan hardware-check and full private
+  CPU/GPU/audio/replay/source-loss/reconfiguration integration.
+- final-verification.log: final GCC/Clang checks, ASan/UBSan suites, 14 x86-64
+  Nix checks. hardware-target.log exercises the final Make target.
+Dependencies/GPU allocations are not made sanitizer-instrumented by app builds.
+
+Preserved invalid setups (not product failures or passing evidence)
+- codecs/: 320x240 HEVC was below the device's 384-pixel width minimum.
+- codecs-final/ and hardware-final.log: an added B-picture assertion found
+  that HEVC had silently selected I/P. Corrected in codecs-verified/ with
+  explicit I/P settings and actual picture-type checks. H.264 retains B frames.
+Earlier nominal/codecs logs remain as development evidence, not the final gate.
+
+Profiling, separate from performance runs
+- samply-control/, samply-direct/: real twelve-second private portal captures;
+  profiler compatibility preload is removed before executing the recorder.
+  Presymbolicated profiles, sample counts and summaries are retained.
+- tracy/: actual six-second instrumented native recording, 360 frames,
+  replay.tracy, exported zones, two independently decoded replay clips.
+No attachment/signals were sent to the user's interactive recorder.
+
+Reproduction from the development shell
+- nix build .#amd .#amd-workspace-reference .#amd-workspace-packed .#amd-workspace-whole
+- make PROFILE=release hardware-check
+- bash tools/check-workspace-failures.sh DRIVER direct|packed|whole NEW_DIR
+- bash tools/check-workspace-codecs.sh NEW_DIR control DRIVER direct DRIVER ...
+- bash tools/benchmark-gpu-drivers.sh RECORDER FIXTURE NEW_DIR 3 control DRIVER direct DRIVER whole DRIVER
+- GPUKEY_DRIVER_CASES=hd1000 GPUKEY_DRIVER_SATURATED_SECONDS=20 selects the longer saturation series.
+- tools/profile-portal-samply.sh and tools/profile-replay.sh reproduce the profiler paths.
+- nix fmt; /home/quince/.agents/skills/c23-skill/scripts/c23_verify.sh
+
+Unresolved: broader devices/firmware, compression and power/game-interference
+comparisons, CPU-input conversion, native header/command overhead, and larger
+representation changes. This is verified progress toward the unchanged goal.

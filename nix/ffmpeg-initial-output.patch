@@ -1,0 +1,35 @@
+--- a/libavcodec/hw_base_encode.c
++++ b/libavcodec/hw_base_encode.c
+@@ -625,7 +625,9 @@
+             return err;
+ 
+         // More frames can be buffered
+-        if (av_fifo_can_write(ctx->encode_fifo) && !ctx->end_of_stream) {
++        if (av_fifo_can_write(ctx->encode_fifo) && !ctx->end_of_stream &&
++            // Materialize the first issued picture before publishing a mux header.
++            !(ctx->encode_order == 0 && ctx->initial_output)) {
+             if (!ctx->async_readout || !ctx->op->ready)
+                 return AVERROR(EAGAIN);
+             av_fifo_peek(ctx->encode_fifo, &pic, 1, 0);
+--- a/libavcodec/hw_base_encode.h
++++ b/libavcodec/hw_base_encode.h
+@@ -224,6 +224,8 @@
+ 
+     // Allow completed output to be collected without another input frame.
+     int             async_readout;
++    // Read the first issued picture even while the asynchronous FIFO has space.
++    int             initial_output;
+     // Borrowed readiness fd, valid after receive returned EAGAIN; -1 otherwise.
+     int             async_fd;
+ 
+@@ -249,6 +251,10 @@
+ 
+ 
+ #define HW_BASE_ENCODE_COMMON_OPTIONS \
++    { "initial_output", \
++      "Wait for the first issued output without filling the asynchronous queue", \
++      OFFSET(common.base.initial_output), AV_OPT_TYPE_BOOL, \
++      { .i64 = 0 }, 0, 1, FLAGS }, \
+     { "idr_interval", \
+       "Distance (in I-frames) between key frames", \
+       OFFSET(common.base.idr_interval), AV_OPT_TYPE_INT, \

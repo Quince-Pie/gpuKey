@@ -1,0 +1,53 @@
+--- a/libavcodec/vaapi_encode.c
++++ b/libavcodec/vaapi_encode.c
+@@ -848,6 +848,8 @@
+ end:
+     av_refstruct_unref(&pic->output_buffer_ref);
+     pic->output_buffer = VA_INVALID_ID;
++    if (ctx->async_trim)
++        av_refstruct_pool_trim(ctx->output_buffer_pool, 1);
+     return err;
+ }
+ 
+@@ -2098,8 +2100,10 @@
+     VAAPIEncodeBuffer *buffer = obj;
+     VABufferID buffer_id = buffer->id;
+ 
+-    if (buffer->fd >= 0)
++    if (buffer->fd >= 0) {
+         close(buffer->fd);
++        ++ctx->async_fd_generation;
++    }
+     if (buffer_id != VA_INVALID_ID)
+         vaDestroyBuffer(ctx->hwctx->display, buffer_id);
+ 
+@@ -2232,6 +2236,7 @@
+ 
+     // Read-only AVOptions are not initialized by av_opt_set_defaults().
+     base_ctx->async_fd = -1;
++    ctx->async_fd_generation = 0;
+     err = ff_hw_base_encode_init(avctx, base_ctx);
+     if (err < 0)
+         goto fail;
+--- a/libavcodec/vaapi_encode.h
++++ b/libavcodec/vaapi_encode.h
+@@ -209,6 +209,8 @@
+     // Pool of (reusable) bitstream output buffers.
+     struct AVRefStructPool *output_buffer_pool;
+     int             async_events;
++    int             async_trim;
++    uint64_t        async_fd_generation;
+ 
+     // Global parameters which will be applied at the start of the
+     // sequence (includes rate control parameters below).
+@@ -358,6 +360,10 @@
+ 
+ 
+ #define VAAPI_ENCODE_COMMON_OPTIONS \
++    { "async_trim", "Release excess idle output buffers; observe fd generation", \
++      OFFSET(common.async_trim), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS }, \
++    { "async_fd_generation", "Changes when an exposed output descriptor closes", \
++      OFFSET(common.async_fd_generation), AV_OPT_TYPE_UINT64, { .i64 = 0 }, 0, UINT64_MAX, FLAGS | AV_OPT_FLAG_READONLY }, \
+     { "async_events", "Expose a persistent dma-buf output readiness fd when supported", \
+       OFFSET(common.async_events), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS }, \
+     { "async_output_fd", "Borrowed completion fd after receive returns EAGAIN", \

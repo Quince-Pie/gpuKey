@@ -1,0 +1,152 @@
+--- a/src/gallium/frontends/va/picture_av1_enc.c
++++ b/src/gallium/frontends/va/picture_av1_enc.c
+@@ -212,7 +212,24 @@
+    context->desc.av1enc.tg_obu_header.temporal_id = av1->tile_group_obu_hdr_info.bits.temporal_id;
+    context->desc.av1enc.tg_obu_header.spatial_id = av1->tile_group_obu_hdr_info.bits.spatial_id;
+ 
+-   /* Evict unused surfaces */
++   surf = handle_table_get(drv->htab, av1->reconstructed_frame);
++   if (!surf)
++      return VA_STATUS_ERROR_INVALID_PARAMETER;
++   const bool separate_dpb = context->decoder->create_dpb_buffer != NULL;
++   if (separate_dpb && surf->is_dpb && surf->ctx != context) {
++         /* A different live encoder still owns its DPB association. A closed
++          * encoder's auxiliary state cannot be reused by a new encoder. */
++         if (surf->ctx)
++            return VA_STATUS_ERROR_INVALID_PARAMETER;
++         if (surf->buffer)
++            surf->buffer->destroy(surf->buffer);
++         surf->buffer = NULL;
++         surf->is_dpb = false;
++   }
++
++   /* Evict unused surfaces. For separately allocated reconstructions, the
++    * inactive entry borrows its surface's buffer. Its unused order_hint stores
++    * that surface ID, preserving cross-surface reuse without another field. */
+    for (i = 0; i < context->desc.av1enc.dpb_size; i++) {
+       struct pipe_av1_enc_dpb_entry *dpb = &context->desc.av1enc.dpb[i];
+       if (!dpb->id || dpb->id == av1->reconstructed_frame)
+@@ -222,22 +239,25 @@
+             break;
+       }
+       if (j == ARRAY_SIZE(av1->reference_frames)) {
+-         surf = handle_table_get(drv->htab, dpb->id);
+-         assert(surf);
+-         surf->is_dpb = false;
+-         surf->buffer = NULL;
+-         /* Keep the buffer for reuse later */
++         if (separate_dpb) {
++            dpb->order_hint = dpb->id;
++         } else {
++            vlVaSurface *retired = handle_table_get(drv->htab, dpb->id);
++            assert(retired);
++            retired->is_dpb = false;
++            retired->buffer = NULL;
++         }
+          dpb->id = 0;
+       }
+    }
+ 
+-   surf = handle_table_get(drv->htab, av1->reconstructed_frame);
+-   if (!surf)
+-      return VA_STATUS_ERROR_INVALID_PARAMETER;
+ 
+    for (i = 0; i < ARRAY_SIZE(context->desc.av1enc.dpb); i++) {
+-      if (context->desc.av1enc.dpb[i].id == av1->reconstructed_frame) {
+-         assert(surf->is_dpb);
++      if (context->desc.av1enc.dpb[i].id == av1->reconstructed_frame ||
++          (separate_dpb && !context->desc.av1enc.dpb[i].id &&
++           context->desc.av1enc.dpb[i].buffer &&
++           context->desc.av1enc.dpb[i].order_hint == av1->reconstructed_frame)) {
++         assert(surf->is_dpb && surf->buffer == context->desc.av1enc.dpb[i].buffer);
+          break;
+       }
+       if (!surf->is_dpb && !context->desc.av1enc.dpb[i].id) {
+@@ -246,21 +266,34 @@
+             surf->buffer->destroy(surf->buffer);
+             surf->buffer = NULL;
+          }
+-         if (context->decoder->create_dpb_buffer) {
++         if (separate_dpb) {
+             struct pipe_video_buffer *buffer = context->desc.av1enc.dpb[i].buffer;
++            uint32_t owner = context->desc.av1enc.dpb[i].order_hint;
+             if (!buffer) {
+                /* Find unused buffer */
+                for (j = 0; j < context->desc.av1enc.dpb_size; j++) {
+                   struct pipe_av1_enc_dpb_entry *dpb = &context->desc.av1enc.dpb[j];
+                   if (!dpb->id && dpb->buffer) {
+                      buffer = dpb->buffer;
++                     owner = dpb->order_hint;
+                      dpb->buffer = NULL;
++                     dpb->order_hint = 0;
+                      break;
+                   }
+                }
+             }
+-            if (!buffer)
++            if (buffer) {
++               vlVaSurface *previous = handle_table_get(drv->htab, owner);
++               assert(previous && previous != surf && previous->is_dpb && previous->buffer == buffer);
++               previous->buffer = NULL;
++               previous->is_dpb = false;
++            } else {
+                buffer = context->decoder->create_dpb_buffer(context->decoder, &context->desc.base, &surf->templat);
++            }
++            if (!buffer) {
++               surf->is_dpb = false;
++               return VA_STATUS_ERROR_ALLOCATION_FAILED;
++            }
+             surf->buffer = buffer;
+          }
+          vlVaSetSurfaceContext(drv, surf, context);
+--- a/src/gallium/frontends/va/surface.c
++++ b/src/gallium/frontends/va/surface.c
+@@ -88,7 +88,10 @@
+       break;
+    case PIPE_VIDEO_FORMAT_AV1:
+       for (unsigned i = 0; i < surf->ctx->desc.av1enc.dpb_size; i++) {
+-         if (surf->ctx->desc.av1enc.dpb[i].id == id) {
++         struct pipe_av1_enc_dpb_entry *dpb = &surf->ctx->desc.av1enc.dpb[i];
++         if (dpb->id == id ||
++             (surf->ctx->decoder && surf->ctx->decoder->create_dpb_buffer &&
++              !dpb->id && dpb->buffer && dpb->order_hint == id)) {
+             memset(&surf->ctx->desc.av1enc.dpb[i], 0, sizeof(surf->ctx->desc.av1enc.dpb[i]));
+             break;
+          }
+--- a/src/gallium/frontends/va/context.c
++++ b/src/gallium/frontends/va/context.c
+@@ -510,7 +510,10 @@
+       if (is_encode) {
+          for (uint32_t i = 0; i < ARRAY_SIZE(context->desc.av1enc.dpb); i++) {
+             struct pipe_video_buffer *buf = context->desc.av1enc.dpb[i].buffer;
+-            if (buf && !context->desc.av1enc.dpb[i].id)
++            /* Separately created AV1 buffers remain owned by their surfaces,
++             * including inactive entries whose order_hint identifies the owner. */
++            if (buf && !context->desc.av1enc.dpb[i].id &&
++                (!context->decoder || !context->decoder->create_dpb_buffer))
+                buf->destroy(buf);
+          }
+          util_dynarray_fini(&context->desc.av1enc.raw_headers);
+--- a/src/gallium/frontends/va/va_private.h
++++ b/src/gallium/frontends/va/va_private.h
+@@ -436,6 +436,7 @@
+    vlVaBuffer *coded_buf;
+    struct pipe_fence_handle *fence; /* pipe_video_codec fence */
+    struct pipe_fence_handle *pipe_fence; /* pipe_context fence */
++   /* AV1 also keeps this set for a surface owning an inactive reusable DPB. */
+    bool is_dpb;
+    unsigned int strides[3];
+    unsigned int offsets[3];
+--- a/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc.c
++++ b/src/gallium/drivers/radeonsi/mm/radeon_vcn_enc.c
+@@ -2202,6 +2202,10 @@
+    }
+ 
+    struct radeon_enc_dpb_buffer *dpb = CALLOC_STRUCT(radeon_enc_dpb_buffer);
++   if (!dpb) {
++      buf->destroy(buf);
++      return NULL;
++   }
+    dpb->templ = templ;
+    dpb->luma = (struct si_texture *)((struct vl_video_buffer *)buf)->resources[0];
+    dpb->chroma = (struct si_texture *)((struct vl_video_buffer *)buf)->resources[1];

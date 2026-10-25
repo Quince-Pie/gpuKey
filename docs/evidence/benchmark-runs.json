@@ -1,0 +1,1802 @@
+[
+  {
+    "cpu_user_us": 624158,
+    "cpu_system_us": 23558,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 715797194,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94296,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 123291.9,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3600469
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 258118.5,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4478518
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 18580.3,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 25468
+    }
+  },
+  {
+    "cpu_user_us": 616605,
+    "cpu_system_us": 23500,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 711573985,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 93860,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 121714.5,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3551296
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 261862.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3963699
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 47899.2,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 69001
+    }
+  },
+  {
+    "cpu_user_us": 640447,
+    "cpu_system_us": 20379,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 742553624,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95112,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 118338.0,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3178548
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 296625.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 8388607,
+      "max_ns": 5887805
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 15529.5,
+      "p50_bucket_upper_ns": 16383,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 21431
+    }
+  },
+  {
+    "cpu_user_us": 665024,
+    "cpu_system_us": 24749,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 753543313,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94028,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 123878.5,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3996251
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 223177.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 7410488
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 23906.8,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 35657
+    }
+  },
+  {
+    "cpu_user_us": 648310,
+    "cpu_system_us": 29729,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 751646511,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94528,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 134278.1,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 2097151,
+      "max_ns": 4025256
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 229655.3,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4962097
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 30002.0,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 44003
+    }
+  },
+  {
+    "cpu_user_us": 646484,
+    "cpu_system_us": 25521,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 740286805,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94300,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 122402.9,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3637620
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 236741.5,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4421128
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 27702.7,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 38062
+    }
+  },
+  {
+    "cpu_user_us": 608345,
+    "cpu_system_us": 19145,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 698104387,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95776,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 131413.6,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3128092
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 227929.0,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4696271
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 17819.0,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 23064
+    }
+  },
+  {
+    "cpu_user_us": 622701,
+    "cpu_system_us": 21544,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 712346393,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94352,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 123563.0,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3685531
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 243407.9,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4387614
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 25680.3,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 35758
+    }
+  },
+  {
+    "cpu_user_us": 634605,
+    "cpu_system_us": 24176,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 723826442,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94376,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 124897.6,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 4317222
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 227798.7,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4396431
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 27383.7,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 37010
+    }
+  },
+  {
+    "cpu_user_us": 644095,
+    "cpu_system_us": 24186,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 744023451,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94432,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 124461.2,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3911841
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 274023.4,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 8388607,
+      "max_ns": 6335705
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 17249.3,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 24316
+    }
+  },
+  {
+    "cpu_user_us": 656218,
+    "cpu_system_us": 29419,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 767595169,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 96168,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 120849.7,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3411872
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 317943.5,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 6547829
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 19121.5,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 31309
+    }
+  },
+  {
+    "cpu_user_us": 614845,
+    "cpu_system_us": 24459,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 710118076,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95708,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 135803.2,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3489509
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 219661.4,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 8388607,
+      "max_ns": 7102742
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 37301.0,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 55646
+    }
+  },
+  {
+    "cpu_user_us": 612560,
+    "cpu_system_us": 17273,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 695176111,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95152,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 135716.8,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3495830
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 192141.4,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 5451126
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 17985.7,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 30618
+    }
+  },
+  {
+    "cpu_user_us": 620895,
+    "cpu_system_us": 24342,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 727310708,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95212,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 123750.2,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3537089
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 298624.3,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4465282
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 21150.5,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 41449
+    }
+  },
+  {
+    "cpu_user_us": 615750,
+    "cpu_system_us": 24960,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 721667569,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95272,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 120866.9,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3577616
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 309742.7,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 7315486
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 21055.2,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 33263
+    }
+  },
+  {
+    "cpu_user_us": 630850,
+    "cpu_system_us": 28106,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 724374205,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94212,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 123396.8,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3330888
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 263582.9,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3821890
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 70523.8,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 83989
+    }
+  },
+  {
+    "cpu_user_us": 668537,
+    "cpu_system_us": 20464,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 758627145,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95164,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 124961.1,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3797464
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 245251.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3950014
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 92176.7,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 102895
+    }
+  },
+  {
+    "cpu_user_us": 618515,
+    "cpu_system_us": 21183,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 713576597,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94104,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 122717.0,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3947859
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 276294.8,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 8388607,
+      "max_ns": 4689138
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 84518.7,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 93006
+    }
+  },
+  {
+    "cpu_user_us": 614161,
+    "cpu_system_us": 19785,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 705900936,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 95400,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 121066.5,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3480361
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 253405.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 6334123
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 77853.2,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 86274
+    }
+  },
+  {
+    "cpu_user_us": 649145,
+    "cpu_system_us": 20643,
+    "requested_synthetic_frames": 180,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 742977501,
+    "offered": 0,
+    "submitted": 180,
+    "packets": 180,
+    "skipped": 0,
+    "accepted_bytes": 238464,
+    "written_bytes": 238464,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 1572864,
+    "max_rss_kib": 94708,
+    "prepare": {
+      "count": 180,
+      "mean_ns": 118102.2,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3558651
+    },
+    "encode_and_receive": {
+      "count": 180,
+      "mean_ns": 257763.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4045856
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 6,
+      "mean_ns": 69954.5,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 75002
+    }
+  },
+  {
+    "cpu_user_us": 24413,
+    "cpu_system_us": 16706,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 162648568,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 79404,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 74753.1,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3500600
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 596588.0,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 2097151,
+      "max_ns": 2069231
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 26386.7,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 38753
+    }
+  },
+  {
+    "cpu_user_us": 27051,
+    "cpu_system_us": 14873,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 181727831,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 80020,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 77464.6,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 4400910
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 667992.4,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 5009887
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 15575.7,
+      "p50_bucket_upper_ns": 16383,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 23013
+    }
+  },
+  {
+    "cpu_user_us": 26719,
+    "cpu_system_us": 16093,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 198911494,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 77948,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 75825.2,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 3422952
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 746251.5,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 8388607,
+      "max_ns": 5293105
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 26483.7,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 39234
+    }
+  },
+  {
+    "cpu_user_us": 27814,
+    "cpu_system_us": 13938,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 158273247,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 78308,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 73295.9,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3387034
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 577200.1,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 2097151,
+      "max_ns": 2235827
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 10179.3,
+      "p50_bucket_upper_ns": 8191,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 17282
+    }
+  },
+  {
+    "cpu_user_us": 33412,
+    "cpu_system_us": 8356,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 195640040,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 80344,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 78367.2,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3894959
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 726989.4,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4704877
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 9027.3,
+      "p50_bucket_upper_ns": 16383,
+      "p99_bucket_upper_ns": 16383,
+      "max_ns": 15770
+    }
+  },
+  {
+    "cpu_user_us": 36806,
+    "cpu_system_us": 5666,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 185826707,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 79892,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 74796.8,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3289669
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 689298.9,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 8388607,
+      "max_ns": 5989568
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 8933.3,
+      "p50_bucket_upper_ns": 8191,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 17884
+    }
+  },
+  {
+    "cpu_user_us": 33340,
+    "cpu_system_us": 9351,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 179968869,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 78396,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 73177.4,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3120487
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 667318.8,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3112903
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 8519.3,
+      "p50_bucket_upper_ns": 8191,
+      "p99_bucket_upper_ns": 16383,
+      "max_ns": 16211
+    }
+  },
+  {
+    "cpu_user_us": 34213,
+    "cpu_system_us": 8934,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 186881732,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 78144,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 77255.9,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3857618
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 692699.0,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 3901712
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 8723.3,
+      "p50_bucket_upper_ns": 8191,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 16742
+    }
+  },
+  {
+    "cpu_user_us": 32722,
+    "cpu_system_us": 10070,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 174567630,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 79384,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 77918.9,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3197975
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 636485.1,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 2097151,
+      "max_ns": 2229796
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 31446.7,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 43402
+    }
+  },
+  {
+    "cpu_user_us": 29239,
+    "cpu_system_us": 13909,
+    "requested_synthetic_frames": 240,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 199126833,
+    "offered": 0,
+    "submitted": 240,
+    "packets": 240,
+    "skipped": 0,
+    "accepted_bytes": 13200,
+    "written_bytes": 13200,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 786432,
+    "max_rss_kib": 80036,
+    "prepare": {
+      "count": 240,
+      "mean_ns": 78959.5,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 3578558
+    },
+    "encode_and_receive": {
+      "count": 240,
+      "mean_ns": 744239.2,
+      "p50_bucket_upper_ns": 1048575,
+      "p99_bucket_upper_ns": 4194303,
+      "max_ns": 4812622
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 3,
+      "mean_ns": 28290.3,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 40797
+    }
+  },
+  {
+    "cpu_user_us": 40845,
+    "cpu_system_us": 37661,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1315850919,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 144996,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 285351.8,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3857868
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10297344.1,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 33554431,
+      "max_ns": 18828718
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 49929.6,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 84189
+    }
+  },
+  {
+    "cpu_user_us": 37250,
+    "cpu_system_us": 41771,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1297532800,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 142780,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 290552.9,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 4204417
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10131247.7,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 15431635
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 33443.6,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 47931
+    }
+  },
+  {
+    "cpu_user_us": 38681,
+    "cpu_system_us": 36739,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1312889103,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 143032,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 293034.0,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 4228042
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10247070.2,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 17337565
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 15765.0,
+      "p50_bucket_upper_ns": 16383,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 27342
+    }
+  },
+  {
+    "cpu_user_us": 39565,
+    "cpu_system_us": 37472,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1300587783,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 144468,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 292130.3,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3733442
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10154173.7,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 16152574
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 18898.2,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 28344
+    }
+  },
+  {
+    "cpu_user_us": 43426,
+    "cpu_system_us": 31953,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1306769719,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 143548,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 288619.4,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3624175
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10223771.4,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 18430321
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 46345.5,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 88258
+    }
+  },
+  {
+    "cpu_user_us": 41575,
+    "cpu_system_us": 35522,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1300761678,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 144860,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 282415.0,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3451386
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10129853.7,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 16190285
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 24789.4,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 38743
+    }
+  },
+  {
+    "cpu_user_us": 40847,
+    "cpu_system_us": 36470,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1300158795,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 143564,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 285340.8,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3597474
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10149838.7,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 15746393
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 16326.0,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 32767,
+      "max_ns": 22573
+    }
+  },
+  {
+    "cpu_user_us": 36664,
+    "cpu_system_us": 41738,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1311852137,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 143180,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 291159.2,
+      "p50_bucket_upper_ns": 524287,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 4071244
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10244917.4,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 33554431,
+      "max_ns": 17424460
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 61050.9,
+      "p50_bucket_upper_ns": 131071,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 95441
+    }
+  },
+  {
+    "cpu_user_us": 38850,
+    "cpu_system_us": 33665,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1299152134,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 144072,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 279129.3,
+      "p50_bucket_upper_ns": 262143,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3596192
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10162030.8,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 17901857
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 49875.9,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 74010
+    }
+  },
+  {
+    "cpu_user_us": 41124,
+    "cpu_system_us": 31661,
+    "requested_synthetic_frames": 120,
+    "success": true,
+    "synthetic": true,
+    "elapsed_ns": 1301624538,
+    "offered": 0,
+    "submitted": 120,
+    "packets": 120,
+    "skipped": 0,
+    "accepted_bytes": 372193,
+    "written_bytes": 372193,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 2097152,
+    "max_rss_kib": 142928,
+    "prepare": {
+      "count": 120,
+      "mean_ns": 282904.8,
+      "p50_bucket_upper_ns": 262143,
+      "p99_bucket_upper_ns": 524287,
+      "max_ns": 3758721
+    },
+    "encode_and_receive": {
+      "count": 120,
+      "mean_ns": 10191871.6,
+      "p50_bucket_upper_ns": 16777215,
+      "p99_bucket_upper_ns": 16777215,
+      "max_ns": 18797769
+    },
+    "source_lease": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    },
+    "sink_completion": {
+      "count": 8,
+      "mean_ns": 22562.9,
+      "p50_bucket_upper_ns": 32767,
+      "p99_bucket_upper_ns": 65535,
+      "max_ns": 40347
+    }
+  }
+]

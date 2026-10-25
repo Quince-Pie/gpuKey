@@ -1,0 +1,227 @@
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/control.d -c -o build/gcc-debug-replay-eventfd-address-undefined/control.o src/control.c
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/replay.d -c -o build/gcc-debug-replay-eventfd-address-undefined/replay.o src/replay.c
+gcc -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/gpukey build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/main.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/audio_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/audio_test tests/audio_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/control_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/control_test tests/control_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/core_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/core_test tests/core_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/media_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/media_test tests/media_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/pattern_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/pattern_test tests/pattern_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/portal_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/portal_test tests/portal_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/replay_test.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/replay_test tests/replay_test.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+gcc -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -DGK_REPLAY_EVENTFD -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O0 -g3 -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all -Werror -MMD -MP -MF build/gcc-debug-replay-eventfd-address-undefined/tests/capture_fixture.d -fsanitize=address,undefined -o build/gcc-debug-replay-eventfd-address-undefined/tests/capture_fixture tests/capture_fixture.c build/gcc-debug-replay-eventfd-address-undefined/audio.o build/gcc-debug-replay-eventfd-address-undefined/capture.o build/gcc-debug-replay-eventfd-address-undefined/control.o build/gcc-debug-replay-eventfd-address-undefined/core.o build/gcc-debug-replay-eventfd-address-undefined/devices.o build/gcc-debug-replay-eventfd-address-undefined/gpu.o build/gcc-debug-replay-eventfd-address-undefined/media.o build/gcc-debug-replay-eventfd-address-undefined/pattern.o build/gcc-debug-replay-eventfd-address-undefined/portal.o build/gcc-debug-replay-eventfd-address-undefined/replay.o build/gcc-debug-replay-eventfd-address-undefined/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+run build/gcc-debug-replay-eventfd-address-undefined/tests/audio_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+bash tests/integration.sh /tmp/gpuKey/build/gcc-debug-replay-eventfd-address-undefined/gpukey /tmp/gpuKey/build/gcc-debug-replay-eventfd-address-undefined/tests/capture_fixture
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/result.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+run build/gcc-debug-replay-eventfd-address-undefined/tests/control_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Replay control needs an owned, private XDG_RUNTIME_DIR (mode 0700): Permission denied
+Saving replay to /tmp/gpukey-control-PnGXHO/gpukey-replay-20261020-041532-273824210.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-PnGXHO/gpukey-replay-20261020-041532-273824210.mkv
+Saving replay to /tmp/gpukey-control-PnGXHO/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-PnGXHO/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-PnGXHO/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+run build/gcc-debug-replay-eventfd-address-undefined/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/gcc-debug-replay-eventfd-address-undefined/tests/media_test
+[libaom-av1 @ 0x7d8fee5e2380] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x7d8fee5e5f80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8fee5ebe80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x7d8fee5f2c80] Could not update timestamps for skipped samples.
+[opus @ 0x7d8fee5f2c80] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x7d8fee5f4f80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8fee5f8b80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8fee5fdb80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x7d8fee600380] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8fee603080] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8fee605d80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/gcc-debug-replay-eventfd-address-undefined/tests/pattern_test
+pattern: scalar equivalence, odd/small dimensions, row periods and uint64 wrap pass
+run build/gcc-debug-replay-eventfd-address-undefined/tests/portal_test
+TAP version 14
+# random seed: R02Sff5450ee0174b7356d48e3fb9f715905
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed
+run build/gcc-debug-replay-eventfd-address-undefined/tests/replay_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+Completed: 1 video inputs, 1 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=514/514/0
+replay: independent cuts, eviction, paused export, audio timing, copy control, stop, invalid packets and byte limit pass
+bash tests/cli.sh /tmp/gpuKey/build/gcc-debug-replay-eventfd-address-undefined/gpukey
+private PipeWire integration: 1 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/capped.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+cli: positional/default output, format inference, repeatable audio, rational FPS, errors and nonoverwrite pass
+bash tests/replay-cli.sh /tmp/gpuKey/build/gcc-debug-replay-eventfd-address-undefined/gpukey
+Completed: 26 video inputs, 26 encoded packets; 0 capture skips, 25 FPS-limited; accepted/written/durable bytes=1786/1786/0
+private PipeWire integration: 26 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/audio.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347831/1347831/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/duration-boundary.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+'first clip.mkv': OK
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347831/1347831/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/audio-revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+capture: selected audio format was removed (Stale file handle)
+Incomplete recording: 21 video inputs, 21 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=541587/541587/0
+gpukey: Stale file handle. Any partial output has been preserved.
+private PipeWire integration: 21 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/aux.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+replay cli: repeated saves, private trigger, session collision, failures, stop and restart pass
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=308795/308795/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/aux-pcm.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=6149275/6149275/0
+private PipeWire integration: 50 video packets, passed
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static-replay.mkv.second.mkv
+Saved 1.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static-replay.mkv.second.mkv
+Saved 1.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/static-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.vb79TK/tmp.5eXRdpmukd/replay-revoke.mkv
+capture: selected source was removed (Broken pipe)
+Replay stopped: 1 clips saved, 0 failed; unsaved history discarded.
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire replay: 1 independent clips, 1 + 6 audio channels pass
+Audio devices (IDs last until PipeWire restarts; names can be reused):
+  ID           TYPE      DESCRIPTION / NODE NAME
+  No audio devices are visible on this PipeWire connection.
+
+Use: gpukey clip.mkv --audio ID [--audio ID ...]
+Each selected device becomes a separate track; no audio is selected by default.
+Use --display or --window to choose a screen source in the desktop dialog.
+integration: private PipeWire source -> recorder -> independent decoder passed

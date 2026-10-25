@@ -1,0 +1,428 @@
+--- a/libavcodec/cbs_av1.c
++++ b/libavcodec/cbs_av1.c
+@@ -1238,6 +1238,44 @@
+ #endif
+ }
+ 
++/* One caller-owned packed OBU, using the same syntax/state writer as CBS.
++ * The VAAPI caller treats a write failure as terminal for the picture. */
++int ff_cbs_av1_write_obu_buffer(CodedBitstreamContext *ctx, AV1RawOBU *obu,
++                               uint8_t *data, size_t capacity, size_t *bits)
++{
++#if CBS_WRITE
++    CodedBitstreamUnit unit = { .type = obu->header.obu_type, .content = obu };
++    PutBitContext pbc;
++    int err;
++
++    /* The writer reserves up to two OBU-header and eight size-field bytes. */
++    if (capacity < 10 || capacity > INT_MAX / 8)
++        return AVERROR(ENOSPC);
++    if (((CodedBitstreamAV1Context *)ctx->priv_data)->omit_redundant_header_copy &&
++        unit.type == AV1_OBU_REDUNDANT_FRAME_HEADER)
++        return AVERROR(EINVAL);
++
++    /* A sequence survives this call in the syntax context. Make its ownership
++     * explicit before the writer takes pointers into it. Other raw OBUs are
++     * borrowed only for the call; retained frame-header bits are still copied. */
++    if (unit.type == AV1_OBU_SEQUENCE_HEADER) {
++        err = CBS_FUNC(make_unit_refcounted)(ctx, &unit);
++        if (err < 0)
++            return err;
++    }
++    init_put_bits(&pbc, data, capacity);
++    err = cbs_av1_write_obu(ctx, &unit, &pbc);
++    if (err >= 0) {
++        *bits = put_bits_count(&pbc);
++        flush_put_bits(&pbc);
++    }
++    av_refstruct_unref(&unit.content_ref);
++    return err;
++#else
++    return AVERROR(ENOSYS);
++#endif
++}
++
+ static int cbs_av1_assemble_fragment(CodedBitstreamContext *ctx,
+                                      CodedBitstreamFragment *frag)
+ {
+--- a/libavcodec/cbs_av1.h
++++ b/libavcodec/cbs_av1.h
+@@ -432,6 +432,12 @@
+     } obu;
+ } AV1RawOBU;
+ 
++/* Serialize one OBU into caller-owned storage; capacity includes the writer's
++ * ten-byte maximum header reservation. No output pointer escapes this call.
++ * On failure the caller must abort the picture, not retry with mutated state. */
++int ff_cbs_av1_write_obu_buffer(CodedBitstreamContext *ctx, AV1RawOBU *obu,
++                               uint8_t *data, size_t capacity, size_t *bits);
++
+ typedef struct AV1ReferenceFrameState {
+     int valid;          // RefValid
+     int frame_id;       // RefFrameId
+@@ -461,6 +467,8 @@
+     /** A RefStruct reference backing sequence_header. */
+     AV1RawOBU            *sequence_header_ref;
+ 
++    /* Write-only projection: VAAPI emits no redundant frame-header OBUs. */
++    int omit_redundant_header_copy;
+     int     seen_frame_header;
+     AVBufferRef *frame_header_ref;
+     uint8_t     *frame_header;
+--- a/libavcodec/cbs_av1_syntax_template.c
++++ b/libavcodec/cbs_av1_syntax_template.c
+@@ -1790,6 +1790,13 @@
+             priv->seen_frame_header = 1;
+ 
+             av_buffer_unref(&priv->frame_header_ref);
++#ifdef WRITE
++            if (priv->omit_redundant_header_copy) {
++                priv->frame_header = NULL;
++                priv->frame_header_size = 0;
++                return 0;
++            }
++#endif
+ 
+ #ifdef READ
+             fh_bits  = get_bits_count(rw) - start_pos;
+--- a/libavcodec/vaapi_encode_av1.c
++++ b/libavcodec/vaapi_encode_av1.c
+@@ -40,12 +40,11 @@
+ 
+ typedef struct VAAPIEncodeAV1Context {
+     VAAPIEncodeContext common;
+-    AV1RawOBU sh; /**< sequence header.*/
+-    AV1RawOBU fh; /**< frame header.*/
+-    AV1RawOBU mh[4]; /**< metadata header.*/
+-    int nb_mh;
++    /* Only metadata payloads survive picture setup. Raw OBUs are call-local. */
++    AV1RawMetadataHDRMDCV mastering;
++    AV1RawMetadataHDRCLL light;
++    unsigned metadata_flags; /**< bit 0: MDCV, bit 1: CLL, in that output order. */
+     CodedBitstreamContext *cbc;
+-    CodedBitstreamFragment current_obu;
+     VAConfigAttribValEncAV1 attr;
+     VAConfigAttribValEncAV1Ext1 attr_ext1;
+     VAConfigAttribValEncAV1Ext2 attr_ext2;
+@@ -136,6 +135,9 @@
+     priv->cbc->trace_level   = AV_LOG_DEBUG;
+     priv->cbc->trace_context = ctx;
+     priv->cbc->trace_write_callback = vaapi_encode_av1_trace_write_log;
++    /* Slice setup ends each picture before the next header. Show-existing
++     * headers use reference state, never a redundant-header bit copy. */
++    ((CodedBitstreamAV1Context *)priv->cbc->priv_data)->omit_redundant_header_copy = 1;
+ 
+     if (ctx->rc_mode->quality) {
+         priv->q_idx_p = av_clip(ctx->rc_quality, 0, AV1_MAX_QUANT);
+@@ -164,48 +166,16 @@
+     return 0;
+ }
+ 
+-static int vaapi_encode_av1_add_obu(AVCodecContext *avctx,
+-                                    CodedBitstreamFragment *au,
+-                                    uint8_t type,
+-                                    void *obu_unit)
+-{
+-    int ret;
+-
+-    ret = ff_cbs_insert_unit_content(au, -1,
+-                                     type, obu_unit, NULL);
+-    if (ret < 0) {
+-        av_log(avctx, AV_LOG_ERROR, "Failed to add OBU unit: "
+-               "type = %d.\n", type);
+-        return ret;
+-    }
+-
+-    return 0;
+-}
+-
+ static int vaapi_encode_av1_write_obu(AVCodecContext *avctx,
+-                                      char *data, size_t *data_len,
+-                                      CodedBitstreamFragment *bs)
++                                      char *data, size_t capacity,
++                                      size_t *data_len, AV1RawOBU *obu)
+ {
+     VAAPIEncodeAV1Context *priv = avctx->priv_data;
+-    int ret;
+-
+-    ret = ff_cbs_write_fragment_data(priv->cbc, bs);
+-    if (ret < 0) {
++    int ret = ff_cbs_av1_write_obu_buffer(priv->cbc, obu, (uint8_t *)data,
++                                         capacity, data_len);
++    if (ret < 0)
+         av_log(avctx, AV_LOG_ERROR, "Failed to write packed header.\n");
+-        return ret;
+-    }
+-
+-    if ((size_t)8 * MAX_PARAM_BUFFER_SIZE < 8 * bs->data_size - bs->data_bit_padding) {
+-        av_log(avctx, AV_LOG_ERROR, "Access unit too large: "
+-               "%zu < %zu.\n", (size_t)8 * MAX_PARAM_BUFFER_SIZE,
+-               8 * bs->data_size - bs->data_bit_padding);
+-        return AVERROR(ENOSPC);
+-    }
+-
+-    memcpy(data, bs->data, bs->data_size);
+-    *data_len = 8 * bs->data_size - bs->data_bit_padding;
+-
+-    return 0;
++    return ret;
+ }
+ 
+ static int tile_log2(int blkSize, int target) {
+@@ -353,7 +323,9 @@
+ {
+     VAAPIEncodeAV1Context *priv = avctx->priv_data;
+ 
+-    memcpy(data, &priv->sh_data, MAX_PARAM_BUFFER_SIZE * sizeof(char));
++    if (*data_len < priv->sh_data_len)
++        return AVERROR(ENOSPC);
++    memcpy(data, priv->sh_data, (priv->sh_data_len + 7) / 8);
+     *data_len = priv->sh_data_len;
+ 
+     return 0;
+@@ -364,14 +336,12 @@
+     FFHWBaseEncodeContext       *base_ctx = avctx->priv_data;
+     VAAPIEncodeContext               *ctx = avctx->priv_data;
+     VAAPIEncodeAV1Context           *priv = avctx->priv_data;
+-    AV1RawOBU                     *sh_obu = &priv->sh;
++    AV1RawOBU                       raw = { 0 };
++    AV1RawOBU                     *sh_obu = &raw;
+     AV1RawSequenceHeader              *sh = &sh_obu->obu.sequence_header;
+     VAEncSequenceParameterBufferAV1 *vseq = ctx->codec_sequence_params;
+-    CodedBitstreamFragment           *obu = &priv->current_obu;
+     const AVPixFmtDescriptor *desc;
+-    int ret;
+-
+-    memset(sh_obu, 0, sizeof(*sh_obu));
++
+     sh_obu->header.obu_type = AV1_OBU_SEQUENCE_HEADER;
+ 
+     desc = av_pix_fmt_desc_get(base_ctx->input_frames->sw_format);
+@@ -453,17 +423,8 @@
+         vseq->seq_fields.bits.enable_cdef = sh->enable_cdef = 1;
+     }
+ 
+-    ret = vaapi_encode_av1_add_obu(avctx, obu, AV1_OBU_SEQUENCE_HEADER, &priv->sh);
+-    if (ret < 0)
+-        goto end;
+-
+-    ret = vaapi_encode_av1_write_obu(avctx, priv->sh_data, &priv->sh_data_len, obu);
+-    if (ret < 0)
+-        goto end;
+-
+-end:
+-    ff_cbs_fragment_reset(obu);
+-    return ret;
++    return vaapi_encode_av1_write_obu(avctx, priv->sh_data, sizeof(priv->sh_data),
++                                        &priv->sh_data_len, sh_obu);
+ }
+ 
+ static int vaapi_encode_av1_init_picture_params(AVCodecContext *avctx,
+@@ -473,10 +434,10 @@
+     VAAPIEncodeAV1Context          *priv = avctx->priv_data;
+     VAAPIEncodePicture        *vaapi_pic = pic->priv;
+     VAAPIEncodeAV1Picture          *hpic = pic->codec_priv;
+-    AV1RawOBU                    *fh_obu = &priv->fh;
++    AV1RawOBU                       raw = { 0 };
++    AV1RawOBU                    *fh_obu = &raw;
+     AV1RawFrameHeader                *fh = &fh_obu->obu.frame.header;
+     VAEncPictureParameterBufferAV1 *vpic = vaapi_pic->codec_picture_params;
+-    CodedBitstreamFragment          *obu = &priv->current_obu;
+     CodedBitstreamAV1Context      *cbctx = priv->cbc->priv_data;
+     FFHWBaseEncodePicture *ref;
+     VAAPIEncodeAV1Picture *href;
+@@ -485,7 +446,6 @@
+     static const int8_t default_loop_filter_ref_deltas[AV1_TOTAL_REFS_PER_FRAME] =
+         { 1, 0, 0, 0, -1, 0, -1, -1 };
+ 
+-    memset(fh_obu, 0, sizeof(*fh_obu));
+     vaapi_pic->nb_slices = priv->tile_groups;
+     vaapi_pic->non_independent_frame = pic->encode_order < pic->display_order;
+     fh_obu->header.obu_type = AV1_OBU_FRAME_HEADER;
+@@ -645,13 +605,10 @@
+         }
+     }
+ 
+-    ret = vaapi_encode_av1_add_obu(avctx, obu, AV1_OBU_FRAME_HEADER, &priv->fh);
++    ret = vaapi_encode_av1_write_obu(avctx, priv->fh_data, sizeof(priv->fh_data),
++                                      &priv->fh_data_len, fh_obu);
+     if (ret < 0)
+-        goto end;
+-
+-    ret = vaapi_encode_av1_write_obu(avctx, priv->fh_data, &priv->fh_data_len, obu);
+-    if (ret < 0)
+-        goto end;
++        return ret;
+ 
+     if (!(ctx->va_rc_mode & VA_RC_CQP)) {
+         vpic->min_base_qindex = av_clip(avctx->qmin, 1, AV1_MAX_QUANT);
+@@ -668,7 +625,7 @@
+                                                2 : 1));
+     }
+ 
+-    priv->nb_mh = 0;
++    priv->metadata_flags = 0;
+ 
+     if (pic->type == FF_HW_PICTURE_TYPE_IDR) {
+         AVFrameSideData *sd =
+@@ -678,16 +635,12 @@
+             AVMasteringDisplayMetadata *mdm =
+                 (AVMasteringDisplayMetadata *)sd->data;
+             if (mdm->has_primaries && mdm->has_luminance) {
+-                AV1RawOBU              *obu = &priv->mh[priv->nb_mh++];
+-                AV1RawMetadata          *md = &obu->obu.metadata;
+-                AV1RawMetadataHDRMDCV *mdcv = &md->metadata.hdr_mdcv;
++                AV1RawMetadataHDRMDCV *mdcv = &priv->mastering;
+                 const int        chroma_den = 1 << 16;
+                 const int      max_luma_den = 1 << 8;
+                 const int      min_luma_den = 1 << 14;
+ 
+-                memset(obu, 0, sizeof(*obu));
+-                obu->header.obu_type = AV1_OBU_METADATA;
+-                md->metadata_type = AV1_METADATA_TYPE_HDR_MDCV;
++                priv->metadata_flags |= 1;
+ 
+                 for (i = 0; i < 3; i++) {
+                     mdcv->primary_chromaticity_x[i] =
+@@ -718,20 +671,12 @@
+                                     AV_FRAME_DATA_CONTENT_LIGHT_LEVEL);
+         if (sd) {
+             AVContentLightMetadata *cllm = (AVContentLightMetadata *)sd->data;
+-            AV1RawOBU               *obu = &priv->mh[priv->nb_mh++];
+-            AV1RawMetadata           *md = &obu->obu.metadata;
+-            AV1RawMetadataHDRCLL    *cll = &md->metadata.hdr_cll;
+-
+-            memset(obu, 0, sizeof(*obu));
+-            obu->header.obu_type = AV1_OBU_METADATA;
+-            md->metadata_type    = AV1_METADATA_TYPE_HDR_CLL;
+-            cll->max_cll         = cllm->MaxCLL;
+-            cll->max_fall        = cllm->MaxFALL;
+-        }
+-    }
+-
+-end:
+-    ff_cbs_fragment_reset(obu);
++            priv->metadata_flags |= 2;
++            priv->light.max_cll  = cllm->MaxCLL;
++            priv->light.max_fall = cllm->MaxFALL;
++        }
++    }
++
+     return ret;
+ }
+ 
+@@ -762,10 +707,7 @@
+                                                  char *data, size_t *data_len)
+ {
+     VAAPIEncodeAV1Context     *priv = avctx->priv_data;
+-    CodedBitstreamFragment     *obu = &priv->current_obu;
+     CodedBitstreamAV1Context *cbctx = priv->cbc->priv_data;
+-    AV1RawOBU               *fh_obu = &priv->fh;
+-    AV1RawFrameHeader       *rep_fh = &fh_obu->obu.frame_header;
+     VAAPIEncodePicture   *vaapi_pic = pic->priv;
+     VAAPIEncodeAV1Picture *href;
+     int ret = 0;
+@@ -773,7 +715,9 @@
+     vaapi_pic->tail_size = 0;
+     /** Pack repeat frame header. */
+     if (pic->display_order > pic->encode_order) {
+-        memset(fh_obu, 0, sizeof(*fh_obu));
++        AV1RawOBU raw = { 0 };
++        AV1RawOBU *fh_obu = &raw;
++        AV1RawFrameHeader *rep_fh = &raw.obu.frame_header;
+         href = pic->refs[0][pic->nb_refs[0] - 1]->codec_priv;
+         fh_obu->header.obu_type = AV1_OBU_FRAME_HEADER;
+         fh_obu->header.obu_has_size_field = 1;
+@@ -788,22 +732,20 @@
+ 
+         cbctx->seen_frame_header = 0;
+ 
+-        ret = vaapi_encode_av1_add_obu(avctx, obu, AV1_OBU_FRAME_HEADER, &priv->fh);
++        ret = vaapi_encode_av1_write_obu(avctx, vaapi_pic->tail_data,
++                                          sizeof(vaapi_pic->tail_data),
++                                          &vaapi_pic->tail_size, fh_obu);
+         if (ret < 0)
+-            goto end;
+-
+-        ret = vaapi_encode_av1_write_obu(avctx, vaapi_pic->tail_data, &vaapi_pic->tail_size, obu);
+-        if (ret < 0)
+-            goto end;
++            return ret;
+ 
+         vaapi_pic->tail_size /= 8;
+     }
+ 
+-    memcpy(data, &priv->fh_data, MAX_PARAM_BUFFER_SIZE * sizeof(char));
++    if (*data_len < priv->fh_data_len)
++        return AVERROR(ENOSPC);
++    memcpy(data, priv->fh_data, (priv->fh_data_len + 7) / 8);
+     *data_len = priv->fh_data_len;
+ 
+-end:
+-    ff_cbs_fragment_reset(obu);
+     return ret;
+ }
+ 
+@@ -812,32 +754,32 @@
+                                                int index, int *type,
+                                                char *data, size_t *data_len)
+ {
+-    VAAPIEncodeAV1Context  *priv = avctx->priv_data;
+-    CodedBitstreamFragment *obu  = &priv->current_obu;
+-    AV1RawOBU *mh_obu;
+-    char mh_data[MAX_PARAM_BUFFER_SIZE];
+-    size_t mh_data_len;
+-    int ret = 0;
+-
+-    if (index >= priv->nb_mh)
++    VAAPIEncodeAV1Context *priv = avctx->priv_data;
++    unsigned kind;
++    int ret;
++
++    /* Keep the no-metadata path ahead of the temporary OBU initialization. */
++    if (index == 0 && (priv->metadata_flags & 1))
++        kind = AV1_METADATA_TYPE_HDR_MDCV;
++    else if (index == !!(priv->metadata_flags & 1) && (priv->metadata_flags & 2))
++        kind = AV1_METADATA_TYPE_HDR_CLL;
++    else
+         return AVERROR_EOF;
+ 
+-    mh_obu = &priv->mh[index];
+-    ret = vaapi_encode_av1_add_obu(avctx, obu, AV1_OBU_METADATA, mh_obu);
++    AV1RawOBU raw = { 0 };
++    raw.header.obu_type = AV1_OBU_METADATA;
++    raw.obu.metadata.metadata_type = kind;
++    if (kind == AV1_METADATA_TYPE_HDR_MDCV)
++        raw.obu.metadata.metadata.hdr_mdcv = priv->mastering;
++    else
++        raw.obu.metadata.metadata.hdr_cll = priv->light;
++    ret = vaapi_encode_av1_write_obu(avctx, data,
++                                      FFMIN(*data_len / 8, MAX_PARAM_BUFFER_SIZE),
++                                      data_len, &raw);
+     if (ret < 0)
+-        goto end;
+-
+-    ret = vaapi_encode_av1_write_obu(avctx, mh_data, &mh_data_len, obu);
+-    if (ret < 0)
+-        goto end;
+-
+-    memcpy(data, mh_data, MAX_PARAM_BUFFER_SIZE * sizeof(char));
+-    *data_len = mh_data_len;
++        return ret;
+     *type = VAEncPackedHeaderRawData;
+-
+-end:
+-    ff_cbs_fragment_reset(obu);
+-    return ret;
++    return 0;
+ }
+ 
+ static const VAAPIEncodeProfile vaapi_encode_av1_profiles[] = {
+@@ -962,7 +904,6 @@
+ {
+     VAAPIEncodeAV1Context *priv = avctx->priv_data;
+ 
+-    ff_cbs_fragment_free(&priv->current_obu);
+     ff_cbs_close(&priv->cbc);
+ 
+     return ff_vaapi_encode_close(avctx);

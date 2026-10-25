@@ -1,0 +1,83 @@
+{
+  "gpu_memory_peak_mib": {
+    "total-vram": 103.43359375,
+    "shared-vram": 57.5,
+    "total-gtt": 23.34765625
+  },
+  "child_cpu_ms": 433.675,
+  "child_max_rss_mib": 45.60546875,
+  "recording": {
+    "cpu_user_us": 262739,
+    "cpu_system_us": 169880,
+    "requested_synthetic_frames": 0,
+    "audio_input_samples": 0,
+    "audio_boundary_silence_samples": 0,
+    "audio_corrupt_silence_samples": 0,
+    "audio_tracks": 0,
+    "fps_limited": 0,
+    "encoder_inputs": 2,
+    "encode_depth": 2,
+    "peak_source_buffers": 2,
+    "completion_readout": true,
+    "completion_events": true,
+    "completion_wakeups": 2400,
+    "completion_fallbacks": 0,
+    "video_clock": "source",
+    "video_boundary_omitted": 0,
+    "success": true,
+    "synthetic": false,
+    "elapsed_ns": 40026015516,
+    "offered": 2401,
+    "submitted": 2400,
+    "packets": 2400,
+    "skipped": 0,
+    "accepted_bytes": 0,
+    "written_bytes": 0,
+    "durable_bytes": 0,
+    "peak_output_reserved_bytes": 0,
+    "max_rss_kib": 46700,
+    "replay_saved": 2,
+    "replay_failed": 0,
+    "replay_peak_live_bytes": 8076263,
+    "replay_peak_owned_bytes": 8076263,
+    "replay_copied_bytes": 0,
+    "replay_saved_bytes": 14106710,
+    "replay_shared_keyframes": 0,
+    "replay_shared_key_bytes": 0,
+    "prepare": {
+      "count": 2400,
+      "mean_ns": 147572.6,
+      "p50_bucket_upper_ns": 262143,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 502625
+    },
+    "encode_and_receive": {
+      "count": 2400,
+      "mean_ns": 60236.4,
+      "p50_bucket_upper_ns": 65535,
+      "p99_bucket_upper_ns": 131071,
+      "max_ns": 228504
+    },
+    "source_lease": {
+      "count": 2400,
+      "mean_ns": 163361.3,
+      "p50_bucket_upper_ns": 262143,
+      "p99_bucket_upper_ns": 262143,
+      "max_ns": 558530
+    },
+    "sink_completion": {
+      "count": 0,
+      "mean_ns": 0.0,
+      "p50_bucket_upper_ns": 0,
+      "p99_bucket_upper_ns": 0,
+      "max_ns": 0
+    }
+  },
+  "producer": {
+    "produced": 2401,
+    "empty_processes": 0,
+    "coalesced_ticks": 0,
+    "peak_source_buffers": 2,
+    "peak_source_bytes": 60293120
+  }
+}

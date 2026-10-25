@@ -1,0 +1,4 @@
+0a18e5401e29898f14a3c503ecae90e331f3209118ee9f6b328512e500f048c6  /nix/store/775jhbmziv4kv4179nyqmcypslrbnmpi-gpukey-amd/bin/gpukey
+a7bbc0a2b5ec7fbaf612bb2595c9f46d3238a0021aded2e534031b3f53d9fec4  /nix/store/ahk6w4vrnl67bca0ms3k4q60b6xnz8wn-gpukey-amd-reference/bin/gpukey
+f1ea269c0833fd220838d51819bbacfd23a517350ab2266d39bd5cdfd5b4b4aa  /nix/store/nvjb89bjpn2z9fmwzn9f8rj8adfh3wk2-mesa-gpukey-vpp-26.2.5/lib/dri/radeonsi_drv_video.so
+dea5b3d66e68909efd9b052ee196577b5d568e52a5ebf7d2f79c1021ef507a7b  /nix/store/x4mbri0fhyj3lbfyl5pld30dz9bifc49-mesa-gpukey-aco-26.2.5/lib/dri/radeonsi_drv_video.so

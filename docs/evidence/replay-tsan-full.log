@@ -1,0 +1,2761 @@
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/main.d -c -o build/clang-release-thread/main.o src/main.c
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/audio_test.d -fsanitize=thread -o build/clang-release-thread/tests/audio_test tests/audio_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/core_test.d -fsanitize=thread -o build/clang-release-thread/tests/core_test tests/core_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/media_test.d -fsanitize=thread -o build/clang-release-thread/tests/media_test tests/media_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/portal_test.d -fsanitize=thread -o build/clang-release-thread/tests/portal_test tests/portal_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -fsanitize=thread -o build/clang-release-thread/gpukey build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/main.o build/clang-release-thread/media.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+bash tests/integration.sh /tmp/gpuKey/build/clang-release-thread/gpukey /tmp/gpuKey/build/clang-release-thread/tests/capture_fixture
+run build/clang-release-thread/tests/audio_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/result.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+run build/clang-release-thread/tests/control_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Saving replay to /tmp/gpukey-control-vjO13U/gpukey-replay-20261020-013629-059207226.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-vjO13U/gpukey-replay-20261020-013629-059207226.mkv
+Saving replay to /tmp/gpukey-control-vjO13U/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-vjO13U/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-vjO13U/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+run build/clang-release-thread/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/clang-release-thread/tests/media_test
+[libaom-av1 @ 0x725c00000000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x725c00000a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x725c00000e00] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x725c00000700] Could not update timestamps for skipped samples.
+[opus @ 0x725c00000700] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x725c00000000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x725c00001180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x725c00000700] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x725c00000000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/clang-release-thread/tests/portal_test
+TAP version 14
+# random seed: R02Sf6b2367ca5744814584589f4ccad00a5
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000c880 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000c880 by thread T1:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000d830 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000d830 by thread T1:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004b40 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004b40 by thread T1:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400002930 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400002930 by thread T1:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000120 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000120 by thread T1:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Location is file descriptor 9 created by thread T1 at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720800001d60 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720800001d60 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000390 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000390 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00000230 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00000230 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x720800001de0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 g_str_equal ??:? (libglib-2.0.so.0+0x53268) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720800001de0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Location is heap block of size 21 at 0x720800001de0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x720800001f20 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 schedule_callbacks ??:? (libgio-2.0.so.0+0x134665) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x720800001f20 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Location is heap block of size 31 at 0x720800001f20 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x724000000700 by thread T4:
+    #0 sendmsg ??:? (portal_test+0xaa618)
+    #1 g_socket_send_message_with_timeout ??:? (libgio-2.0.so.0+0xc008b) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 4 at 0x724000000704 by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Location is heap block of size 256 at 0x724000000700 allocated by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in sendmsg
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x724000000798 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 1 at 0x72400000079f by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000c9a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000c9a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000690 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000690 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000004d0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000004d0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000cec0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000cec0 by thread T1:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 call_in_idle_cb ??:? (libgio-2.0.so.0+0x1394bc) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x722000004f00 by thread T4:
+    #0 sendmsg ??:? (portal_test+0xaa618)
+    #1 g_socket_send_message_with_timeout ??:? (libgio-2.0.so.0+0xc008b) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x722000004f00 by thread T1:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 call_in_idle_cb ??:? (libgio-2.0.so.0+0x1394bc) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Location is heap block of size 128 at 0x722000004f00 allocated by thread T1:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 call_in_idle_cb ??:? (libgio-2.0.so.0+0x1394bc) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T1 (tid=1392761, running) created by main thread at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 main /tmp/gpuKey/tests/portal_test.c:172 (portal_test+0x11da7e)
+
+SUMMARY: ThreadSanitizer: data race ??:? in sendmsg
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e0a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e0a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000720 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000720 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00000150 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00000150 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000c760 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000c760 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c000007b0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c000007b0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004d00 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004d00 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400001970 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400001970 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:179 (portal_test+0x11dadd)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x721c00000200 by main thread:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 closed /tmp/gpuKey/src/portal.c:82 (portal_test+0x134a70)
+    #2 emit_signal_instance_in_idle_cb ??:? (libgio-2.0.so.0+0x132dbf) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:186 (portal_test+0x11dbc0)
+
+  Previous write of size 8 at 0x721c00000200 by thread T4:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  As if synchronized via sleep:
+    #0 nanosleep ??:? (portal_test+0x85c4c)
+    #1 g_usleep ??:? (libglib-2.0.so.0+0xa0b1f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 __libc_start_call_main ??:? (libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+
+  Location is heap block of size 109 at 0x721c000001c0 allocated by thread T4:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721400006220 by main thread:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:186 (portal_test+0x11dbc0)
+
+  Previous write of size 8 at 0x721400006220 by thread T4:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000cee0 by main thread:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:186 (portal_test+0x11dbc0)
+
+  Previous write of size 8 at 0x72080000cee0 by thread T4:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720800002020 by main thread:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:186 (portal_test+0x11dbc0)
+
+  Previous write of size 8 at 0x720800002020 by thread T4:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721800006240 by main thread:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:186 (portal_test+0x11dbc0)
+
+  Previous write of size 8 at 0x721800006240 by thread T4:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000cf20 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000cf20 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:189 (portal_test+0x11dbf6)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c000008d0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c000008d0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:189 (portal_test+0x11dbf6)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004b40 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004b40 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:189 (portal_test+0x11dbf6)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000cee0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000cee0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000990 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000990 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004de0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004de0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400003030 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400003030 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721400005b80 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 5 at 0x721400005b80 by main thread:
+    #0 strlen ??:? (portal_test+0x9319f)
+    #1 g_strdup ??:? (libglib-2.0.so.0+0x904c5) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000e160 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 g_str_equal ??:? (libglib-2.0.so.0+0x53268) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e160 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Location is heap block of size 21 at 0x72080000e160 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000e2a0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 schedule_callbacks ??:? (libgio-2.0.so.0+0x134665) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x72080000e2a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Location is heap block of size 31 at 0x72080000e2a0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x724000000b00 by thread T4:
+    #0 sendmsg ??:? (portal_test+0xaa618)
+    #1 g_socket_send_message_with_timeout ??:? (libgio-2.0.so.0+0xc008b) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 4 at 0x724000000b04 by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Location is heap block of size 256 at 0x724000000b00 allocated by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in sendmsg
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x724000000b98 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 1 at 0x724000000b9f by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e4c0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e4c0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000d50 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000d50 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000005b0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000005b0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400001960 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400001960 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e4e0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e4e0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000e10 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000e10 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004d70 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004d70 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x7204000019a0 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x7204000019a0 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000cf60 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000cf60 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000e70 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000e70 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007070 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00007070 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:191 (portal_test+0x11dc26)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e500 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e500 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:194 (portal_test+0x11dc5f)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00000fc0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00000fc0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:194 (portal_test+0x11dc5f)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00000070 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00000070 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:194 (portal_test+0x11dc5f)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000f0a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000f0a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00001080 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00001080 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007000 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00007000 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x7204000019a0 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x7204000019a0 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x7214000068a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 5 at 0x7214000068a0 by main thread:
+    #0 strlen ??:? (portal_test+0x9319f)
+    #1 g_strdup ??:? (libglib-2.0.so.0+0x904c5) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 1 at 0x7204000019c0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 g_str_equal ??:? (libglib-2.0.so.0+0x53268) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x7204000019c0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Location is heap block of size 1 at 0x7204000019c0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000e740 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 schedule_callbacks ??:? (libgio-2.0.so.0+0x134665) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x72080000e740 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Location is heap block of size 31 at 0x72080000e740 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000f060 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000f060 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00001410 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00001410 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+private PipeWire integration: 51 video packets, passed
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00000700 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00000700 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x7204000018b0 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x7204000018b0 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007200 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x721c00007200 by main thread:
+    #0 strlen ??:? (portal_test+0x9319f)
+    #1 g_strdup ??:? (libglib-2.0.so.0+0x904c5) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e980 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e980 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c000014d0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c000014d0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004ad0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004ad0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e8c0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e8c0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00001500 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00001500 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000003f0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000003f0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e000 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e000 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00001590 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00001590 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000072a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000072a0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400003030 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400003030 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:197 (portal_test+0x11dca1)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000f180 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000f180 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c00001680 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c00001680 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007070 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00007070 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000e9a0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 g_str_equal ??:? (libglib-2.0.so.0+0x53268) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e9a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is heap block of size 21 at 0x72080000e9a0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000eae0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 schedule_callbacks ??:? (libgio-2.0.so.0+0x134665) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x72080000eae0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is heap block of size 31 at 0x72080000eae0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x724000001100 by thread T4:
+    #0 sendmsg ??:? (portal_test+0xaa618)
+    #1 g_socket_send_message_with_timeout ??:? (libgio-2.0.so.0+0xc008b) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 4 at 0x724000001104 by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is heap block of size 256 at 0x724000001100 allocated by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in sendmsg
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x724000001198 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 1 at 0x72400000119f by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000e7a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000e7a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f1b0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f1b0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000007e0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000007e0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x7204000030a0 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x7204000030a0 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007040 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x721c00007040 by main thread:
+    #0 strlen ??:? (portal_test+0x9319f)
+    #1 g_strdup ??:? (libglib-2.0.so.0+0x904c5) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000ed00 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000ed00 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f270 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f270 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004bb0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004bb0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400003320 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400003320 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:200 (portal_test+0x13444f)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000f1e0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000f1e0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f300 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f300 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004c20 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00004c20 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400002a60 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400002a60 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000000b0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x721c000000b0 by main thread:
+    #0 strlen ??:? (portal_test+0x9319f)
+    #1 g_strdup ??:? (libglib-2.0.so.0+0x904c5) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:204 (portal_test+0x1344d9)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400003370 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400003370 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000edc0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000edc0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f4b0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f4b0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007150 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00007150 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x7204000019a0 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x7204000019a0 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:202 (portal_test+0x11dd23)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000ee60 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000ee60 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f4b0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f4b0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000000e0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000000e0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000eee0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 g_str_equal ??:? (libglib-2.0.so.0+0x53268) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000eee0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Location is heap block of size 21 at 0x72080000eee0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x72080000f240 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 schedule_callbacks ??:? (libgio-2.0.so.0+0x134665) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x72080000f240 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Location is heap block of size 21 at 0x72080000f240 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 5 at 0x72080000ede0 by thread T4:
+    #0 strcmp ??:? (portal_test+0x936a3)
+    #1 schedule_callbacks ??:? (libgio-2.0.so.0+0x13467c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 8 at 0x72080000ede0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Location is heap block of size 17 at 0x72080000ede0 allocated by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in strcmp
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Read of size 8 at 0x724000001400 by thread T4:
+    #0 sendmsg ??:? (portal_test+0xaa618)
+    #1 g_socket_send_message_with_timeout ??:? (libgio-2.0.so.0+0xc008b) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+
+  Previous write of size 4 at 0x724000001404 by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Location is heap block of size 256 at 0x724000001400 allocated by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in sendmsg
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x724000001498 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 1 at 0x72400000149f by main thread:
+    #0 memcpy ??:? (portal_test+0x750eb)
+    #1 g_memory_buffer_write.isra.0 ??:? (libgio-2.0.so.0+0x13ff8c) (BuildId: 319490686da2a6766f7dc3726e9b3d420e02a3b4)
+    #2 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000f320 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000f320 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f8a0 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f8a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c000009a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c000009a0 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720400003170 by thread T4 (mutexes: write M0):
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720400003170 by main thread:
+    #0 realloc ??:? (portal_test+0xd7558)
+    #1 g_realloc ??:? (libglib-2.0.so.0+0x7105f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Mutex M0 (0x721000002240) created at:
+    #0 pthread_rwlock_init ??:? (portal_test+0x8eb73)
+    #1 g_rw_lock_reader_lock ??:? (libglib-2.0.so.0+0x9e82c) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72b000000260 by thread T4:
+    #0 close ??:? (portal_test+0x89c3b)
+    #1 g_wakeup_free ??:? (libglib-2.0.so.0+0xcc922) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x72b000000260 by main thread:
+    #0 read ??:? (portal_test+0x975a7)
+    #1 g_wakeup_acknowledge ??:? (libglib-2.0.so.0+0xcc84f) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Location is file descriptor 19 created by main thread at:
+    #0 eventfd ??:? (portal_test+0x8e612)
+    #1 g_wakeup_new ??:? (libglib-2.0.so.0+0xcc6c8) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in close
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00004b10 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous read of size 8 at 0x721c00004b10 by main thread:
+    #0 strlen ??:? (portal_test+0x9319f)
+    #1 g_strdup ??:? (libglib-2.0.so.0+0x904c5) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:181 (portal_test+0x1342e4)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x72080000f3a0 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x72080000f3a0 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x720c0000f990 by thread T4:
+    #0 free_sized ??:? (portal_test+0xd802c)
+    #1 g_free_sized ??:? (libglib-2.0.so.0+0x71100) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x720c0000f990 by main thread:
+    #0 malloc ??:? (portal_test+0xd8a34)
+    #1 g_malloc ??:? (libglib-2.0.so.0+0x70f55) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free_sized
+==================
+==================
+WARNING: ThreadSanitizer: data race (pid=1392757)
+  Write of size 8 at 0x721c00007230 by thread T4:
+    #0 free ??:? (portal_test+0xd7cdc)
+    #1 g_free ??:? (libglib-2.0.so.0+0x710e0) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+  Previous write of size 8 at 0x721c00007230 by main thread:
+    #0 calloc ??:? (portal_test+0xd72a3)
+    #1 g_malloc0 ??:? (libglib-2.0.so.0+0x70fdd) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+    #2 gk_portal_open /tmp/gpuKey/src/portal.c:252 (portal_test+0x1348f0)
+    #3 main /tmp/gpuKey/tests/portal_test.c:206 (portal_test+0x11ddac)
+
+  Thread T4 'gdbus' (tid=1392765, running) created by thread T1 at:
+    #0 pthread_create ??:? (portal_test+0x87c97)
+    #1 g_system_thread_new ??:? (libglib-2.0.so.0+0x9dc3b) (BuildId: 5550b4c1dedbaeb8ca325b0476891f07938dde5c)
+
+SUMMARY: ThreadSanitizer: data race ??:? in free
+==================
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+ThreadSanitizer: reported 132 warnings
+make: *** [Makefile:121: check] Error 1
+make: *** Waiting for unfinished jobs....
+Completed: 1 video inputs, 1 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=514/514/0
+private PipeWire integration: 1 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/capped.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 26 video inputs, 26 encoded packets; 0 capture skips, 25 FPS-limited; accepted/written/durable bytes=1713/1713/0
+private PipeWire integration: 26 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/audio.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347864/1347864/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/audio-revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+capture: selected audio format was removed (Stale file handle)
+Incomplete recording: 21 video inputs, 21 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=541951/541951/0
+gpukey: Stale file handle. Any partial output has been preserved.
+private PipeWire integration: 21 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/missing.mp4
+device: explicit software AV1 control
+audio device not found: missing-device; run 'gpukey devices'
+capture: selected audio is unavailable (No such file or directory)
+Incomplete recording: 0 video inputs, 0 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=0/0/0
+gpukey: No such file or directory. Any partial output has been preserved.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/duplicate.mp4
+device: explicit software AV1 control
+capture: the same audio device was selected twice (File exists)
+Incomplete recording: 0 video inputs, 0 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=0/0/0
+gpukey: File exists. Any partial output has been preserved.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/kind.mp4
+device: explicit software AV1 control
+capture: audio source/monitor kind does not match; use --audio ID (Invalid argument)
+Incomplete recording: 0 video inputs, 0 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=0/0/0
+gpukey: Invalid argument. Any partial output has been preserved.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/aux.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=318024/318024/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/aux-pcm.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=6149258/6149258/0
+private PipeWire integration: 50 video packets, passed
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay.mkv.second.mkv
+Saved 1.274 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips with mono/surround audio pass
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static-replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static-replay.mkv.second.mkv
+Saved 1.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static-replay.mkv.second.mkv
+Saved 1.293 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/static-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips with mono/surround audio pass
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.21ac0b/tmp.FUa2wfvgHR/replay-revoke.mkv
+capture: selected source was removed (Broken pipe)
+Replay stopped: 1 clips saved, 0 failed; unsaved history discarded.
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire replay: 1 independent clips with mono/surround audio pass
+Audio devices (IDs last until PipeWire restarts; names can be reused):
+  ID           TYPE      DESCRIPTION / NODE NAME
+  No audio devices are visible on this PipeWire connection.
+
+Use: gpukey clip.mkv --audio ID [--audio ID ...]
+Each selected device becomes a separate track; no audio is selected by default.
+Use --display or --window to choose a screen source in the desktop dialog.
+integration: private PipeWire source -> recorder -> independent decoder passed

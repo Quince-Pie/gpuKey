@@ -1,0 +1,1979 @@
+{
+  "ram-vaapi": {
+    "totals": {
+      "Rss": 40460288,
+      "Pss": 21556224,
+      "Private_Clean": 1716224,
+      "Private_Dirty": 4866048,
+      "Anonymous": 4861952
+    },
+    "mappings": [
+      {
+        "name": "/nix/store/qkqg6qvw6fssxkpw1c3f7k4s06xc2gws-mesa-gpukey-hints-26.2.5/lib/libgallium-26.2.5.so",
+        "Rss": 18575360,
+        "Pss": 9654272,
+        "Private_Clean": 131072,
+        "Private_Dirty": 602112,
+        "Anonymous": 602112
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6",
+        "Rss": 1875968,
+        "Pss": 215040,
+        "Private_Clean": 0,
+        "Private_Dirty": 24576,
+        "Anonymous": 24576
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgio-2.0.so.0.8800.3",
+        "Rss": 1658880,
+        "Pss": 811008,
+        "Private_Clean": 0,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "[anonymous]",
+        "Rss": 1617920,
+        "Pss": 1617920,
+        "Private_Clean": 0,
+        "Private_Dirty": 1617920,
+        "Anonymous": 1617920
+      },
+      {
+        "name": "/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libstdc++.so.6.0.36",
+        "Rss": 1597440,
+        "Pss": 835584,
+        "Private_Clean": 0,
+        "Private_Dirty": 73728,
+        "Anonymous": 73728
+      },
+      {
+        "name": "[heap]",
+        "Rss": 1249280,
+        "Pss": 1249280,
+        "Private_Clean": 0,
+        "Private_Dirty": 1249280,
+        "Anonymous": 1249280
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libglib-2.0.so.0.8800.3",
+        "Rss": 1216512,
+        "Pss": 423936,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zkbn5fyfijgv9qwq40acmlgcy8cak98h-ffmpeg-gpukey-capacity-return-9.0.2-lib/lib/libavcodec.so.63.1.102",
+        "Rss": 1089536,
+        "Pss": 948224,
+        "Private_Clean": 720896,
+        "Private_Dirty": 102400,
+        "Anonymous": 102400
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/libpipewire-0.3.so.0.1609.0",
+        "Rss": 1077248,
+        "Pss": 424960,
+        "Private_Clean": 0,
+        "Private_Dirty": 102400,
+        "Anonymous": 102400
+      },
+      {
+        "name": "/nix/store/zkbn5fyfijgv9qwq40acmlgcy8cak98h-ffmpeg-gpukey-capacity-return-9.0.2-lib/lib/libavutil.so.61.1.102",
+        "Rss": 872448,
+        "Pss": 581632,
+        "Private_Clean": 196608,
+        "Private_Dirty": 94208,
+        "Anonymous": 94208
+      },
+      {
+        "name": "/nix/store/zkbn5fyfijgv9qwq40acmlgcy8cak98h-ffmpeg-gpukey-capacity-return-9.0.2-lib/lib/libavformat.so.63.1.102",
+        "Rss": 667648,
+        "Pss": 565248,
+        "Private_Clean": 417792,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libm.so.6",
+        "Rss": 593920,
+        "Pss": 123904,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so.1.4.363",
+        "Rss": 573440,
+        "Pss": 292864,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/cgzr5afjdbx30j7g44z2h92i8h3828k2-systemd-minimal-libs-262/lib/libsystemd.so.0.45.0",
+        "Rss": 430080,
+        "Pss": 182272,
+        "Private_Clean": 0,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgobject-2.0.so.0.8800.3",
+        "Rss": 425984,
+        "Pss": 221184,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/f5r77q40xh7rj30dfkajv8y6jwbf4xh2-zstd-1.5.7/lib/libzstd.so.1.5.7",
+        "Rss": 376832,
+        "Pss": 139264,
+        "Private_Clean": 4096,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-session-manager.so",
+        "Rss": 356352,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/videoconvert/libspa-videoconvert.so",
+        "Rss": 339968,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 28672,
+        "Anonymous": 28672
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-protocol-native.so",
+        "Rss": 294912,
+        "Pss": 129024,
+        "Private_Clean": 0,
+        "Private_Dirty": 49152,
+        "Anonymous": 49152
+      },
+      {
+        "name": "/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libswscale.so.10.1.102",
+        "Rss": 282624,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 86016,
+        "Anonymous": 86016
+      },
+      {
+        "name": "/nix/store/ajzrc8n8fksmaclsa0cggfv3804dk269-libaom-3.15.1/lib/libaom.so.3.15.1",
+        "Rss": 282624,
+        "Pss": 175104,
+        "Private_Clean": 0,
+        "Private_Dirty": 73728,
+        "Anonymous": 73728
+      },
+      {
+        "name": "/nix/store/hm0v0h1ba0698qiiw8s38i1bd9ggdpb9-gpukey-0.1.0/bin/gpukey",
+        "Rss": 258048,
+        "Pss": 258048,
+        "Private_Clean": 245760,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-support.so",
+        "Rss": 258048,
+        "Pss": 108544,
+        "Private_Clean": 0,
+        "Private_Dirty": 36864,
+        "Anonymous": 36864
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/ld-linux-x86-64.so.2",
+        "Rss": 253952,
+        "Pss": 34816,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/cz1kyaqpw21ykdd8hmvsr9lxr953lygc-libvmaf-3.0.0/lib/libvmaf.so.3.0.0",
+        "Rss": 249856,
+        "Pss": 117760,
+        "Private_Clean": 0,
+        "Private_Dirty": 20480,
+        "Anonymous": 20480
+      },
+      {
+        "name": "/nix/store/zllvn25rjq0xcbaxigy1w3qycd5nf4y6-libopus-1.6.1/lib/libopus.so.0.11.1",
+        "Rss": 225280,
+        "Pss": 116736,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib/libva.so.2.2400.0",
+        "Rss": 221184,
+        "Pss": 114688,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zsvigijjqf64yym31xg8y8ab37q1bdkg-util-linux-minimal-2.42.4-lib/lib/libmount.so.1.1.0",
+        "Rss": 217088,
+        "Pss": 116736,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/7rx5im6jbgyfhrl0lc0kyxd9yf14rdxc-expat-2.9.0/lib/libexpat.so.1.13.0",
+        "Rss": 212992,
+        "Pss": 79872,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-client-node.so",
+        "Rss": 208896,
+        "Pss": 75776,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/zsvigijjqf64yym31xg8y8ab37q1bdkg-util-linux-minimal-2.42.4-lib/lib/libblkid.so.1.1.0",
+        "Rss": 208896,
+        "Pss": 120832,
+        "Private_Clean": 0,
+        "Private_Dirty": 32768,
+        "Anonymous": 32768
+      },
+      {
+        "name": "/nix/store/p5dwcn4wpyjmhnnzj6iwwwjynyc6yif0-pcre2-10.49/lib/libpcre2-8.so.0.16.1",
+        "Rss": 204800,
+        "Pss": 71680,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/sgwn4f0dy14s8bghl8jwvdglpvdxk12i-dbus-1.16.2-lib/lib/libdbus-1.so.3.38.3",
+        "Rss": 196608,
+        "Pss": 61440,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/slq0bpajkf5n95nhc0lm7a8f8vha8dw5-libselinux-3.11/lib/libselinux.so.1",
+        "Rss": 176128,
+        "Pss": 62464,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb.so.1.1.0",
+        "Rss": 147456,
+        "Pss": 77824,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3xaspbv6nwvihmc3ybmlv0wjjksvpamq-xz-5.8.4/lib/liblzma.so.5.8.4",
+        "Rss": 143360,
+        "Pss": 52224,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/lbvvv07w1kbxifkdswpl0ifn7sdcfcan-dav1d-1.5.3/lib/libdav1d.so.7.0.0",
+        "Rss": 135168,
+        "Pss": 77824,
+        "Private_Clean": 0,
+        "Private_Dirty": 20480,
+        "Anonymous": 20480
+      },
+      {
+        "name": "/nix/store/ji36842higmp6b06hbbpmzbd59g1c07c-zlib-1.3.2/lib/libz.so.1.3.2",
+        "Rss": 110592,
+        "Pss": 39936,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3sj8msrsym648f35mk3gb3pp385hhk8r-gcc-16.2.0-libgcc/lib/libgcc_s.so.1",
+        "Rss": 106496,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/bvfkqam1y3zmsb3k41iml0zwx13sknjl-elfutils-0.195/lib/libelf-0.195.so",
+        "Rss": 102400,
+        "Pss": 55296,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib/libdrm.so.2.134.0",
+        "Rss": 98304,
+        "Pss": 53248,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pfds9zw10xksh0zr7qplqg1lj9avs2gz-libffi-3.8.0/lib/libffi.so.8.5.0",
+        "Rss": 94208,
+        "Pss": 51200,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zkbn5fyfijgv9qwq40acmlgcy8cak98h-ffmpeg-gpukey-capacity-return-9.0.2-lib/lib/libswresample.so.7.1.102",
+        "Rss": 94208,
+        "Pss": 53248,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/zx4ag3v11v9rl0iqvg6vzbpflzlg0dk2-bzip2-1.0.8/lib/libbz2.so.1.0.8",
+        "Rss": 86016,
+        "Pss": 31744,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "[stack]",
+        "Rss": 77824,
+        "Pss": 77824,
+        "Private_Clean": 0,
+        "Private_Dirty": 77824,
+        "Anonymous": 77824
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-client-device.so",
+        "Rss": 69632,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-randr.so.0.1.0",
+        "Rss": 69632,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/0lalp8bqwbvxkrqmvsawagzx2w18w4h5-lm-sensors-3.6.2/lib/libsensors.so.5.0.0",
+        "Rss": 69632,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-metadata.so",
+        "Rss": 65536,
+        "Pss": 36864,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/home/quince/.cache/mesa_shader_cache/index",
+        "Rss": 65536,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib/libdrm_amdgpu.so.1.134.0",
+        "Rss": 61440,
+        "Pss": 34816,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-xfixes.so.0.0.0",
+        "Rss": 45056,
+        "Pss": 26624,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-adapter.so",
+        "Rss": 40960,
+        "Pss": 24576,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-rt.so",
+        "Rss": 40960,
+        "Pss": 24576,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-sync.so.1.0.0",
+        "Rss": 36864,
+        "Pss": 22528,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-dbus.so",
+        "Rss": 32768,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zfls1iw1bpglz5w2lqg3b8mjay1hg7dr-libxdmcp-1.1.5/lib/libXdmcp.so.6.0.0",
+        "Rss": 32768,
+        "Pss": 20480,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-dri3.so.0.1.0",
+        "Rss": 28672,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgmodule-2.0.so.0.8800.3",
+        "Rss": 28672,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-journal.so",
+        "Rss": 24576,
+        "Pss": 12288,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/anh1ib7l6ksrwr45kiwgz906vfi0vr5x-libxau-1.0.12/lib/libXau.so.6.0.0",
+        "Rss": 24576,
+        "Pss": 16384,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-present.so.0.0.0",
+        "Rss": 24576,
+        "Pss": 16384,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/rck9w8gj3r2w2z1xpw15g1fvpzi8iz9h-libx11-1.8.13/lib/libX11-xcb.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/v4j317f11g4px2cc4ad7cldqkn0wdbqz-libxshmfence-1.3.3/lib/libxshmfence.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libdl.so.2",
+        "Rss": 20480,
+        "Pss": 8192,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libpthread.so.0",
+        "Rss": 20480,
+        "Pss": 8192,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib/libva-drm.so.2.2400.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib/liburing.so.2.14",
+        "Rss": 16384,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 4096,
+        "Anonymous": 4096
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=2312 (deleted)",
+        "Rss": 12288,
+        "Pss": 6144,
+        "Private_Clean": 0,
+        "Private_Dirty": 4096,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vvar]",
+        "Rss": 8192,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vdso]",
+        "Rss": 8192,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=4096 (deleted)",
+        "Rss": 4096,
+        "Pss": 1024,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=256 (deleted)",
+        "Rss": 4096,
+        "Pss": 2048,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/dev/dri/renderD128",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vvar_vclock]",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vsyscall]",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      }
+    ]
+  },
+  "ram-vulkan": {
+    "totals": {
+      "Rss": 55980032,
+      "Pss": 46608384,
+      "Private_Clean": 32755712,
+      "Private_Dirty": 8388608,
+      "Anonymous": 8384512
+    },
+    "mappings": [
+      {
+        "name": "/nix/store/mr6cbi3rdy6w5y4cd6875gf4y0pqn0jf-llvm-21.1.8-lib/lib/libLLVM.so.21.1",
+        "Rss": 26402816,
+        "Pss": 26402816,
+        "Private_Clean": 24227840,
+        "Private_Dirty": 2174976,
+        "Anonymous": 2174976
+      },
+      {
+        "name": "/nix/store/0jq2axwnmxcargkdlmpjjv02m7g4aggx-mesa-gpukey-rgb-26.2.5/lib/libvulkan_radeon.so",
+        "Rss": 5226496,
+        "Pss": 5226496,
+        "Private_Clean": 4796416,
+        "Private_Dirty": 430080,
+        "Anonymous": 430080
+      },
+      {
+        "name": "[anonymous]",
+        "Rss": 2408448,
+        "Pss": 2408448,
+        "Private_Clean": 0,
+        "Private_Dirty": 2408448,
+        "Anonymous": 2408448
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6",
+        "Rss": 1875968,
+        "Pss": 231424,
+        "Private_Clean": 0,
+        "Private_Dirty": 24576,
+        "Anonymous": 24576
+      },
+      {
+        "name": "[heap]",
+        "Rss": 1765376,
+        "Pss": 1765376,
+        "Private_Clean": 0,
+        "Private_Dirty": 1765376,
+        "Anonymous": 1765376
+      },
+      {
+        "name": "/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libstdc++.so.6.0.36",
+        "Rss": 1662976,
+        "Pss": 901120,
+        "Private_Clean": 65536,
+        "Private_Dirty": 73728,
+        "Anonymous": 73728
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgio-2.0.so.0.8800.3",
+        "Rss": 1658880,
+        "Pss": 811008,
+        "Private_Clean": 0,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libglib-2.0.so.0.8800.3",
+        "Rss": 1216512,
+        "Pss": 423936,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libavcodec.so.63.1.102",
+        "Rss": 1163264,
+        "Pss": 1163264,
+        "Private_Clean": 1060864,
+        "Private_Dirty": 102400,
+        "Anonymous": 102400
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/libpipewire-0.3.so.0.1609.0",
+        "Rss": 1077248,
+        "Pss": 424960,
+        "Private_Clean": 0,
+        "Private_Dirty": 102400,
+        "Anonymous": 102400
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libavutil.so.61.1.102",
+        "Rss": 937984,
+        "Pss": 937984,
+        "Private_Clean": 843776,
+        "Private_Dirty": 94208,
+        "Anonymous": 94208
+      },
+      {
+        "name": "/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so.1.4.363",
+        "Rss": 675840,
+        "Pss": 395264,
+        "Private_Clean": 102400,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libm.so.6",
+        "Rss": 659456,
+        "Pss": 142336,
+        "Private_Clean": 4096,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libavformat.so.63.1.102",
+        "Rss": 651264,
+        "Pss": 651264,
+        "Private_Clean": 606208,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/cgzr5afjdbx30j7g44z2h92i8h3828k2-systemd-minimal-libs-262/lib/libsystemd.so.0.45.0",
+        "Rss": 430080,
+        "Pss": 182272,
+        "Private_Clean": 0,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgobject-2.0.so.0.8800.3",
+        "Rss": 425984,
+        "Pss": 221184,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-session-manager.so",
+        "Rss": 356352,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/videoconvert/libspa-videoconvert.so",
+        "Rss": 339968,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 28672,
+        "Anonymous": 28672
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-protocol-native.so",
+        "Rss": 294912,
+        "Pss": 129024,
+        "Private_Clean": 0,
+        "Private_Dirty": 49152,
+        "Anonymous": 49152
+      },
+      {
+        "name": "/nix/store/m5s1ak7s1swmhmy64yqvya342g0603s7-libxml2-2.15.4/lib/libxml2.so.16.1.4",
+        "Rss": 286720,
+        "Pss": 286720,
+        "Private_Clean": 245760,
+        "Private_Dirty": 40960,
+        "Anonymous": 40960
+      },
+      {
+        "name": "/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libswscale.so.10.1.102",
+        "Rss": 282624,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 86016,
+        "Anonymous": 86016
+      },
+      {
+        "name": "/nix/store/ajzrc8n8fksmaclsa0cggfv3804dk269-libaom-3.15.1/lib/libaom.so.3.15.1",
+        "Rss": 282624,
+        "Pss": 175104,
+        "Private_Clean": 0,
+        "Private_Dirty": 73728,
+        "Anonymous": 73728
+      },
+      {
+        "name": "/nix/store/3sscrbn93ccq4gl5yyr359hv9y45qnqx-gpukey-0.1.0/bin/gpukey",
+        "Rss": 266240,
+        "Pss": 266240,
+        "Private_Clean": 253952,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-support.so",
+        "Rss": 258048,
+        "Pss": 108544,
+        "Private_Clean": 0,
+        "Private_Dirty": 36864,
+        "Anonymous": 36864
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/ld-linux-x86-64.so.2",
+        "Rss": 253952,
+        "Pss": 37888,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/cz1kyaqpw21ykdd8hmvsr9lxr953lygc-libvmaf-3.0.0/lib/libvmaf.so.3.0.0",
+        "Rss": 249856,
+        "Pss": 117760,
+        "Private_Clean": 0,
+        "Private_Dirty": 20480,
+        "Anonymous": 20480
+      },
+      {
+        "name": "/nix/store/cgzr5afjdbx30j7g44z2h92i8h3828k2-systemd-minimal-libs-262/lib/libudev.so.1.7.15",
+        "Rss": 241664,
+        "Pss": 241664,
+        "Private_Clean": 217088,
+        "Private_Dirty": 24576,
+        "Anonymous": 24576
+      },
+      {
+        "name": "/nix/store/zllvn25rjq0xcbaxigy1w3qycd5nf4y6-libopus-1.6.1/lib/libopus.so.0.11.1",
+        "Rss": 225280,
+        "Pss": 116736,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zsvigijjqf64yym31xg8y8ab37q1bdkg-util-linux-minimal-2.42.4-lib/lib/libmount.so.1.1.0",
+        "Rss": 217088,
+        "Pss": 116736,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/7rx5im6jbgyfhrl0lc0kyxd9yf14rdxc-expat-2.9.0/lib/libexpat.so.1.13.0",
+        "Rss": 212992,
+        "Pss": 79872,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-client-node.so",
+        "Rss": 208896,
+        "Pss": 75776,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/zsvigijjqf64yym31xg8y8ab37q1bdkg-util-linux-minimal-2.42.4-lib/lib/libblkid.so.1.1.0",
+        "Rss": 208896,
+        "Pss": 120832,
+        "Private_Clean": 0,
+        "Private_Dirty": 32768,
+        "Anonymous": 32768
+      },
+      {
+        "name": "/nix/store/p5dwcn4wpyjmhnnzj6iwwwjynyc6yif0-pcre2-10.49/lib/libpcre2-8.so.0.16.1",
+        "Rss": 204800,
+        "Pss": 71680,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib/libva.so.2.2400.0",
+        "Rss": 196608,
+        "Pss": 102400,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/sgwn4f0dy14s8bghl8jwvdglpvdxk12i-dbus-1.16.2-lib/lib/libdbus-1.so.3.38.3",
+        "Rss": 184320,
+        "Pss": 57344,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "[stack]",
+        "Rss": 180224,
+        "Pss": 180224,
+        "Private_Clean": 0,
+        "Private_Dirty": 180224,
+        "Anonymous": 180224
+      },
+      {
+        "name": "/nix/store/slq0bpajkf5n95nhc0lm7a8f8vha8dw5-libselinux-3.11/lib/libselinux.so.1",
+        "Rss": 176128,
+        "Pss": 62464,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5r77q40xh7rj30dfkajv8y6jwbf4xh2-zstd-1.5.7/lib/libzstd.so.1.5.7",
+        "Rss": 172032,
+        "Pss": 60416,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3xaspbv6nwvihmc3ybmlv0wjjksvpamq-xz-5.8.4/lib/liblzma.so.5.8.4",
+        "Rss": 163840,
+        "Pss": 58368,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/05qiq1wpq0v63fhfsj851jkib1zjdsc1-libdisplay-info-0.4.0/lib/libdisplay-info.so.0.4.0",
+        "Rss": 143360,
+        "Pss": 143360,
+        "Private_Clean": 135168,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb.so.1.1.0",
+        "Rss": 143360,
+        "Pss": 75776,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/lbvvv07w1kbxifkdswpl0ifn7sdcfcan-dav1d-1.5.3/lib/libdav1d.so.7.0.0",
+        "Rss": 135168,
+        "Pss": 77824,
+        "Private_Clean": 0,
+        "Private_Dirty": 20480,
+        "Anonymous": 20480
+      },
+      {
+        "name": "/home/quince/.cache/mesa_shader_cache/index",
+        "Rss": 131072,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/nix/store/ij4mv4rzvd60yql6jafpmh95x3l63937-mesa-26.1.8/lib/libVkLayer_MESA_device_select.so",
+        "Rss": 106496,
+        "Pss": 57344,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ji36842higmp6b06hbbpmzbd59g1c07c-zlib-1.3.2/lib/libz.so.1.3.2",
+        "Rss": 106496,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3sj8msrsym648f35mk3gb3pp385hhk8r-gcc-16.2.0-libgcc/lib/libgcc_s.so.1",
+        "Rss": 106496,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/bvfkqam1y3zmsb3k41iml0zwx13sknjl-elfutils-0.195/lib/libelf-0.195.so",
+        "Rss": 98304,
+        "Pss": 53248,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib/libdrm.so.2.134.0",
+        "Rss": 98304,
+        "Pss": 53248,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pfds9zw10xksh0zr7qplqg1lj9avs2gz-libffi-3.8.0/lib/libffi.so.8.5.0",
+        "Rss": 94208,
+        "Pss": 51200,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libswresample.so.7.1.102",
+        "Rss": 94208,
+        "Pss": 94208,
+        "Private_Clean": 81920,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/zx4ag3v11v9rl0iqvg6vzbpflzlg0dk2-bzip2-1.0.8/lib/libbz2.so.1.0.8",
+        "Rss": 86016,
+        "Pss": 31744,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ff1qrwmrdkr1hg4q1afpbw8139nj2r5m-wayland-1.26.0/lib/libwayland-client.so.0.26.0",
+        "Rss": 86016,
+        "Pss": 86016,
+        "Private_Clean": 73728,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-randr.so.0.1.0",
+        "Rss": 73728,
+        "Pss": 43008,
+        "Private_Clean": 4096,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-client-device.so",
+        "Rss": 69632,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-metadata.so",
+        "Rss": 65536,
+        "Pss": 36864,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib/libdrm_amdgpu.so.1.134.0",
+        "Rss": 61440,
+        "Pss": 34816,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-xfixes.so.0.0.0",
+        "Rss": 45056,
+        "Pss": 26624,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-adapter.so",
+        "Rss": 40960,
+        "Pss": 24576,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-rt.so",
+        "Rss": 40960,
+        "Pss": 24576,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-sync.so.1.0.0",
+        "Rss": 36864,
+        "Pss": 22528,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-dbus.so",
+        "Rss": 32768,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zfls1iw1bpglz5w2lqg3b8mjay1hg7dr-libxdmcp-1.1.5/lib/libXdmcp.so.6.0.0",
+        "Rss": 32768,
+        "Pss": 20480,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-dri3.so.0.1.0",
+        "Rss": 28672,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgmodule-2.0.so.0.8800.3",
+        "Rss": 28672,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-journal.so",
+        "Rss": 24576,
+        "Pss": 12288,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/anh1ib7l6ksrwr45kiwgz906vfi0vr5x-libxau-1.0.12/lib/libXau.so.6.0.0",
+        "Rss": 24576,
+        "Pss": 16384,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-present.so.0.0.0",
+        "Rss": 24576,
+        "Pss": 16384,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/librt.so.1",
+        "Rss": 20480,
+        "Pss": 20480,
+        "Private_Clean": 12288,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/hkqzh1vx6kr4mis703ph6gmnl3790x9k-libxcb-keysyms-0.4.1/lib/libxcb-keysyms.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 20480,
+        "Private_Clean": 12288,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/v4j317f11g4px2cc4ad7cldqkn0wdbqz-libxshmfence-1.3.3/lib/libxshmfence.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-shm.so.0.0.0",
+        "Rss": 20480,
+        "Pss": 20480,
+        "Private_Clean": 12288,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/rck9w8gj3r2w2z1xpw15g1fvpzi8iz9h-libx11-1.8.13/lib/libX11-xcb.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libdl.so.2",
+        "Rss": 20480,
+        "Pss": 8192,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libpthread.so.0",
+        "Rss": 20480,
+        "Pss": 8192,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib/libva-drm.so.2.2400.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib/liburing.so.2.14",
+        "Rss": 16384,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 4096,
+        "Anonymous": 4096
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=2312 (deleted)",
+        "Rss": 12288,
+        "Pss": 6144,
+        "Private_Clean": 0,
+        "Private_Dirty": 4096,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vvar]",
+        "Rss": 8192,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vdso]",
+        "Rss": 8192,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=4096 (deleted)",
+        "Rss": 4096,
+        "Pss": 1024,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=256 (deleted)",
+        "Rss": 4096,
+        "Pss": 2048,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/dev/dri/renderD128",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/home/quince/.cache/radv_builtin_shaders/index",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vvar_vclock]",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vsyscall]",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      }
+    ]
+  },
+  "ram-aco": {
+    "totals": {
+      "Rss": 28311552,
+      "Pss": 18888704,
+      "Private_Clean": 8458240,
+      "Private_Dirty": 4952064,
+      "Anonymous": 4947968
+    },
+    "mappings": [
+      {
+        "name": "/nix/store/896yc4wnz6wn804kdbl1638gl243vskz-mesa-gpukey-rgb-26.2.5/lib/libvulkan_radeon.so",
+        "Rss": 5488640,
+        "Pss": 5488640,
+        "Private_Clean": 5050368,
+        "Private_Dirty": 438272,
+        "Anonymous": 438272
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6",
+        "Rss": 1875968,
+        "Pss": 215040,
+        "Private_Clean": 0,
+        "Private_Dirty": 24576,
+        "Anonymous": 24576
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgio-2.0.so.0.8800.3",
+        "Rss": 1658880,
+        "Pss": 811008,
+        "Private_Clean": 0,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libstdc++.so.6.0.36",
+        "Rss": 1597440,
+        "Pss": 835584,
+        "Private_Clean": 0,
+        "Private_Dirty": 73728,
+        "Anonymous": 73728
+      },
+      {
+        "name": "[anonymous]",
+        "Rss": 1564672,
+        "Pss": 1564672,
+        "Private_Clean": 0,
+        "Private_Dirty": 1564672,
+        "Anonymous": 1564672
+      },
+      {
+        "name": "[heap]",
+        "Rss": 1388544,
+        "Pss": 1388544,
+        "Private_Clean": 0,
+        "Private_Dirty": 1388544,
+        "Anonymous": 1388544
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libglib-2.0.so.0.8800.3",
+        "Rss": 1216512,
+        "Pss": 423936,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libavcodec.so.63.1.102",
+        "Rss": 1163264,
+        "Pss": 1163264,
+        "Private_Clean": 1060864,
+        "Private_Dirty": 102400,
+        "Anonymous": 102400
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/libpipewire-0.3.so.0.1609.0",
+        "Rss": 1077248,
+        "Pss": 424960,
+        "Private_Clean": 0,
+        "Private_Dirty": 102400,
+        "Anonymous": 102400
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libavutil.so.61.1.102",
+        "Rss": 937984,
+        "Pss": 937984,
+        "Private_Clean": 843776,
+        "Private_Dirty": 94208,
+        "Anonymous": 94208
+      },
+      {
+        "name": "/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so.1.4.363",
+        "Rss": 675840,
+        "Pss": 395264,
+        "Private_Clean": 102400,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libm.so.6",
+        "Rss": 659456,
+        "Pss": 142336,
+        "Private_Clean": 4096,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libavformat.so.63.1.102",
+        "Rss": 651264,
+        "Pss": 651264,
+        "Private_Clean": 606208,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/cgzr5afjdbx30j7g44z2h92i8h3828k2-systemd-minimal-libs-262/lib/libsystemd.so.0.45.0",
+        "Rss": 466944,
+        "Pss": 204800,
+        "Private_Clean": 0,
+        "Private_Dirty": 45056,
+        "Anonymous": 45056
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgobject-2.0.so.0.8800.3",
+        "Rss": 425984,
+        "Pss": 221184,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-session-manager.so",
+        "Rss": 356352,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/videoconvert/libspa-videoconvert.so",
+        "Rss": 339968,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 28672,
+        "Anonymous": 28672
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-protocol-native.so",
+        "Rss": 294912,
+        "Pss": 129024,
+        "Private_Clean": 0,
+        "Private_Dirty": 49152,
+        "Anonymous": 49152
+      },
+      {
+        "name": "/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libswscale.so.10.1.102",
+        "Rss": 282624,
+        "Pss": 184320,
+        "Private_Clean": 0,
+        "Private_Dirty": 86016,
+        "Anonymous": 86016
+      },
+      {
+        "name": "/nix/store/ajzrc8n8fksmaclsa0cggfv3804dk269-libaom-3.15.1/lib/libaom.so.3.15.1",
+        "Rss": 282624,
+        "Pss": 175104,
+        "Private_Clean": 0,
+        "Private_Dirty": 73728,
+        "Anonymous": 73728
+      },
+      {
+        "name": "/nix/store/3sscrbn93ccq4gl5yyr359hv9y45qnqx-gpukey-0.1.0/bin/gpukey",
+        "Rss": 266240,
+        "Pss": 266240,
+        "Private_Clean": 253952,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-support.so",
+        "Rss": 258048,
+        "Pss": 108544,
+        "Private_Clean": 0,
+        "Private_Dirty": 36864,
+        "Anonymous": 36864
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/ld-linux-x86-64.so.2",
+        "Rss": 253952,
+        "Pss": 34816,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/cz1kyaqpw21ykdd8hmvsr9lxr953lygc-libvmaf-3.0.0/lib/libvmaf.so.3.0.0",
+        "Rss": 249856,
+        "Pss": 117760,
+        "Private_Clean": 0,
+        "Private_Dirty": 20480,
+        "Anonymous": 20480
+      },
+      {
+        "name": "/nix/store/cgzr5afjdbx30j7g44z2h92i8h3828k2-systemd-minimal-libs-262/lib/libudev.so.1.7.15",
+        "Rss": 241664,
+        "Pss": 241664,
+        "Private_Clean": 217088,
+        "Private_Dirty": 24576,
+        "Anonymous": 24576
+      },
+      {
+        "name": "/nix/store/zllvn25rjq0xcbaxigy1w3qycd5nf4y6-libopus-1.6.1/lib/libopus.so.0.11.1",
+        "Rss": 225280,
+        "Pss": 116736,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zsvigijjqf64yym31xg8y8ab37q1bdkg-util-linux-minimal-2.42.4-lib/lib/libmount.so.1.1.0",
+        "Rss": 217088,
+        "Pss": 116736,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/7rx5im6jbgyfhrl0lc0kyxd9yf14rdxc-expat-2.9.0/lib/libexpat.so.1.13.0",
+        "Rss": 212992,
+        "Pss": 79872,
+        "Private_Clean": 0,
+        "Private_Dirty": 16384,
+        "Anonymous": 16384
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-client-node.so",
+        "Rss": 208896,
+        "Pss": 75776,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/zsvigijjqf64yym31xg8y8ab37q1bdkg-util-linux-minimal-2.42.4-lib/lib/libblkid.so.1.1.0",
+        "Rss": 208896,
+        "Pss": 120832,
+        "Private_Clean": 0,
+        "Private_Dirty": 32768,
+        "Anonymous": 32768
+      },
+      {
+        "name": "/nix/store/p5dwcn4wpyjmhnnzj6iwwwjynyc6yif0-pcre2-10.49/lib/libpcre2-8.so.0.16.1",
+        "Rss": 204800,
+        "Pss": 71680,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/sgwn4f0dy14s8bghl8jwvdglpvdxk12i-dbus-1.16.2-lib/lib/libdbus-1.so.3.38.3",
+        "Rss": 196608,
+        "Pss": 61440,
+        "Private_Clean": 0,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib/libva.so.2.2400.0",
+        "Rss": 196608,
+        "Pss": 102400,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3xaspbv6nwvihmc3ybmlv0wjjksvpamq-xz-5.8.4/lib/liblzma.so.5.8.4",
+        "Rss": 180224,
+        "Pss": 65536,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "[stack]",
+        "Rss": 180224,
+        "Pss": 180224,
+        "Private_Clean": 0,
+        "Private_Dirty": 180224,
+        "Anonymous": 180224
+      },
+      {
+        "name": "/nix/store/slq0bpajkf5n95nhc0lm7a8f8vha8dw5-libselinux-3.11/lib/libselinux.so.1",
+        "Rss": 176128,
+        "Pss": 62464,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5r77q40xh7rj30dfkajv8y6jwbf4xh2-zstd-1.5.7/lib/libzstd.so.1.5.7",
+        "Rss": 172032,
+        "Pss": 60416,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/05qiq1wpq0v63fhfsj851jkib1zjdsc1-libdisplay-info-0.4.0/lib/libdisplay-info.so.0.4.0",
+        "Rss": 143360,
+        "Pss": 143360,
+        "Private_Clean": 135168,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb.so.1.1.0",
+        "Rss": 143360,
+        "Pss": 75776,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/lbvvv07w1kbxifkdswpl0ifn7sdcfcan-dav1d-1.5.3/lib/libdav1d.so.7.0.0",
+        "Rss": 135168,
+        "Pss": 77824,
+        "Private_Clean": 0,
+        "Private_Dirty": 20480,
+        "Anonymous": 20480
+      },
+      {
+        "name": "/home/quince/.cache/mesa_shader_cache/index",
+        "Rss": 131072,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/nix/store/ij4mv4rzvd60yql6jafpmh95x3l63937-mesa-26.1.8/lib/libVkLayer_MESA_device_select.so",
+        "Rss": 106496,
+        "Pss": 57344,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ji36842higmp6b06hbbpmzbd59g1c07c-zlib-1.3.2/lib/libz.so.1.3.2",
+        "Rss": 106496,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3sj8msrsym648f35mk3gb3pp385hhk8r-gcc-16.2.0-libgcc/lib/libgcc_s.so.1",
+        "Rss": 106496,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/bvfkqam1y3zmsb3k41iml0zwx13sknjl-elfutils-0.195/lib/libelf-0.195.so",
+        "Rss": 98304,
+        "Pss": 53248,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib/libdrm.so.2.134.0",
+        "Rss": 98304,
+        "Pss": 53248,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pfds9zw10xksh0zr7qplqg1lj9avs2gz-libffi-3.8.0/lib/libffi.so.8.5.0",
+        "Rss": 94208,
+        "Pss": 51200,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/yx06c7a7pspqv3lpaadd72hf7ggnd695-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib/lib/libswresample.so.7.1.102",
+        "Rss": 94208,
+        "Pss": 94208,
+        "Private_Clean": 81920,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/zx4ag3v11v9rl0iqvg6vzbpflzlg0dk2-bzip2-1.0.8/lib/libbz2.so.1.0.8",
+        "Rss": 86016,
+        "Pss": 31744,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ff1qrwmrdkr1hg4q1afpbw8139nj2r5m-wayland-1.26.0/lib/libwayland-client.so.0.26.0",
+        "Rss": 86016,
+        "Pss": 86016,
+        "Private_Clean": 73728,
+        "Private_Dirty": 12288,
+        "Anonymous": 12288
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-randr.so.0.1.0",
+        "Rss": 73728,
+        "Pss": 43008,
+        "Private_Clean": 4096,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-client-device.so",
+        "Rss": 69632,
+        "Pss": 38912,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-metadata.so",
+        "Rss": 65536,
+        "Pss": 36864,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib/libdrm_amdgpu.so.1.134.0",
+        "Rss": 61440,
+        "Pss": 34816,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-xfixes.so.0.0.0",
+        "Rss": 45056,
+        "Pss": 26624,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-adapter.so",
+        "Rss": 40960,
+        "Pss": 24576,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/pipewire-0.3/libpipewire-module-rt.so",
+        "Rss": 40960,
+        "Pss": 24576,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-sync.so.1.0.0",
+        "Rss": 36864,
+        "Pss": 22528,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-dbus.so",
+        "Rss": 32768,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/zfls1iw1bpglz5w2lqg3b8mjay1hg7dr-libxdmcp-1.1.5/lib/libXdmcp.so.6.0.0",
+        "Rss": 32768,
+        "Pss": 20480,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-dri3.so.0.1.0",
+        "Rss": 28672,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/libgmodule-2.0.so.0.8800.3",
+        "Rss": 28672,
+        "Pss": 18432,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib/spa-0.2/support/libspa-journal.so",
+        "Rss": 24576,
+        "Pss": 12288,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/anh1ib7l6ksrwr45kiwgz906vfi0vr5x-libxau-1.0.12/lib/libXau.so.6.0.0",
+        "Rss": 24576,
+        "Pss": 16384,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-present.so.0.0.0",
+        "Rss": 24576,
+        "Pss": 16384,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/hkqzh1vx6kr4mis703ph6gmnl3790x9k-libxcb-keysyms-0.4.1/lib/libxcb-keysyms.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 20480,
+        "Private_Clean": 12288,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/v4j317f11g4px2cc4ad7cldqkn0wdbqz-libxshmfence-1.3.3/lib/libxshmfence.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/d5dsf0h0r0fpi48rgvi7hmnac3mzj2s8-libxcb-1.17.0/lib/libxcb-shm.so.0.0.0",
+        "Rss": 20480,
+        "Pss": 20480,
+        "Private_Clean": 12288,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/rck9w8gj3r2w2z1xpw15g1fvpzi8iz9h-libx11-1.8.13/lib/libX11-xcb.so.1.0.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libdl.so.2",
+        "Rss": 20480,
+        "Pss": 8192,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libpthread.so.0",
+        "Rss": 20480,
+        "Pss": 8192,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib/libva-drm.so.2.2400.0",
+        "Rss": 20480,
+        "Pss": 14336,
+        "Private_Clean": 0,
+        "Private_Dirty": 8192,
+        "Anonymous": 8192
+      },
+      {
+        "name": "/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib/liburing.so.2.14",
+        "Rss": 16384,
+        "Pss": 10240,
+        "Private_Clean": 0,
+        "Private_Dirty": 4096,
+        "Anonymous": 4096
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=2312 (deleted)",
+        "Rss": 12288,
+        "Pss": 6144,
+        "Private_Clean": 0,
+        "Private_Dirty": 4096,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vvar]",
+        "Rss": 8192,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vdso]",
+        "Rss": 8192,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=4096 (deleted)",
+        "Rss": 4096,
+        "Pss": 1024,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/memfd:pipewire-memfd:flags=0x0000000f,type=2,size=256 (deleted)",
+        "Rss": 4096,
+        "Pss": 2048,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/dev/dri/renderD128",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "/home/quince/.cache/radv_builtin_shaders/index",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vvar_vclock]",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      },
+      {
+        "name": "[vsyscall]",
+        "Rss": 0,
+        "Pss": 0,
+        "Private_Clean": 0,
+        "Private_Dirty": 0,
+        "Anonymous": 0
+      }
+    ]
+  }
+}

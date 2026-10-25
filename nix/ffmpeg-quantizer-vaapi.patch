@@ -1,0 +1,32 @@
+--- a/libavcodec/vaapi_encode_av1.c
++++ b/libavcodec/vaapi_encode_av1.c
+@@ -537,8 +537,11 @@
+     fh->uniform_tile_spacing_flag = priv->uniform_tile;
+     fh->tile_size_bytes_minus1    = priv->attr_ext2.bits.tile_size_bytes_minus1;
+ 
+-    /** ignore ONLY_4x4 mode for codedlossless is not fully implemented. */
+-    if (priv->attr_ext2.bits.tx_mode_support & 0x04)
++    /* This encoder writes no segmentation or nonzero quantizer deltas, so
++     * zero base_q_idx makes the frame coded-lossless. Its mode is inferred. */
++    if (!fh->base_q_idx)
++        fh->tx_mode = AV1_ONLY_4X4;
++    else if (priv->attr_ext2.bits.tx_mode_support & 0x04)
+         fh->tx_mode = AV1_TX_MODE_SELECT;
+     else if (priv->attr_ext2.bits.tx_mode_support & 0x02)
+         fh->tx_mode = AV1_TX_MODE_LARGEST;
+@@ -888,6 +891,15 @@
+         return AVERROR_EXTERNAL;
+     } else {
+         priv->attr_ext2.value = attr.value;
++    }
++
++    if (ctx->rc_mode->quality &&
++        (priv->q_idx_idr == 0 || (avctx->gop_size > 1 && priv->q_idx_p == 0) ||
++         (avctx->max_b_frames > 0 && priv->q_idx_b == 0)) &&
++        !(priv->attr_ext2.bits.tx_mode_support & 0x01)) {
++        av_log(avctx, AV_LOG_ERROR,
++               "AV1 QIndex 0 requires lossless ONLY_4X4 transforms, which this driver does not support.\n");
++        return AVERROR(ENOSYS);
+     }
+ 
+     av_opt_set_int(priv->cbc->priv_data, "fixed_obu_size_length",

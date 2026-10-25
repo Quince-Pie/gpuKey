@@ -1,0 +1,833 @@
+==> [1/4] GCC debug build + tests
+error (ignored): SQLite database '/home/quince/.cache/nix/eval-cache-v6/82c58c8c7f9da96c63bda71a81a6d3f7d6cdd12dbe90ed75c14ee7a58b331dd3.sqlite' is busy
+make: Entering directory '/tmp/gpuKey'
+run build/gcc-debug/tests/audio_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+run build/gcc-debug/tests/av1_test
+[libaom-av1 @ 0x5555555a1680] 3.15.1
+[libaom-av1 @ 0x5555555a1680] Neither bitrate nor constrained quality specified, using default CRF of 32
+AV1: observed configuration, crop metadata, invalid requests and unchanged packet ownership pass
+run build/gcc-debug/tests/control_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Replay control needs an owned, private XDG_RUNTIME_DIR (mode 0700): Permission denied
+Saving replay to /tmp/gpukey-control-3TLYWq/gpukey-replay-20261023-053717-299371507.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-3TLYWq/gpukey-replay-20261023-053717-299371507.mkv
+Saving replay to /tmp/gpukey-control-3TLYWq/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-3TLYWq/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-3TLYWq/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+run build/gcc-debug/tests/conversion_fallback_test
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa2c0] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555557ade40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557ade40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x5555555a3f40] Could not update timestamps for skipped samples.
+[opus @ 0x5555555a3f40] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x5555557afa40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa2c0] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557afa40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x555555741ac0] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556a8600] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+conversion fallback: 11 denied row caches; media pixels, timing, audio and teardown pass
+run build/gcc-debug/tests/conversion_test
+conversion: independent matrix/filter oracle, 208 format/geometry combinations, padding and validation pass
+run build/gcc-debug/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/gcc-debug/tests/media_empty_test
+[libaom-av1 @ 0x55555559ff40] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x5555556d5f00] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x55555559ff40] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+[libaom-av1 @ 0x5555556d5f00] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed
+run build/gcc-debug/tests/media_test
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa600] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555557ae180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557ae180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x5555555a3f40] Could not update timestamps for skipped samples.
+[opus @ 0x5555555a3f40] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x5555557afd40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa600] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557afd40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556a4b40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x555555750000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/gcc-debug/tests/pattern_test
+pattern: scalar equivalence, odd/small dimensions, row periods and uint64 wrap pass
+run build/gcc-debug/tests/portal_test
+TAP version 14
+# random seed: R02Sc2f6f2f2de701ec45b04fa0e8686c59d
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed
+run build/gcc-debug/tests/replay_sharing_test
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+replay sharing: exact keys, sub-buffer offsets, paused export, eviction, budget and teardown pass
+run build/gcc-debug/tests/replay_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+replay: independent cuts, eviction, paused export, audio timing, copy control, stop, invalid packets and byte limit pass
+bash tests/cli.sh /tmp/gpuKey/build/gcc-debug/gpukey
+cli: positional/default output, format inference, repeatable audio, rational FPS, errors and nonoverwrite pass
+bash tests/replay-cli.sh /tmp/gpuKey/build/gcc-debug/gpukey
+'first clip.mkv': OK
+replay cli: repeated saves, private trigger, session collision, failures, stop and restart pass
+make: Leaving directory '/tmp/gpuKey'
+==> [2/4] GCC ASan+UBSan build + tests
+make: Entering directory '/tmp/gpuKey'
+run build/gcc-debug-address-undefined/tests/audio_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+run build/gcc-debug-address-undefined/tests/av1_test
+[libaom-av1 @ 0x7d8ff45e0a80] 3.15.1
+[libaom-av1 @ 0x7d8ff45e0a80] Neither bitrate nor constrained quality specified, using default CRF of 32
+AV1: observed configuration, crop metadata, invalid requests and unchanged packet ownership pass
+run build/gcc-debug-address-undefined/tests/control_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Replay control needs an owned, private XDG_RUNTIME_DIR (mode 0700): Permission denied
+Saving replay to /tmp/gpukey-control-KYsBBe/gpukey-replay-20261023-053725-850704201.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-KYsBBe/gpukey-replay-20261023-053725-850704201.mkv
+Saving replay to /tmp/gpukey-control-KYsBBe/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-KYsBBe/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-KYsBBe/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+run build/gcc-debug-address-undefined/tests/conversion_fallback_test
+[libaom-av1 @ 0x7d8ff45e0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff45e3c80] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff45e6e80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x7d8ff45ea080] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff45ef580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x7d8ff45f5980] Could not update timestamps for skipped samples.
+[opus @ 0x7d8ff45f5980] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x7d8ff45f7c80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff45fae80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff45ff480] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x7d8ff4601280] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff4603580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff4605880] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+conversion fallback: 11 denied row caches; media pixels, timing, audio and teardown pass
+run build/gcc-debug-address-undefined/tests/conversion_test
+conversion: independent matrix/filter oracle, 208 format/geometry combinations, padding and validation pass
+run build/gcc-debug-address-undefined/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/gcc-debug-address-undefined/tests/media_empty_test
+[libaom-av1 @ 0x7d8ff45e0a80] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x7d8ff45e1e80] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x7d8ff45e3780] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+[libaom-av1 @ 0x7d8ff45e4b80] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed
+run build/gcc-debug-address-undefined/tests/media_test
+[libaom-av1 @ 0x7d8ff45e0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff45e3c80] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff45e6e80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x7d8ff45ea080] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff45ef580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x7d8ff45f5980] Could not update timestamps for skipped samples.
+[opus @ 0x7d8ff45f5980] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x7d8ff45f7c80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff45fae80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff45ff480] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x7d8ff4601280] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff4603580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff4605880] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/gcc-debug-address-undefined/tests/pattern_test
+pattern: scalar equivalence, odd/small dimensions, row periods and uint64 wrap pass
+run build/gcc-debug-address-undefined/tests/portal_test
+TAP version 14
+# random seed: R02S210e50cc6b20844cb64c5dac1a276267
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed
+run build/gcc-debug-address-undefined/tests/replay_sharing_test
+[libaom-av1 @ 0x7d8ff45e0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+replay sharing: exact keys, sub-buffer offsets, paused export, eviction, budget and teardown pass
+run build/gcc-debug-address-undefined/tests/replay_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+replay: independent cuts, eviction, paused export, audio timing, copy control, stop, invalid packets and byte limit pass
+bash tests/cli.sh /tmp/gpuKey/build/gcc-debug-address-undefined/gpukey
+cli: positional/default output, format inference, repeatable audio, rational FPS, errors and nonoverwrite pass
+bash tests/replay-cli.sh /tmp/gpuKey/build/gcc-debug-address-undefined/gpukey
+'first clip.mkv': OK
+replay cli: repeated saves, private trigger, session collision, failures, stop and restart pass
+make: Leaving directory '/tmp/gpuKey'
+==> [3/4] Clang+mold debug build + tests
+make: Entering directory '/tmp/gpuKey'
+run build/clang-mold-debug/tests/audio_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+run build/clang-mold-debug/tests/av1_test
+[libaom-av1 @ 0x5555555a0680] 3.15.1
+[libaom-av1 @ 0x5555555a0680] Neither bitrate nor constrained quality specified, using default CRF of 32
+AV1: observed configuration, crop metadata, invalid requests and unchanged packet ownership pass
+run build/clang-mold-debug/tests/control_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Replay control needs an owned, private XDG_RUNTIME_DIR (mode 0700): Permission denied
+Saving replay to /tmp/gpukey-control-G0ROXh/gpukey-replay-20261023-053735-303889057.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-G0ROXh/gpukey-replay-20261023-053735-303889057.mkv
+Saving replay to /tmp/gpukey-control-G0ROXh/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-G0ROXh/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-G0ROXh/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+run build/clang-mold-debug/tests/conversion_fallback_test
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa2c0] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555557ade40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557ade40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x5555555a3f40] Could not update timestamps for skipped samples.
+[opus @ 0x5555555a3f40] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x5555557afa40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa2c0] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557afa40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x555555741ac0] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556a8600] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+conversion fallback: 11 denied row caches; media pixels, timing, audio and teardown pass
+run build/clang-mold-debug/tests/conversion_test
+conversion: independent matrix/filter oracle, 208 format/geometry combinations, padding and validation pass
+run build/clang-mold-debug/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/clang-mold-debug/tests/media_empty_test
+[libaom-av1 @ 0x55555559ff40] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x5555556d5f00] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x55555559ff40] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+[libaom-av1 @ 0x5555556d5f00] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed
+run build/clang-mold-debug/tests/media_test
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa600] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555557ae180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557ae180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x5555555a3f40] Could not update timestamps for skipped samples.
+[opus @ 0x5555555a3f40] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x5555557afd40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556aa600] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x5555557afd40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x5555555a3f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x5555556a4b40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x555555750000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/clang-mold-debug/tests/pattern_test
+pattern: scalar equivalence, odd/small dimensions, row periods and uint64 wrap pass
+run build/clang-mold-debug/tests/portal_test
+TAP version 14
+# random seed: R02Sc895fb29618ea7610ee4eeff11f5aa54
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed
+run build/clang-mold-debug/tests/replay_sharing_test
+[libaom-av1 @ 0x5555555a2f40] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+replay sharing: exact keys, sub-buffer offsets, paused export, eviction, budget and teardown pass
+run build/clang-mold-debug/tests/replay_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+replay: independent cuts, eviction, paused export, audio timing, copy control, stop, invalid packets and byte limit pass
+bash tests/cli.sh /tmp/gpuKey/build/clang-mold-debug/gpukey
+cli: positional/default output, format inference, repeatable audio, rational FPS, errors and nonoverwrite pass
+bash tests/replay-cli.sh /tmp/gpuKey/build/clang-mold-debug/gpukey
+'first clip.mkv': OK
+replay cli: repeated saves, private trigger, session collision, failures, stop and restart pass
+make: Leaving directory '/tmp/gpuKey'
+==> [4/4] Clang+mold ASan+UBSan build + tests
+make: Entering directory '/tmp/gpuKey'
+run build/clang-mold-debug-address-undefined/tests/audio_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+run build/clang-mold-debug-address-undefined/tests/av1_test
+[libaom-av1 @ 0x7d8ff53e0a80] 3.15.1
+[libaom-av1 @ 0x7d8ff53e0a80] Neither bitrate nor constrained quality specified, using default CRF of 32
+AV1: observed configuration, crop metadata, invalid requests and unchanged packet ownership pass
+run build/clang-mold-debug-address-undefined/tests/control_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Replay control needs an owned, private XDG_RUNTIME_DIR (mode 0700): Permission denied
+Saving replay to /tmp/gpukey-control-ceBsNb/gpukey-replay-20261023-053742-860470158.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-ceBsNb/gpukey-replay-20261023-053742-860470158.mkv
+Saving replay to /tmp/gpukey-control-ceBsNb/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-ceBsNb/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-ceBsNb/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+run build/clang-mold-debug-address-undefined/tests/conversion_fallback_test
+[libaom-av1 @ 0x7d8ff53e0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff53e3c80] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff53e6e80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x7d8ff53ea080] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff53ef580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x7d8ff53f5980] Could not update timestamps for skipped samples.
+[opus @ 0x7d8ff53f5980] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x7d8ff53f7c80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff53fae80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff53ff480] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x7d8ff5401280] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff5403580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff5405880] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+conversion fallback: 11 denied row caches; media pixels, timing, audio and teardown pass
+run build/clang-mold-debug-address-undefined/tests/conversion_test
+conversion: independent matrix/filter oracle, 208 format/geometry combinations, padding and validation pass
+run build/clang-mold-debug-address-undefined/tests/core_test
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+run build/clang-mold-debug-address-undefined/tests/media_empty_test
+[libaom-av1 @ 0x7d8ff51e0a80] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x7d8ff51e1e80] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x7d8ff51e3780] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+[libaom-av1 @ 0x7d8ff51e4b80] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed
+run build/clang-mold-debug-address-undefined/tests/media_test
+[libaom-av1 @ 0x7d8ff53e0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff53e3c80] 3.15.1
+plan: libaom-av1; 63x47 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff53e6e80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x7d8ff53ea080] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff53ef580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x7d8ff53f5980] Could not update timestamps for skipped samples.
+[opus @ 0x7d8ff53f5980] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x7d8ff53f7c80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff53fae80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x7d8ff53ff480] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x7d8ff5401280] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff5403580] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x7d8ff5405880] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+run build/clang-mold-debug-address-undefined/tests/pattern_test
+pattern: scalar equivalence, odd/small dimensions, row periods and uint64 wrap pass
+run build/clang-mold-debug-address-undefined/tests/portal_test
+TAP version 14
+# random seed: R02S31cb24210f63e88061b30889e4ccfe9a
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+# GLib-DEBUG: unsetenv() is not thread-safe and should not be used after threads are created
+portal: immediate response, stable serial, owned FD, revocation, denial and cancellation passed
+run build/clang-mold-debug-address-undefined/tests/replay_sharing_test
+[libaom-av1 @ 0x7d8ff51e0a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+replay sharing: exact keys, sub-buffer offsets, paused export, eviction, budget and teardown pass
+run build/clang-mold-debug-address-undefined/tests/replay_test
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+replay: independent cuts, eviction, paused export, audio timing, copy control, stop, invalid packets and byte limit pass
+bash tests/cli.sh /tmp/gpuKey/build/clang-mold-debug-address-undefined/gpukey
+cli: positional/default output, format inference, repeatable audio, rational FPS, errors and nonoverwrite pass
+bash tests/replay-cli.sh /tmp/gpuKey/build/clang-mold-debug-address-undefined/gpukey
+'first clip.mkv': OK
+replay cli: repeated saves, private trigger, session collision, failures, stop and restart pass
+make: Leaving directory '/tmp/gpuKey'
+==> [5/5] nix flake check (all 6 compiler x linker packages, .comment proofs, tracy, formatting)
+evaluating flake...
+checking flake output 'packages'...
+checking derivation packages.x86_64-linux.gcc...
+derivation evaluated to /nix/store/q3bb4i57321bqsgs79pwlbyky7wqngnf-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.default...
+derivation evaluated to /nix/store/q3bb4i57321bqsgs79pwlbyky7wqngnf-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.full...
+derivation evaluated to /nix/store/j5d0w10psmhkgyqfidmgn2a73w576bcs-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.mesa-color...
+derivation evaluated to /nix/store/ncfjlc8zcdhyq0vxrplnhyvx04dgi7l5-mesa-gpukey-color-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-compact...
+derivation evaluated to /nix/store/a79fl7zzyb314n8px6r0zyh5xzk4p31s-mesa-gpukey-compact-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-media...
+derivation evaluated to /nix/store/fn6w6xh6yiar3arsa07czz9h4gfnjmzv-mesa-gpukey-media-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-aco...
+derivation evaluated to /nix/store/mwj5jlmbwcsiz1m2cqjckd9ia1x50clp-mesa-gpukey-aco-26.2.5.drv
+checking derivation packages.x86_64-linux.ffmpeg-readout...
+derivation evaluated to /nix/store/bifcjg48xbvpfhvhxkaxcwwi1zf83hzc-ffmpeg-gpukey-readout-9.0.2.drv
+checking derivation packages.x86_64-linux.ffmpeg-recorder...
+derivation evaluated to /nix/store/70zgk24xjn13c0x5730q9c2wy3k7y70m-ffmpeg-gpukey-recorder-9.0.2.drv
+checking derivation packages.x86_64-linux.ffmpeg-mapping...
+derivation evaluated to /nix/store/mfzvgyipyka73h6snxm9jsc8crxri2as-ffmpeg-gpukey-mapping-9.0.2.drv
+checking derivation packages.x86_64-linux.ffmpeg-header-trace...
+derivation evaluated to /nix/store/3sjaassim4v19l0a4ikv4z1wqlygqa5i-ffmpeg-gpukey-headers-trace-9.0.2.drv
+checking derivation packages.x86_64-linux.ffmpeg-headers...
+derivation evaluated to /nix/store/zbn8lnkr4ak5s6p5yba0ql0fc6yvkwaz-ffmpeg-gpukey-headers-9.0.2.drv
+checking derivation packages.x86_64-linux.header-trace...
+derivation evaluated to /nix/store/mxkiw499nxljd4l16yd0skpkiz84xby8-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.headers...
+derivation evaluated to /nix/store/q3bb4i57321bqsgs79pwlbyky7wqngnf-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.mapping...
+derivation evaluated to /nix/store/d12mb92k9zhdvaaajmkl50z2q6p88agp-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.readout...
+derivation evaluated to /nix/store/8n0bhndc4bzq9d01glran4w48yn5dszm-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.recorder...
+derivation evaluated to /nix/store/f6fhrwjf4rn8r53mxk3mi70cyq4iqy8s-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.mesa-views...
+derivation evaluated to /nix/store/z768j8ia793mbcjvbmljaym8l4615gvw-mesa-gpukey-views-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-vpp...
+derivation evaluated to /nix/store/yl7khzzvif44rvy0f1wddh3vxk2zi6z2-mesa-gpukey-vpp-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-events...
+derivation evaluated to /nix/store/dbvf5hybjhrdxzgavf5683552f6h81dp-mesa-gpukey-events-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-workspace...
+derivation evaluated to /nix/store/2c3naczrmx299siiabmv0454rfkbh93z-mesa-gpukey-workspace-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-workspace-packed...
+derivation evaluated to /nix/store/8xpmk9szgkb62y4x1fwir3m05zq515jr-mesa-gpukey-workspace-packed-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-workspace-whole...
+derivation evaluated to /nix/store/rq3mc4vnc53ish2qcxf8hiz473v5x922-mesa-gpukey-workspace-whole-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-chroma...
+derivation evaluated to /nix/store/bbm28pbf2wrmn9nq924yy0cvkir8qwn6-mesa-gpukey-chroma-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-hints...
+derivation evaluated to /nix/store/haiy2hx8dw4s3j5zjzz4ynzmgbp3n8lg-mesa-gpukey-hints-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-hints-fixed...
+derivation evaluated to /nix/store/w71p90z9zmfsvs9p01bxcbbba8mdab2b-mesa-gpukey-hints-fixed-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-hints-exact...
+derivation evaluated to /nix/store/y9dzm9yp9l3k225x5fcm5vd0c0v7j492-mesa-gpukey-hints-exact-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-hints-shared...
+derivation evaluated to /nix/store/xkjbnvnpl22iki67zw3vv13yjlnxzm0d-mesa-gpukey-hints-shared-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-chroma-fault...
+derivation evaluated to /nix/store/qpgxz29pw2s4sxi18ym57jmqkfn6p0xp-mesa-gpukey-chroma-fault-26.2.5.drv
+checking derivation packages.x86_64-linux.mesa-vpp-fault...
+derivation evaluated to /nix/store/mwx4m05v3ixy2i6bxdklh2daina8mar9-mesa-gpukey-vpp-fault-26.2.5.drv
+checking derivation packages.x86_64-linux.amd...
+derivation evaluated to /nix/store/0x0bnzfmlwdah1glhh2y7vq523dirjpc-gpukey-amd.drv
+checking derivation packages.x86_64-linux.amd-hints-reference...
+derivation evaluated to /nix/store/3wqp0b4ldly1w0l9qpx44l72ki92rsna-gpukey-amd-hints-reference.drv
+checking derivation packages.x86_64-linux.amd-hints-fixed...
+derivation evaluated to /nix/store/mrpqg9c81j1n34vb9s32c22ka4nydfg6-gpukey-amd-hints-fixed.drv
+checking derivation packages.x86_64-linux.amd-hints-exact...
+derivation evaluated to /nix/store/z6m92rgq05np94c6hb7a1lgzn1r5dx4d-gpukey-amd-hints-exact.drv
+checking derivation packages.x86_64-linux.amd-hints-shared...
+derivation evaluated to /nix/store/fkfb0x4pjs3f7z2j2j67b6yab8krgqsy-gpukey-amd-hints-shared.drv
+checking derivation packages.x86_64-linux.amd-headers-reference...
+derivation evaluated to /nix/store/922q1n1xmm2c1h2q7zhnlb93291nhip4-gpukey-amd-headers-reference.drv
+checking derivation packages.x86_64-linux.amd-chroma-reference...
+derivation evaluated to /nix/store/bapfabl92cwgx1zagckimazyfy133bzd-gpukey-amd-chroma-reference.drv
+checking derivation packages.x86_64-linux.amd-workspace-reference...
+derivation evaluated to /nix/store/w18xwvbz32n19lpabz1m2gfma24mx78a-gpukey-amd-workspace-reference.drv
+checking derivation packages.x86_64-linux.amd-workspace-packed...
+derivation evaluated to /nix/store/yd7zsmmrgsyz9iviwnh88kyw6xs0kyr5-gpukey-amd-workspace-packed.drv
+checking derivation packages.x86_64-linux.amd-workspace-whole...
+derivation evaluated to /nix/store/pa0clvpqp6a7gjv6kzb64p50vabkkkb7-gpukey-amd-workspace-whole.drv
+checking derivation packages.x86_64-linux.amd-reference...
+derivation evaluated to /nix/store/sabjrfna29j9b0dnmyz38xmn319p7qvk-gpukey-amd-reference.drv
+checking derivation packages.x86_64-linux.amd-vpp-reference...
+derivation evaluated to /nix/store/jjdgk3igbka9i0p8azhlgngb36h1cz7r-gpukey-amd-vpp-reference.drv
+checking derivation packages.x86_64-linux.amd-readout-reference...
+derivation evaluated to /nix/store/zx87mspaaxv6jjic170n9b309y81yhjr-gpukey-amd-readout-reference.drv
+checking derivation packages.x86_64-linux.clang...
+derivation evaluated to /nix/store/x31m0y97s0xb3rhfh64yagq6gwv8670s-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.gcc-mold...
+derivation evaluated to /nix/store/jya8xfn8zkfnq4h3gjfsfsx354yp67hk-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.gcc-wild...
+derivation evaluated to /nix/store/i4alsgi4y19g17qvmwqskvxbnc9adrkz-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.clang-mold...
+derivation evaluated to /nix/store/c04il6v0plskdzmmmiihwlhxbfzskssr-gpukey-0.1.0.drv
+checking derivation packages.x86_64-linux.clang-wild...
+derivation evaluated to /nix/store/38idzc4jg4v33shraa4rh6w054ifpgp4-gpukey-0.1.0.drv
+checking flake output 'devShells'...
+checking derivation devShells.x86_64-linux.gcc...
+derivation evaluated to /nix/store/r489220jyi1am1i39x69bqbh3nb0wn92-nix-shell.drv
+checking derivation devShells.x86_64-linux.default...
+derivation evaluated to /nix/store/r489220jyi1am1i39x69bqbh3nb0wn92-nix-shell.drv
+checking derivation devShells.x86_64-linux.full...
+derivation evaluated to /nix/store/vjzwm971jshpd5q1zafw6v7dnhzi9h5i-nix-shell.drv
+checking derivation devShells.x86_64-linux.mapping...
+derivation evaluated to /nix/store/059jmrm316p74bly5610aadphgq73zg9-nix-shell.drv
+checking derivation devShells.x86_64-linux.readout...
+derivation evaluated to /nix/store/yc0hk7brpqlwajyhcl50m4298yjr1skr-nix-shell.drv
+checking derivation devShells.x86_64-linux.recorder...
+derivation evaluated to /nix/store/lnx93n7jz6s4zvjrb3xqma13yka03hql-nix-shell.drv
+checking derivation devShells.x86_64-linux.clang...
+derivation evaluated to /nix/store/3qxyzas8idv2sy2r0hac2ri3zxpb7an2-nix-shell.drv
+checking derivation devShells.x86_64-linux.gcc-mold...
+derivation evaluated to /nix/store/0y42w7n229n0xrich2lf4m8qnfrygq1c-nix-shell.drv
+checking derivation devShells.x86_64-linux.gcc-wild...
+derivation evaluated to /nix/store/j5lnv0jfy4f1554r3zsanpzih5wl4djb-nix-shell.drv
+checking derivation devShells.x86_64-linux.clang-mold...
+derivation evaluated to /nix/store/y6743lwjwyhnwjl8psqag23d624xkmmk-nix-shell.drv
+checking derivation devShells.x86_64-linux.clang-wild...
+derivation evaluated to /nix/store/pmz2s2cnxm13wbnz810psjgccdgj5iia-nix-shell.drv
+checking flake output 'formatter'...
+checking derivation formatter.x86_64-linux...
+derivation evaluated to /nix/store/m19ppg4vk2cjs7x95nv555pfab2pdbwq-nixfmt-tree-2.6.0.drv
+checking flake output 'checks'...
+checking derivation checks.x86_64-linux.tracy...
+derivation evaluated to /nix/store/yz0kbydiw38pmkcmm96vazn205bl2yxb-gpukey-tracy-0.1.0.drv
+checking derivation checks.x86_64-linux.command-hints...
+derivation evaluated to /nix/store/6rps5jbzripa9v5xcjkmmy2as8mf8gw5-gpukey-command-hints-check.drv
+checking derivation checks.x86_64-linux.formatting...
+derivation evaluated to /nix/store/2jz4dz69w48gb6lkn6dwfqjwjgkad0d7-formatting.drv
+checking derivation checks.x86_64-linux.toolchain-clang...
+derivation evaluated to /nix/store/ihrixncqqcjhkslffrqxsrf1i0j4g0if-gpukey-toolchain-clang-ld.drv
+checking derivation checks.x86_64-linux.toolchain-clang-mold...
+derivation evaluated to /nix/store/2c0sykl333znk7mphmivq37s6c7nkfj0-gpukey-toolchain-clang-mold.drv
+checking derivation checks.x86_64-linux.toolchain-clang-wild...
+derivation evaluated to /nix/store/fhcsvizsj2ngrhfjiw8pwhbq17g6ap2r-gpukey-toolchain-clang-wild.drv
+checking derivation checks.x86_64-linux.toolchain-gcc...
+derivation evaluated to /nix/store/dm0kzhv8l1qsm6v3ancnrjj4h49c96q7-gpukey-toolchain-gcc-ld.drv
+checking derivation checks.x86_64-linux.toolchain-gcc-mold...
+derivation evaluated to /nix/store/azhzddrba3h1jk8b0srcy23qj84yzhs7-gpukey-toolchain-gcc-mold.drv
+checking derivation checks.x86_64-linux.toolchain-gcc-wild...
+derivation evaluated to /nix/store/lv7zm1lsyzz44k0m7bcgh8bmkmxhgrz2-gpukey-toolchain-gcc-wild.drv
+checking derivation checks.x86_64-linux.build-clang...
+derivation evaluated to /nix/store/x31m0y97s0xb3rhfh64yagq6gwv8670s-gpukey-0.1.0.drv
+checking derivation checks.x86_64-linux.build-clang-mold...
+derivation evaluated to /nix/store/c04il6v0plskdzmmmiihwlhxbfzskssr-gpukey-0.1.0.drv
+checking derivation checks.x86_64-linux.build-clang-wild...
+derivation evaluated to /nix/store/38idzc4jg4v33shraa4rh6w054ifpgp4-gpukey-0.1.0.drv
+checking derivation checks.x86_64-linux.build-gcc...
+derivation evaluated to /nix/store/q3bb4i57321bqsgs79pwlbyky7wqngnf-gpukey-0.1.0.drv
+checking derivation checks.x86_64-linux.build-gcc-mold...
+derivation evaluated to /nix/store/jya8xfn8zkfnq4h3gjfsfsx354yp67hk-gpukey-0.1.0.drv
+checking derivation checks.x86_64-linux.build-gcc-wild...
+derivation evaluated to /nix/store/i4alsgi4y19g17qvmwqskvxbnc9adrkz-gpukey-0.1.0.drv
+checking flake output 'overlays'...
+checking overlay 'overlays.default'...
+running 15 flake checks...
+building '/nix/store/2jz4dz69w48gb6lkn6dwfqjwjgkad0d7-formatting.drv'...
+building '/nix/store/38idzc4jg4v33shraa4rh6w054ifpgp4-gpukey-0.1.0.drv'...
+building '/nix/store/c04il6v0plskdzmmmiihwlhxbfzskssr-gpukey-0.1.0.drv'...
+building '/nix/store/i4alsgi4y19g17qvmwqskvxbnc9adrkz-gpukey-0.1.0.drv'...
+building '/nix/store/jya8xfn8zkfnq4h3gjfsfsx354yp67hk-gpukey-0.1.0.drv'...
+building '/nix/store/x31m0y97s0xb3rhfh64yagq6gwv8670s-gpukey-0.1.0.drv'...
+building '/nix/store/6rps5jbzripa9v5xcjkmmy2as8mf8gw5-gpukey-command-hints-check.drv'...
+building '/nix/store/fhcsvizsj2ngrhfjiw8pwhbq17g6ap2r-gpukey-toolchain-clang-wild.drv'...
+building '/nix/store/2c0sykl333znk7mphmivq37s6c7nkfj0-gpukey-toolchain-clang-mold.drv'...
+building '/nix/store/ihrixncqqcjhkslffrqxsrf1i0j4g0if-gpukey-toolchain-clang-ld.drv'...
+building '/nix/store/dm0kzhv8l1qsm6v3ancnrjj4h49c96q7-gpukey-toolchain-gcc-ld.drv'...
+building '/nix/store/lv7zm1lsyzz44k0m7bcgh8bmkmxhgrz2-gpukey-toolchain-gcc-wild.drv'...
+building '/nix/store/azhzddrba3h1jk8b0srcy23qj84yzhs7-gpukey-toolchain-gcc-mold.drv'...
+all checks passed!
+warning: The check omitted these incompatible systems: aarch64-linux
+Use '--all-systems' to check all.
+==> ALL VERIFICATION CHECKS PASSED

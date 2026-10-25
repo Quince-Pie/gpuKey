@@ -1,0 +1,16 @@
+{
+  "cpu_user_us": 351378, "cpu_system_us": 197383,
+  "requested_synthetic_frames": 0,
+  "audio_input_samples": 367365, "audio_boundary_silence_samples": 1079, "audio_corrupt_silence_samples": 0,
+  "audio_tracks": 2, "fps_limited": 0,
+  "video_boundary_omitted": 0,
+  "success": true, "synthetic": false, "elapsed_ns": 4065732144,
+  "offered": 201, "submitted": 201, "packets": 201, "skipped": 0,
+  "accepted_bytes": 0, "written_bytes": 0, "durable_bytes": 0, "peak_output_reserved_bytes": 0,
+  "max_rss_kib": 117928,
+  "replay_saved": 2, "replay_failed": 0, "replay_peak_live_bytes": 1083119, "replay_peak_owned_bytes": 1083119, "replay_copied_bytes": 0, "replay_saved_bytes": 980217,
+  "prepare": {"count": 201, "mean_ns": 229404.8, "p50_bucket_upper_ns": 262143, "p99_bucket_upper_ns": 524287, "max_ns": 4395720},
+  "encode_and_receive": {"count": 201, "mean_ns": 93387.6, "p50_bucket_upper_ns": 131071, "p99_bucket_upper_ns": 262143, "max_ns": 816196},
+  "source_lease": {"count": 201, "mean_ns": 243091.5, "p50_bucket_upper_ns": 262143, "p99_bucket_upper_ns": 524287, "max_ns": 4470562},
+  "sink_completion": {"count": 0, "mean_ns": 0.0, "p50_bucket_upper_ns": 0, "p99_bucket_upper_ns": 0, "max_ns": 0}
+}

@@ -1,0 +1,100 @@
+Full-range RGB integration — 24 October 2026 UTC
+
+Delivered artifact
+- Opt-in rgb-full-amd uses the separate mesa-rgb-full driver profile.
+- The recorder selects an advertised linked model/range pair, retaining BT.709
+  primaries and source transfer. Frame, codec, parsed AV1 and mux metadata agree.
+- The ordinary RGB driver and default VAAPI backend are retained.
+- The selector is one byte in existing padding; x86-64 import state stays 24 bytes.
+- No new GPU image, processing pass or packet field is introduced.
+
+Verified packages
+- Limited RGB: /nix/store/3gj45q5p8h34ds037ahvnwh66pv5gar1-gpukey-rgb-amd
+- Full RGB: /nix/store/sj4p2950dhrx1b3vf83i1ap0r0ii3qkd-gpukey-rgb-full-amd
+- Default AMD: /nix/store/jp6jclgf9ppzgzj94gykfp770xza0vbg-gpukey-amd
+- Full driver: /nix/store/vpv68b454yjn8pmsrh55hgsmb131irsp-mesa-gpukey-rgb-full-range-26.2.5
+- Normal driver: /nix/store/896yc4wnz6wn804kdbl1638gl243vskz-mesa-gpukey-rgb-26.2.5
+- Both current RGB profiles use a byte-identical recorder executable.
+- The fixed VAAPI q7rkq342... and preceding RGB 133jqqnv... binaries remain intact.
+
+Archives
+- full-range-control.tar.gz: the preceding 197-file implementation.
+- full-range-evidence.tar.gz: expands to gpukey-full-range/ under /tmp.
+- full-range.sha256: archive/index integrity.
+
+Authoritative evidence in gpukey-full-range/
+- confirmation/: 36 fresh rotating eight-second runs, four variants across
+  1080p60, portrait60 and 1080p240, with identical source/CQP/depth policies.
+  Each output independently decodes and has consecutive visible identities.
+- replay/: twelve 40-second portrait60 runs, three per variant, with two saves
+  after the 30-second history window advances. Initial runs remain included.
+- confirmation-summary.txt and replay-confirmed-summary.txt preserve CPU means,
+  SD, RSS, VRAM/GTT, buffer counts and decoded-identity results.
+- run-confirmation.sh and run-replay-confirmation.sh are the executed commands.
+  Input manifests pass. Builds, profilers, players and heavy analysis do not
+  overlap these timing runs. Boundary frame counts are retained, not normalized
+  away. The producer negotiates two buffers for all measured variants.
+- native-full-corrected/, native-limited/: actual recorder capture, 16+16 audio,
+  replay, static, reconfiguration and missing-PTS checks.
+- native-full-asan/: native full-range capture and teardown under ASan/UBSan.
+- final-native-full-matrix/: RGB8/RGB10, portrait, forced keys, ordinary/queue
+  reconstruction, unsupported pairs and injected submission/export/view failures.
+  Vulkan validation uses the documented repaired RGB validation-layer fork.
+- av1-check.log and tests/av1_test.c: first-picture matrix/range agreement and
+  mismatch rejection, plus geometry/crop/ownership controls, for both profiles.
+- final-verification.log: GCC, Clang, ASan/UBSan and all x86-64 flake checks pass.
+  aarch64 and other GPU vendors were not built/tested in this continuation.
+- scene-full/ and scene-limited/: private 640x480 diagnostic clips and matched
+  spatial-frames/JSON files. Sixteen exact source identities give RGB PSNR
+  30.094 dB full and 30.000 dB limited. This is not a natural-scene quality claim.
+- mpv-pixels.json: 60 exported PNGs per profile have the expected consecutive IDs.
+- decoded-patch-series.json: raw patch values remain stable at 0,1,15,30,120.
+- mpv-full-verbose.log, mpv-full-swscale.log, mpv-full-exact.log and their PNGs:
+  default fast zimg changes full-range export values; accurate mode or swscale
+  restores expected RGB codes. Source video is unchanged.
+- scene-*/brave-*-playback.json and *-video.png: headless Brave progress, decoded
+  WebCodecs tags/YUV samples, renderer information, canvas and compositor output.
+  The reported path is software SwiftShader; accelerated desktop behavior is
+  not established. No existing browser profile/session was used.
+- browser-compositor-pixels.json, consumer-color-diagnostic.json and
+  mpv-exact-pixels.json retain the conversion differences. Brave's limited-range
+  blue-channel error matches libyuv's documented coefficient approximation;
+  copied YUV samples match the independent decoder.
+- samply-{full,limited}-userspace/: actual CPU profiles with symbol sidecars.
+- tracy-{full,limited}/: actual traces, CSV zones and independently decoded exports.
+- latency-{full,limited}/: 300-packet, six-second, 50-FPS submit-to-receive traces.
+  Means are 9.296/9.336 ms; observed p99 9.762/9.766 ms. These are instrumented API
+  delays, not pure GPU or complete capture latency. No superiority claim follows.
+- profile-analysis.*, tracy-summary.json: symbolicated sample/zone summaries.
+  Inclusive fractions overlap, user-space sampling omits kernel events, and
+  startup is included. Export timing varies; it is not treated as an improvement.
+- layout.log: the selected pair fits the existing 24-byte cold state.
+- delivery-package-paths.txt and final immutable-input checks identify the build.
+
+Retained failures and qualifications
+- native-full/gpu.log records the first fixture abort: its limited-only endpoint
+  oracle rejected correct full-range pixels. The oracle was corrected against
+  the declared-range contract, with both profiles rerun.
+- samply-full/ records the denied kernel-inclusive request at perf_event_paranoid=2.
+  The installed vgd35a... wrapper retries with kernel/hypervisor events excluded.
+  Its shim is removed from the recorder environment; system policy is unchanged.
+- The first full driver k41r0... used the same change with fuzzy patch context;
+  the final vpv68... profile applies with zero fuzz and is tested independently.
+- Initial spatial.json uses evenly spread decoded indices. spatial-matched.json
+  uses exact common source identities for the reported comparison.
+- Full range increases measured encoded replay payload/export sizes about 3%.
+  Current RGB CPU means are higher than the fixed reference in the longer runs;
+  the results do not establish a CPU gain or a general nonregression bound.
+- Full range is an explicit precision/storage choice. The default stays VAAPI.
+  The conditional 87.890625 MiB image target is unchanged; no universal optimum
+  or state-of-the-art claim on every metric is made. The broader goal is active.
+
+Reproduce
+  nix run .#rgb-full-amd -- replay 30 --display --fps 60 --backend vulkan --device 0
+  nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0
+  nix flake check
+
+The archived scripts require fresh output names. Consumer/spatial tools are
+tools/check-browser-playback.py and tools/analyze-spatial-quality.py. Browser
+checks use a new private profile, anonymous debugging pipes and a loopback server.
+MPV image export is an image-output check, not a claim about its normal GPU VO.

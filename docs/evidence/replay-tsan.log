@@ -1,0 +1,208 @@
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/control.d -c -o build/clang-release-thread/control.o src/control.c
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/replay.d -c -o build/clang-release-thread/replay.o src/replay.c
+clang -fsanitize=thread -o build/clang-release-thread/gpukey build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/main.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/replay_test.d -fsanitize=thread -o build/clang-release-thread/tests/replay_test tests/replay_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/control_test.d -fsanitize=thread -o build/clang-release-thread/tests/control_test tests/control_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/core_test.d -fsanitize=thread -o build/clang-release-thread/tests/core_test tests/core_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/media_test.d -fsanitize=thread -o build/clang-release-thread/tests/media_test tests/media_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/audio_test.d -fsanitize=thread -o build/clang-release-thread/tests/audio_test tests/audio_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/pattern_test.d -fsanitize=thread -o build/clang-release-thread/tests/pattern_test tests/pattern_test.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+core: timeline, concurrent wrap, ordered output, short writes and ENOSPC passed
+[libaom-av1 @ 0x725c00000000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+[libaom-av1 @ 0x725c00000a80] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x725c00000e00] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; libopus
+[opus @ 0x725c00000700] Could not update timestamps for skipped samples.
+[opus @ 0x725c00000700] Could not update timestamps for discarded samples.
+[libaom-av1 @ 0x725c00000000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x725c00001180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+[libaom-av1 @ 0x725c00000700] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Test stereo; stereo; 48000 → 48000 Hz; pcm_f32le
+selected audio source supplied no samples: No data available
+[libaom-av1 @ 0x725c00000000] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x725c00000700] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+[libaom-av1 @ 0x725c00001180] 3.15.1
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+media: independent AV1 decode, color endpoints, VFR gaps, final duration and audio mux passed
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Desktop; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 3: Surround; 5.1; 96000 → 48000 Hz; pcm_f32le
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Microphone; mono; 44100 → 48000 Hz; libopus
+audio 2: Desktop; stereo; 48000 → 48000 Hz; libopus
+audio 3: Surround; 5.1; 96000 → 48000 Hz; libopus
+audio 4: Eight channels; 7.1; 8000 → 48000 Hz; libopus
+audio 5: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Discrete interface; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+audio: independent tracks, native rates, mono/stereo/surround/16 AUX, Opus/PCM, channel identity and exact endpoints pass
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Replay 'test' ready. Enter saves. Run 'gpukey save --session test' to save; Ctrl-C stops.
+Replay session 'test' is already running. Use --session NAME for another.
+Replay control needs an owned, private XDG_RUNTIME_DIR (mode 0700): Permission denied
+Saving replay to /tmp/gpukey-control-xKK5xC/gpukey-replay-20261020-041513-131686766.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-xKK5xC/gpukey-replay-20261020-041513-131686766.mkv
+Saving replay to /tmp/gpukey-control-xKK5xC/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-xKK5xC/client.mkv
+Saved 1.000 seconds to /tmp/gpukey-control-xKK5xC/client.mkv
+control: Enter, client completion, stale socket, collision, permissions and malformed request pass
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: First; stereo; 48000 → 48000 Hz; libopus
+audio 2: Second; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: First; stereo; 48000 → 48000 Hz; pcm_f32le
+audio 2: Second; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; libopus
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Precision; stereo; 48000 → 48000 Hz; pcm_f32le
+replay: independent cuts, eviction, paused export, audio timing, copy control, stop, invalid packets and byte limit pass
+pattern: scalar equivalence, odd/small dimensions, row periods and uint64 wrap pass
+'first clip.mkv': OK
+replay cli: repeated saves, private trigger, session collision, failures, stop and restart pass
+clang -Isrc -D_GNU_SOURCE -D_REENTRANT -fno-strict-aliasing -fno-strict-overflow -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/pipewire-0.3 -isystem /nix/store/9mn4q5fiyfzwr3fcl6w4r87aky6bc72f-pipewire-1.6.9-dev/include/spa-0.2 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/gio-unix-2.0 -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include -isystem /nix/store/sdywqhfily8324mqijjs03hhqrz5vjkz-glib-2.88.3-dev/include/glib-2.0 -isystem /nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib/glib-2.0/include -isystem /nix/store/6wfpff2fabgqqrac04yl7nlhiv76jn97-ffmpeg-headless-9.0.2-dev/include -isystem /nix/store/98fzz39rw859dd3ka4wqr0w9sgyahhfx-libva-2.24.1-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include -isystem /nix/store/bvfayc21wafivfm336sis18p2f5dq1s1-libdrm-2.4.134-dev/include/libdrm -isystem /nix/store/2vv0il3zbz82gh55mlk9alagh0zdvmg8-liburing-2.14-dev/include -I/nix/store/iadddavz7h0h6py6b3ck4j2v3jfnjmpp-tracy-client-0.14.1-dev/include/tracy -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wdouble-promotion -Wvla -Wstrict-prototypes -Wmissing-prototypes -Wundef -Werror=implicit-function-declaration -Werror=incompatible-pointer-types -Werror=return-type -O2 -g -DNDEBUG -fno-omit-frame-pointer -fsanitize=thread -fno-sanitize-recover=all -Werror -MMD -MP -MF build/clang-release-thread/tests/capture_fixture.d -fsanitize=thread -o build/clang-release-thread/tests/capture_fixture tests/capture_fixture.c build/clang-release-thread/audio.o build/clang-release-thread/capture.o build/clang-release-thread/control.o build/clang-release-thread/core.o build/clang-release-thread/devices.o build/clang-release-thread/gpu.o build/clang-release-thread/media.o build/clang-release-thread/pattern.o build/clang-release-thread/portal.o build/clang-release-thread/replay.o build/clang-release-thread/sink.o -L/nix/store/ar1c2qmqxr64kv7pg8l4yj3473c4dg65-pipewire-1.6.9/lib -L/nix/store/7i0bhnc6ka10z96sy4fpi3b47gvwmg0x-glib-2.88.3/lib -L/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib -L/nix/store/c6b4gyklay36cqap5wmi3p8rqzwbhmf9-libva-2.24.1/lib -L/nix/store/f5bymphw4ci3j34w3iw63v32pqpkxkjf-libdrm-2.4.134/lib -L/nix/store/3mmcfh7zgmblfhlq4nwxzwqc2iv2kd9w-liburing-2.14/lib -lpipewire-0.3 -lgio-2.0 -lgobject-2.0 -lglib-2.0 -lavcodec -lavformat -lavutil -lswresample -lswscale -lva-drm -lva -ldrm -luring -pthread -lm
+bash tests/integration.sh /tmp/gpuKey/build/clang-release-thread/gpukey /tmp/gpuKey/build/clang-release-thread/tests/capture_fixture
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/result.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 1 video inputs, 1 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=514/514/0
+private PipeWire integration: 1 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/capped.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 26 video inputs, 26 encoded packets; 0 capture skips, 25 FPS-limited; accepted/written/durable bytes=1728/1728/0
+private PipeWire integration: 26 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/audio.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347864/1347864/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/duration-boundary.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347831/1347831/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/audio-revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+capture: selected audio format was removed (Stale file handle)
+Incomplete recording: 21 video inputs, 21 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=542063/542063/0
+gpukey: Stale file handle. Any partial output has been preserved.
+private PipeWire integration: 21 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/aux.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=318024/318024/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/aux-pcm.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=6149258/6149258/0
+private PipeWire integration: 50 video packets, passed
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay.mkv.second.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay.mkv.second.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static-replay.mkv
+Saved 1.313 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static-replay.mkv
+Saved 1.313 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static-replay.mkv
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static-replay.mkv.second.mkv
+Saved 1.292 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static-replay.mkv.second.mkv
+Saved 1.292 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/static-replay.mkv.second.mkv
+Replay stopped: 2 clips saved, 0 failed; unsaved history discarded.
+private PipeWire replay: 2 independent clips, 1 + 6 audio channels pass
+Rolling 1.000 seconds; live memory budget 256 MiB plus one export.
+Saved clips include the preceding keyframe and the latest completed audio.
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; libopus
+Replay 'fixture' ready. Run 'gpukey save --session fixture' to save; Ctrl-C stops.
+Saving replay to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay-revoke.mkv
+Saved 1.294 seconds to /tmp/nix-shell.tbAYnC/nix-shell.6Rt6GG/tmp.CBviasntol/replay-revoke.mkv
+capture: selected source was removed (Broken pipe)
+Replay stopped: 1 clips saved, 0 failed; unsaved history discarded.
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire replay: 1 independent clips, 1 + 6 audio channels pass
+Audio devices (IDs last until PipeWire restarts; names can be reused):
+  ID           TYPE      DESCRIPTION / NODE NAME
+  No audio devices are visible on this PipeWire connection.
+
+Use: gpukey clip.mkv --audio ID [--audio ID ...]
+Each selected device becomes a separate track; no audio is selected by default.
+Use --display or --window to choose a screen source in the desktop dialog.
+integration: private PipeWire source -> recorder -> independent decoder passed

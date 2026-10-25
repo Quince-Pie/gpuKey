@@ -1,0 +1,63 @@
+--- a/libavcodec/vaapi_encode.c
++++ b/libavcodec/vaapi_encode.c
+@@ -2221,7 +2221,11 @@
+ 
+ int ff_vaapi_encode_receive_packet(AVCodecContext *avctx, AVPacket *pkt)
+ {
+-    return ff_hw_base_encode_receive_packet(avctx->priv_data, avctx, pkt);
++    VAAPIEncodeContext *ctx = avctx->priv_data;
++    int ret = ff_hw_base_encode_receive_packet(avctx->priv_data, avctx, pkt);
++    if (ctx->async_trim == 2)
++        av_refstruct_pool_trim(ctx->output_buffer_pool, 0);
++    return ret;
+ }
+ 
+ av_cold int ff_vaapi_encode_init(AVCodecContext *avctx)
+--- a/libavcodec/vaapi_encode.h
++++ b/libavcodec/vaapi_encode.h
+@@ -360,8 +360,8 @@
+ 
+ 
+ #define VAAPI_ENCODE_COMMON_OPTIONS \
+-    { "async_trim", "Release excess idle output buffers; observe fd generation", \
+-      OFFSET(common.async_trim), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS }, \
++    { "async_trim", "Unused output retention: 0 unlimited, 1 single, 2 none; observe fd generation", \
++      OFFSET(common.async_trim), AV_OPT_TYPE_INT, { .i64 = 0 }, 0, 2, FLAGS | AV_OPT_FLAG_RUNTIME_PARAM }, \
+     { "async_fd_generation", "Changes when an exposed output descriptor closes", \
+       OFFSET(common.async_fd_generation), AV_OPT_TYPE_UINT64, { .i64 = 0 }, 0, UINT64_MAX, FLAGS | AV_OPT_FLAG_READONLY }, \
+     { "async_events", "Expose a persistent dma-buf output readiness fd when supported", \
+--- a/libavcodec/vulkan_encode.c
++++ b/libavcodec/vulkan_encode.c
+@@ -818,7 +818,10 @@
+ int ff_vulkan_encode_receive_packet(AVCodecContext *avctx, AVPacket *pkt)
+ {
+     FFVulkanEncodeContext *ctx = avctx->priv_data;
+-    return ff_hw_base_encode_receive_packet(&ctx->base, avctx, pkt);
++    int ret = ff_hw_base_encode_receive_packet(&ctx->base, avctx, pkt);
++    if (ctx->opts.async_trim)
++        av_buffer_pool_trim(ctx->buf_pool, ctx->opts.async_trim == 1);
++    return ret;
+ }
+ 
+ static int vulkan_encode_create_dpb(AVCodecContext *avctx, FFVulkanEncodeContext *ctx)
+--- a/libavcodec/vulkan_encode.h
++++ b/libavcodec/vulkan_encode.h
+@@ -158,6 +158,7 @@
+     int level;
+     int tier;
+     int async_depth;
++    int async_trim;
+     VkVideoEncodeUsageFlagBitsKHR usage;
+     VkVideoEncodeContentFlagBitsKHR content;
+     VkVideoEncodeTuningModeKHR tune;
+@@ -242,7 +243,9 @@
+         { "default",  "Default content", 0, AV_OPT_TYPE_CONST, { .i64 = VK_VIDEO_ENCODE_CONTENT_DEFAULT_KHR      }, INT_MIN, INT_MAX, FLAGS, "content" }, \
+         { "camera",   "Camera footage", 0, AV_OPT_TYPE_CONST, { .i64 = VK_VIDEO_ENCODE_CONTENT_CAMERA_BIT_KHR   }, INT_MIN, INT_MAX, FLAGS, "content" }, \
+         { "desktop",  "Screen recording", 0, AV_OPT_TYPE_CONST, { .i64 = VK_VIDEO_ENCODE_CONTENT_DESKTOP_BIT_KHR  }, INT_MIN, INT_MAX, FLAGS, "content" }, \
+-        { "rendered", "Game or 3D content", 0, AV_OPT_TYPE_CONST, { .i64 = VK_VIDEO_ENCODE_CONTENT_RENDERED_BIT_KHR }, INT_MIN, INT_MAX, FLAGS, "content" }
++        { "rendered", "Game or 3D content", 0, AV_OPT_TYPE_CONST, { .i64 = VK_VIDEO_ENCODE_CONTENT_RENDERED_BIT_KHR }, INT_MIN, INT_MAX, FLAGS, "content" }, \
++    { "async_trim", "Unused output retention: 0 unlimited, 1 single, 2 none", \
++      OFFSET(common.opts.async_trim), AV_OPT_TYPE_INT, { .i64 = 0 }, 0, 2, FLAGS | AV_OPT_FLAG_RUNTIME_PARAM }
+ 
+ /**
+  * Initialize encoder.

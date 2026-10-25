@@ -1,0 +1,463 @@
+{
+  "thread": "3729385.2",
+  "active_sample_weight": 269,
+  "reported_cpu_delta_us": 57810,
+  "exclusive_cpu_us": [
+    {
+      "function": "do_lookup_x",
+      "cpu_us": 3323,
+      "percent": 5.748140460128005
+    },
+    {
+      "function": "int_free_chunk",
+      "cpu_us": 2485,
+      "percent": 4.298564262238367
+    },
+    {
+      "function": "normal_updatePosition",
+      "cpu_us": 2314,
+      "percent": 4.002767687251341
+    },
+    {
+      "function": "_memset_avx512_unaligned_erms",
+      "cpu_us": 2237,
+      "percent": 3.8695727382805742
+    },
+    {
+      "function": "_GI___libc_malloc",
+      "cpu_us": 2001,
+      "percent": 3.461338868707836
+    },
+    {
+      "function": "dl_lookup_symbol_x",
+      "cpu_us": 2000,
+      "percent": 3.459609064175748
+    },
+    {
+      "function": "amdgpu_cs_add_buffer(radeon_cmdbuf*, pb_buffer_lean*, unsigned int, radeon_bo_domain)",
+      "cpu_us": 1704,
+      "percent": 2.9475869226777376
+    },
+    {
+      "function": "si_set_constant_buffer",
+      "cpu_us": 1604,
+      "percent": 2.77460646946895
+    },
+    {
+      "function": "_strcmp_evex",
+      "cpu_us": 1532,
+      "percent": 2.6500605431586233
+    },
+    {
+      "function": "compositor_proc_process_frame",
+      "cpu_us": 1444,
+      "percent": 2.4978377443348903
+    },
+    {
+      "function": "proc_begin_frame",
+      "cpu_us": 1373,
+      "percent": 2.375021622556651
+    },
+    {
+      "function": "av_freep",
+      "cpu_us": 1287,
+      "percent": 2.226258432797094
+    },
+    {
+      "function": "util_set_thread_affinity",
+      "cpu_us": 1221,
+      "percent": 2.1120913336792944
+    },
+    {
+      "function": "_GI___pthread_mutex_unlock_usercnt",
+      "cpu_us": 1158,
+      "percent": 2.003113648157758
+    },
+    {
+      "function": "dl_check_map_versions",
+      "cpu_us": 1148,
+      "percent": 1.9858156028368794
+    },
+    {
+      "function": "g_main_context_iterate_unlocked.isra.0",
+      "cpu_us": 1130,
+      "percent": 1.9546791212592978
+    },
+    {
+      "function": "construct_value.isra.0",
+      "cpu_us": 1107,
+      "percent": 1.9148936170212767
+    },
+    {
+      "function": "radeon_enc_obu_instruction",
+      "cpu_us": 1089,
+      "percent": 1.8837571354436948
+    },
+    {
+      "function": "radeon_enc_layer_select",
+      "cpu_us": 1019,
+      "percent": 1.7626708181975437
+    },
+    {
+      "function": "__pthread_mutex_lock",
+      "cpu_us": 968,
+      "percent": 1.674450787061062
+    }
+  ],
+  "inclusive_cpu_us": [
+    {
+      "function": "_libc_start_call_main",
+      "cpu_us": 53058,
+      "percent": 91.77996886351842
+    },
+    {
+      "function": "_libc_start_main_alias_2",
+      "cpu_us": 53058,
+      "percent": 91.77996886351842
+    },
+    {
+      "function": "start",
+      "cpu_us": 53058,
+      "percent": 91.77996886351842
+    },
+    {
+      "function": "main",
+      "cpu_us": 51265,
+      "percent": 88.67842933748486
+    },
+    {
+      "function": "gk_media_submit",
+      "cpu_us": 21563,
+      "percent": 37.299775125410825
+    },
+    {
+      "function": "vlVaEndPicture",
+      "cpu_us": 20924,
+      "percent": 36.194430029406675
+    },
+    {
+      "function": "vaEndPicture",
+      "cpu_us": 20924,
+      "percent": 36.194430029406675
+    },
+    {
+      "function": "avcodec_send_frame",
+      "cpu_us": 20795,
+      "percent": 35.971285244767344
+    },
+    {
+      "function": "encode_receive_packet_internal",
+      "cpu_us": 20576,
+      "percent": 35.5924580522401
+    },
+    {
+      "function": "ff_hw_base_encode_receive_packet",
+      "cpu_us": 20576,
+      "percent": 35.5924580522401
+    },
+    {
+      "function": "gk_media_prepare_begin",
+      "cpu_us": 16070,
+      "percent": 27.797958830652135
+    },
+    {
+      "function": "gk_gpu_convert_submit",
+      "cpu_us": 16070,
+      "percent": 27.797958830652135
+    },
+    {
+      "function": "vaapi_encode_issue",
+      "cpu_us": 15348,
+      "percent": 26.54903995848469
+    },
+    {
+      "function": "proc_end_frame",
+      "cpu_us": 13392,
+      "percent": 23.165542293720808
+    },
+    {
+      "function": "compositor_proc_process_frame",
+      "cpu_us": 10491,
+      "percent": 18.14737934613389
+    },
+    {
+      "function": "vl_compositor_convert_rgb_to_yuv",
+      "cpu_us": 9047,
+      "percent": 15.649541601798997
+    },
+    {
+      "function": "dl_lookup_symbol_x",
+      "cpu_us": 5349,
+      "percent": 9.252724442138039
+    },
+    {
+      "function": "dl_relocate_object_no_relro",
+      "cpu_us": 5323,
+      "percent": 9.207749524303754
+    },
+    {
+      "function": "dl_relocate_object",
+      "cpu_us": 5323,
+      "percent": 9.207749524303754
+    },
+    {
+      "function": "dl_main",
+      "cpu_us": 4752,
+      "percent": 8.220031136481577
+    },
+    {
+      "function": "dl_start",
+      "cpu_us": 4752,
+      "percent": 8.220031136481577
+    },
+    {
+      "function": "dl_sysdep_start",
+      "cpu_us": 4752,
+      "percent": 8.220031136481577
+    },
+    {
+      "function": "EntryPoint",
+      "cpu_us": 4752,
+      "percent": 8.220031136481577
+    },
+    {
+      "function": "radeon_enc_sq_encode",
+      "cpu_us": 4694,
+      "percent": 8.119702473620482
+    },
+    {
+      "function": "amdgpu_cs_flush(radeon_cmdbuf*, unsigned int, pipe_fence_handle**)",
+      "cpu_us": 4271,
+      "percent": 7.38799515654731
+    }
+  ],
+  "exclusive": [
+    {
+      "function": "get_cpu_topology",
+      "samples": 93,
+      "percent": 34.572490706319705
+    },
+    {
+      "function": "util_set_thread_affinity",
+      "samples": 43,
+      "percent": 15.985130111524164
+    },
+    {
+      "function": "_memset_avx512_unaligned_erms",
+      "samples": 6,
+      "percent": 2.2304832713754648
+    },
+    {
+      "function": "_GI___pthread_mutex_unlock_usercnt",
+      "samples": 5,
+      "percent": 1.858736059479554
+    },
+    {
+      "function": "_GI___libc_malloc",
+      "samples": 4,
+      "percent": 1.486988847583643
+    },
+    {
+      "function": "amdgpu_cs_add_buffer(radeon_cmdbuf*, pb_buffer_lean*, unsigned int, radeon_bo_domain)",
+      "samples": 4,
+      "percent": 1.486988847583643
+    },
+    {
+      "function": "do_lookup_x",
+      "samples": 3,
+      "percent": 1.1152416356877324
+    },
+    {
+      "function": "_GI___pthread_self",
+      "samples": 3,
+      "percent": 1.1152416356877324
+    },
+    {
+      "function": "_GI___ioctl",
+      "samples": 3,
+      "percent": 1.1152416356877324
+    },
+    {
+      "function": "__pthread_mutex_lock",
+      "samples": 3,
+      "percent": 1.1152416356877324
+    },
+    {
+      "function": "si_buffer_transfer_unmap",
+      "samples": 3,
+      "percent": 1.1152416356877324
+    },
+    {
+      "function": "si_launch_grid",
+      "samples": 3,
+      "percent": 1.1152416356877324
+    },
+    {
+      "function": "_GI___libc_realloc",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "match_expression",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "construct_value.isra.0",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "do_futex_fence_wait",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "av_freep",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "si_set_constant_buffer",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "g_source_ref",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    },
+    {
+      "function": "av1_f",
+      "samples": 2,
+      "percent": 0.7434944237918215
+    }
+  ],
+  "inclusive": [
+    {
+      "function": "_libc_start_call_main",
+      "samples": 266,
+      "percent": 98.88475836431226
+    },
+    {
+      "function": "_libc_start_main_alias_2",
+      "samples": 266,
+      "percent": 98.88475836431226
+    },
+    {
+      "function": "start",
+      "samples": 266,
+      "percent": 98.88475836431226
+    },
+    {
+      "function": "main",
+      "samples": 265,
+      "percent": 98.51301115241635
+    },
+    {
+      "function": "vaapi_device_connect",
+      "samples": 144,
+      "percent": 53.531598513011154
+    },
+    {
+      "function": "vaInitialize",
+      "samples": 144,
+      "percent": 53.531598513011154
+    },
+    {
+      "function": "av_hwdevice_ctx_create",
+      "samples": 144,
+      "percent": 53.531598513011154
+    },
+    {
+      "function": "gk_gpu_open",
+      "samples": 144,
+      "percent": 53.531598513011154
+    },
+    {
+      "function": "_vaDriverInit_1_24",
+      "samples": 144,
+      "percent": 53.531598513011154
+    },
+    {
+      "function": "vl_drm_screen_create",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "radeonsi_screen_create_impl",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "radeonsi_screen_create",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "pipe_loader_create_screen_vk",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "si_init_gfx_screen",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "amdgpu_winsys_create",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "pipe_radeonsi_create_screen",
+      "samples": 143,
+      "percent": 53.15985130111524
+    },
+    {
+      "function": "get_cpu_topology",
+      "samples": 142,
+      "percent": 52.78810408921933
+    },
+    {
+      "function": "_GI___pthread_once",
+      "samples": 142,
+      "percent": 52.78810408921933
+    },
+    {
+      "function": "util_cpu_detect_once",
+      "samples": 142,
+      "percent": 52.78810408921933
+    },
+    {
+      "function": "_pthread_once_slow.isra.0",
+      "samples": 142,
+      "percent": 52.78810408921933
+    },
+    {
+      "function": "vlVaEndPicture",
+      "samples": 58,
+      "percent": 21.561338289962826
+    },
+    {
+      "function": "vaEndPicture",
+      "samples": 58,
+      "percent": 21.561338289962826
+    },
+    {
+      "function": "gk_media_submit",
+      "samples": 52,
+      "percent": 19.33085501858736
+    },
+    {
+      "function": "avcodec_send_frame",
+      "samples": 51,
+      "percent": 18.95910780669145
+    },
+    {
+      "function": "encode_receive_packet_internal",
+      "samples": 49,
+      "percent": 18.21561338289963
+    }
+  ]
+}

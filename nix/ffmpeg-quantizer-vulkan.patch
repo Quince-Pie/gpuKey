@@ -1,0 +1,33 @@
+--- a/libavcodec/vulkan_encode_av1.c
++++ b/libavcodec/vulkan_encode_av1.c
+@@ -677,13 +677,18 @@
+     }
+ 
+     if (enc->common.opts.rc_mode == VK_VIDEO_ENCODE_RATE_CONTROL_MODE_DISABLED_BIT_KHR) {
+-        enc->q_idx_p = av_clip(enc->common.opts.qp,
+-                               enc->caps.minQIndex, enc->caps.maxQIndex);
++        if (enc->common.opts.qp < enc->caps.minQIndex ||
++            enc->common.opts.qp > enc->caps.maxQIndex) {
++            av_log(avctx, AV_LOG_ERROR, "Requested AV1 QIndex %d is outside the driver range [%u, %u].\n",
++                   enc->common.opts.qp, enc->caps.minQIndex, enc->caps.maxQIndex);
++            return AVERROR(EINVAL);
++        }
++        enc->q_idx_p = enc->common.opts.qp;
+         if (fabs(avctx->i_quant_factor) > 0.0)
+             enc->q_idx_idr =
+                 av_clip((fabs(avctx->i_quant_factor) * enc->q_idx_p  +
+                          avctx->i_quant_offset) + 0.5,
+-                        0, 255);
++                        enc->caps.minQIndex, enc->caps.maxQIndex);
+         else
+             enc->q_idx_idr = enc->q_idx_p;
+ 
+@@ -691,7 +696,7 @@
+             enc->q_idx_b =
+                 av_clip((fabs(avctx->b_quant_factor) * enc->q_idx_p  +
+                          avctx->b_quant_offset) + 0.5,
+-                        0, 255);
++                        enc->caps.minQIndex, enc->caps.maxQIndex);
+         else
+             enc->q_idx_b = enc->q_idx_p;
+     } else {

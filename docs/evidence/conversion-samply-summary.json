@@ -1,0 +1,1391 @@
+{
+  "cpu-legacy": {
+    "thread": "1878748.4",
+    "active_sample_weight": 1634,
+    "reported_cpu_delta_us": 1392187,
+    "exclusive_cpu_us": [
+      {
+        "function": "bgr32ToUV_half_c",
+        "cpu_us": 376610,
+        "percent": 27.051681993870076
+      },
+      {
+        "function": "yuv2nv12cX_c",
+        "cpu_us": 303924,
+        "percent": 21.83068797510679
+      },
+      {
+        "function": "ff_hscale14to15_4_ssse3",
+        "cpu_us": 185531,
+        "percent": 13.326586155451817
+      },
+      {
+        "function": "yuv2plane1_8_c",
+        "cpu_us": 155624,
+        "percent": 11.178383363729154
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "cpu_us": 87289,
+        "percent": 6.269919199073113
+      },
+      {
+        "function": "ff_rgbaToY_avx2",
+        "cpu_us": 40555,
+        "percent": 2.913042572585436
+      },
+      {
+        "function": "opus_fft_impl",
+        "cpu_us": 13094,
+        "percent": 0.940534568991091
+      },
+      {
+        "function": "tonality_analysis.isra.0",
+        "cpu_us": 11980,
+        "percent": 0.8605165829015786
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "cpu_us": 10137,
+        "percent": 0.7281349416421788
+      },
+      {
+        "function": "clt_mdct_forward_c",
+        "cpu_us": 7560,
+        "percent": 0.5430304980580913
+      },
+      {
+        "function": "quant_partition",
+        "cpu_us": 7071,
+        "percent": 0.5079059063186195
+      },
+      {
+        "function": "strcmp",
+        "cpu_us": 6979,
+        "percent": 0.5012975986702936
+      },
+      {
+        "function": "dl_relocate_object_no_relro",
+        "cpu_us": 6413,
+        "percent": 0.4606421407468968
+      },
+      {
+        "function": "haar1",
+        "cpu_us": 5897,
+        "percent": 0.42357815437150326
+      },
+      {
+        "function": "celt_inner_prod_sse",
+        "cpu_us": 5770,
+        "percent": 0.414455816639575
+      },
+      {
+        "function": "stereo_itheta",
+        "cpu_us": 5132,
+        "percent": 0.36862863968705356
+      },
+      {
+        "function": "op_pvq_search_sse2",
+        "cpu_us": 5117,
+        "percent": 0.3675511982226526
+      },
+      {
+        "function": "do_lookup_x",
+        "cpu_us": 4497,
+        "percent": 0.3230169510274123
+      },
+      {
+        "function": "pitch_downsample",
+        "cpu_us": 4191,
+        "percent": 0.3010371451536324
+      },
+      {
+        "function": "find_best_pitch",
+        "cpu_us": 4069,
+        "percent": 0.29227395457650446
+      }
+    ],
+    "inclusive_cpu_us": [
+      {
+        "function": "main",
+        "cpu_us": 1273676,
+        "percent": 91.48742230749174
+      },
+      {
+        "function": "_libc_start_call_main",
+        "cpu_us": 1265913,
+        "percent": 90.92981043494875
+      },
+      {
+        "function": "_libc_start_main_alias_2",
+        "cpu_us": 1265913,
+        "percent": 90.92981043494875
+      },
+      {
+        "function": "start",
+        "cpu_us": 1265716,
+        "percent": 90.91566003704962
+      },
+      {
+        "function": "gk_media_prepare",
+        "cpu_us": 1177964,
+        "percent": 84.612483811442
+      },
+      {
+        "function": "gk_media_prepare_begin",
+        "cpu_us": 1177964,
+        "percent": 84.612483811442
+      },
+      {
+        "function": "sws_scale",
+        "cpu_us": 1074753,
+        "percent": 77.19889641262273
+      },
+      {
+        "function": "scale_internal",
+        "cpu_us": 1074753,
+        "percent": 77.19889641262273
+      },
+      {
+        "function": "ff_swscale",
+        "cpu_us": 1074052,
+        "percent": 77.14854398151972
+      },
+      {
+        "function": "chr_convert",
+        "cpu_us": 377288,
+        "percent": 27.100382348061
+      },
+      {
+        "function": "bgr32ToUV_half_c",
+        "cpu_us": 376610,
+        "percent": 27.051681993870076
+      },
+      {
+        "function": "yuv2nv12cX_c",
+        "cpu_us": 303924,
+        "percent": 21.83068797510679
+      },
+      {
+        "function": "chr_planar_vscale",
+        "cpu_us": 303924,
+        "percent": 21.83068797510679
+      },
+      {
+        "function": "ff_hscale14to15_4_ssse3",
+        "cpu_us": 185531,
+        "percent": 13.326586155451817
+      },
+      {
+        "function": "lum_planar_vscale",
+        "cpu_us": 158317,
+        "percent": 11.37182002130461
+      },
+      {
+        "function": "yuv2plane1_8_c",
+        "cpu_us": 155624,
+        "percent": 11.178383363729154
+      },
+      {
+        "function": "av_hwframe_transfer_data",
+        "cpu_us": 102800,
+        "percent": 7.384065502694681
+      },
+      {
+        "function": "vaapi_transfer_data_to",
+        "cpu_us": 101900,
+        "percent": 7.319419014830623
+      },
+      {
+        "function": "chr_h_scale",
+        "cpu_us": 98257,
+        "percent": 7.057744397843106
+      },
+      {
+        "function": "opus_multistream_encode_native",
+        "cpu_us": 94398,
+        "percent": 6.780554623768215
+      },
+      {
+        "function": "lum_h_scale",
+        "cpu_us": 89173,
+        "percent": 6.405245847001876
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "cpu_us": 87289,
+        "percent": 6.269919199073113
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "cpu_us": 83857,
+        "percent": 6.02340059201817
+      },
+      {
+        "function": "opus_encode_native",
+        "cpu_us": 77692,
+        "percent": 5.5805721501493695
+      },
+      {
+        "function": "image_copy_plane",
+        "cpu_us": 77228,
+        "percent": 5.547243294183899
+      }
+    ],
+    "exclusive": [
+      {
+        "function": "bgr32ToUV_half_c",
+        "samples": 412,
+        "percent": 25.21419828641371
+      },
+      {
+        "function": "yuv2nv12cX_c",
+        "samples": 341,
+        "percent": 20.86903304773562
+      },
+      {
+        "function": "ff_hscale14to15_4_ssse3",
+        "samples": 199,
+        "percent": 12.178702570379437
+      },
+      {
+        "function": "yuv2plane1_8_c",
+        "samples": 161,
+        "percent": 9.8531211750306
+      },
+      {
+        "function": "get_cpu_topology",
+        "samples": 87,
+        "percent": 5.324357405140759
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "samples": 83,
+        "percent": 5.0795593635250915
+      },
+      {
+        "function": "util_set_thread_affinity",
+        "samples": 47,
+        "percent": 2.876376988984088
+      },
+      {
+        "function": "ff_rgbaToY_avx2",
+        "samples": 45,
+        "percent": 2.7539779681762546
+      },
+      {
+        "function": "opus_fft_impl",
+        "samples": 14,
+        "percent": 0.8567931456548348
+      },
+      {
+        "function": "tonality_analysis.isra.0",
+        "samples": 10,
+        "percent": 0.6119951040391677
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "samples": 10,
+        "percent": 0.6119951040391677
+      },
+      {
+        "function": "clt_mdct_forward_c",
+        "samples": 8,
+        "percent": 0.48959608323133413
+      },
+      {
+        "function": "quant_partition",
+        "samples": 6,
+        "percent": 0.3671970624235006
+      },
+      {
+        "function": "celt_inner_prod_sse",
+        "samples": 6,
+        "percent": 0.3671970624235006
+      },
+      {
+        "function": "do_lookup_x",
+        "samples": 5,
+        "percent": 0.30599755201958384
+      },
+      {
+        "function": "haar1",
+        "samples": 5,
+        "percent": 0.30599755201958384
+      },
+      {
+        "function": "stereo_itheta",
+        "samples": 5,
+        "percent": 0.30599755201958384
+      },
+      {
+        "function": "_GI___pthread_self",
+        "samples": 4,
+        "percent": 0.24479804161566707
+      },
+      {
+        "function": "_pthread_setaffinity_new",
+        "samples": 4,
+        "percent": 0.24479804161566707
+      },
+      {
+        "function": "_memset_avx512_unaligned_erms",
+        "samples": 4,
+        "percent": 0.24479804161566707
+      }
+    ],
+    "inclusive": [
+      {
+        "function": "main",
+        "samples": 1519,
+        "percent": 92.96205630354957
+      },
+      {
+        "function": "_libc_start_call_main",
+        "samples": 1512,
+        "percent": 92.53365973072215
+      },
+      {
+        "function": "_libc_start_main_alias_2",
+        "samples": 1512,
+        "percent": 92.53365973072215
+      },
+      {
+        "function": "start",
+        "samples": 1511,
+        "percent": 92.47246022031824
+      },
+      {
+        "function": "gk_media_prepare",
+        "samples": 1274,
+        "percent": 77.96817625458996
+      },
+      {
+        "function": "gk_media_prepare_begin",
+        "samples": 1274,
+        "percent": 77.96817625458996
+      },
+      {
+        "function": "sws_scale",
+        "samples": 1174,
+        "percent": 71.84822521419828
+      },
+      {
+        "function": "scale_internal",
+        "samples": 1174,
+        "percent": 71.84822521419828
+      },
+      {
+        "function": "ff_swscale",
+        "samples": 1172,
+        "percent": 71.72582619339045
+      },
+      {
+        "function": "chr_convert",
+        "samples": 413,
+        "percent": 25.275397796817625
+      },
+      {
+        "function": "bgr32ToUV_half_c",
+        "samples": 412,
+        "percent": 25.21419828641371
+      },
+      {
+        "function": "yuv2nv12cX_c",
+        "samples": 341,
+        "percent": 20.86903304773562
+      },
+      {
+        "function": "chr_planar_vscale",
+        "samples": 341,
+        "percent": 20.86903304773562
+      },
+      {
+        "function": "ff_hscale14to15_4_ssse3",
+        "samples": 199,
+        "percent": 12.178702570379437
+      },
+      {
+        "function": "lum_planar_vscale",
+        "samples": 164,
+        "percent": 10.03671970624235
+      },
+      {
+        "function": "yuv2plane1_8_c",
+        "samples": 161,
+        "percent": 9.8531211750306
+      },
+      {
+        "function": "vaInitialize",
+        "samples": 148,
+        "percent": 9.057527539779683
+      },
+      {
+        "function": "av_hwdevice_ctx_create",
+        "samples": 148,
+        "percent": 9.057527539779683
+      },
+      {
+        "function": "vaapi_device_connect",
+        "samples": 148,
+        "percent": 9.057527539779683
+      },
+      {
+        "function": "gk_gpu_open",
+        "samples": 148,
+        "percent": 9.057527539779683
+      },
+      {
+        "function": "_vaDriverInit_1_24",
+        "samples": 147,
+        "percent": 8.996328029375764
+      },
+      {
+        "function": "pipe_radeonsi_create_screen",
+        "samples": 146,
+        "percent": 8.935128518971847
+      },
+      {
+        "function": "_pthread_once_slow.isra.0",
+        "samples": 146,
+        "percent": 8.935128518971847
+      },
+      {
+        "function": "amdgpu_winsys_create",
+        "samples": 146,
+        "percent": 8.935128518971847
+      },
+      {
+        "function": "vl_drm_screen_create",
+        "samples": 146,
+        "percent": 8.935128518971847
+      }
+    ]
+  },
+  "cpu-candidate": {
+    "thread": "1879003.4",
+    "active_sample_weight": 923,
+    "reported_cpu_delta_us": 698427,
+    "exclusive_cpu_us": [
+      {
+        "function": "gk_rgb_to_yuv_rows.arch_x86_64_v4",
+        "cpu_us": 422529,
+        "percent": 60.49723163623399
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "cpu_us": 63714,
+        "percent": 9.122499559724925
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "cpu_us": 16381,
+        "percent": 2.345413335967825
+      },
+      {
+        "function": "tonality_analysis.isra.0",
+        "cpu_us": 9002,
+        "percent": 1.288896334190975
+      },
+      {
+        "function": "op_pvq_search_sse2",
+        "cpu_us": 7032,
+        "percent": 1.0068339282416057
+      },
+      {
+        "function": "find_best_pitch",
+        "cpu_us": 5989,
+        "percent": 0.8574983498633357
+      },
+      {
+        "function": "tf_analysis",
+        "cpu_us": 5640,
+        "percent": 0.8075289185555541
+      },
+      {
+        "function": "clt_mdct_forward_c",
+        "cpu_us": 5473,
+        "percent": 0.7836180445486787
+      },
+      {
+        "function": "quant_partition",
+        "cpu_us": 4938,
+        "percent": 0.707017340394916
+      },
+      {
+        "function": "__pthread_mutex_lock",
+        "cpu_us": 4251,
+        "percent": 0.6086534455283086
+      },
+      {
+        "function": "opus_fft_impl",
+        "cpu_us": 3984,
+        "percent": 0.5704246828945616
+      },
+      {
+        "function": "g_mutex_lock",
+        "cpu_us": 3941,
+        "percent": 0.5642679907850069
+      },
+      {
+        "function": "mid_memalign",
+        "cpu_us": 3895,
+        "percent": 0.557681762016646
+      },
+      {
+        "function": "haar1",
+        "cpu_us": 3516,
+        "percent": 0.5034169641208028
+      },
+      {
+        "function": "g_source_ref",
+        "cpu_us": 3406,
+        "percent": 0.4876672866312442
+      },
+      {
+        "function": "opus_encode_native",
+        "cpu_us": 3314,
+        "percent": 0.4744948290945224
+      },
+      {
+        "function": "silk_resampler_down2_hp",
+        "cpu_us": 3259,
+        "percent": 0.46661999034974305
+      },
+      {
+        "function": "dual_inner_prod_sse",
+        "cpu_us": 3047,
+        "percent": 0.4362660664607754
+      },
+      {
+        "function": "analysis_compute_dense",
+        "cpu_us": 2764,
+        "percent": 0.395746441646729
+      },
+      {
+        "function": "celt_pitch_xcorr_avx2",
+        "cpu_us": 2707,
+        "percent": 0.3875852451294122
+      }
+    ],
+    "inclusive_cpu_us": [
+      {
+        "function": "main",
+        "cpu_us": 590631,
+        "percent": 84.56588877577757
+      },
+      {
+        "function": "start",
+        "cpu_us": 582367,
+        "percent": 83.3826584596529
+      },
+      {
+        "function": "_libc_start_call_main",
+        "cpu_us": 582367,
+        "percent": 83.3826584596529
+      },
+      {
+        "function": "_libc_start_main_alias_2",
+        "cpu_us": 582367,
+        "percent": 83.3826584596529
+      },
+      {
+        "function": "gk_media_prepare",
+        "cpu_us": 505160,
+        "percent": 72.3282461875042
+      },
+      {
+        "function": "gk_media_prepare_begin",
+        "cpu_us": 505160,
+        "percent": 72.3282461875042
+      },
+      {
+        "function": "gk_rgb_to_yuv_rows.arch_x86_64_v4",
+        "cpu_us": 422529,
+        "percent": 60.49723163623399
+      },
+      {
+        "function": "av_hwframe_transfer_data",
+        "cpu_us": 82631,
+        "percent": 11.831014551270211
+      },
+      {
+        "function": "vaapi_transfer_data_to",
+        "cpu_us": 82631,
+        "percent": 11.831014551270211
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "cpu_us": 80389,
+        "percent": 11.510007488255752
+      },
+      {
+        "function": "opus_multistream_encode_native",
+        "cpu_us": 75270,
+        "percent": 10.777074769446198
+      },
+      {
+        "function": "opus_encode_native",
+        "cpu_us": 66850,
+        "percent": 9.571508547063615
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "cpu_us": 63714,
+        "percent": 9.122499559724925
+      },
+      {
+        "function": "av_image_copy",
+        "cpu_us": 60333,
+        "percent": 8.638411745250398
+      },
+      {
+        "function": "image_copy_plane",
+        "cpu_us": 60333,
+        "percent": 8.638411745250398
+      },
+      {
+        "function": "opus_encode_frame_native.isra.0",
+        "cpu_us": 57956,
+        "percent": 8.298075532589662
+      },
+      {
+        "function": "encode_receive_packet_internal",
+        "cpu_us": 44458,
+        "percent": 6.365446925734544
+      },
+      {
+        "function": "avcodec_send_frame",
+        "cpu_us": 43321,
+        "percent": 6.202652532047014
+      },
+      {
+        "function": "gk_media_audio",
+        "cpu_us": 29430,
+        "percent": 4.21375462288829
+      },
+      {
+        "function": "libopus_encode",
+        "cpu_us": 29155,
+        "percent": 4.174380429164394
+      },
+      {
+        "function": "consume_audio",
+        "cpu_us": 27380,
+        "percent": 3.920237906037424
+      },
+      {
+        "function": "quant_all_bands",
+        "cpu_us": 25667,
+        "percent": 3.674972473859115
+      },
+      {
+        "function": "audio_append",
+        "cpu_us": 25356,
+        "percent": 3.6304438402295443
+      },
+      {
+        "function": "opus_multistream_encode_float",
+        "cpu_us": 25109,
+        "percent": 3.5950786553211715
+      },
+      {
+        "function": "ff_hw_base_encode_receive_packet",
+        "cpu_us": 23649,
+        "percent": 3.3860374813688474
+      }
+    ],
+    "exclusive": [
+      {
+        "function": "gk_rgb_to_yuv_rows.arch_x86_64_v4",
+        "samples": 507,
+        "percent": 54.929577464788736
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "samples": 75,
+        "percent": 8.125677139761647
+      },
+      {
+        "function": "util_set_thread_affinity",
+        "samples": 37,
+        "percent": 4.008667388949079
+      },
+      {
+        "function": "get_cpu_topology",
+        "samples": 22,
+        "percent": 2.38353196099675
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "samples": 15,
+        "percent": 1.6251354279523293
+      },
+      {
+        "function": "g_mutex_lock",
+        "samples": 11,
+        "percent": 1.191765980498375
+      },
+      {
+        "function": "tonality_analysis.isra.0",
+        "samples": 9,
+        "percent": 0.9750812567713976
+      },
+      {
+        "function": "_GI_ppoll",
+        "samples": 8,
+        "percent": 0.866738894907909
+      },
+      {
+        "function": "quant_partition",
+        "samples": 7,
+        "percent": 0.7583965330444203
+      },
+      {
+        "function": "op_pvq_search_sse2",
+        "samples": 7,
+        "percent": 0.7583965330444203
+      },
+      {
+        "function": "do_futex_fence_wait",
+        "samples": 6,
+        "percent": 0.6500541711809318
+      },
+      {
+        "function": "__pthread_mutex_lock",
+        "samples": 6,
+        "percent": 0.6500541711809318
+      },
+      {
+        "function": "_memset_avx512_unaligned_erms",
+        "samples": 6,
+        "percent": 0.6500541711809318
+      },
+      {
+        "function": "clt_mdct_forward_c",
+        "samples": 5,
+        "percent": 0.5417118093174431
+      },
+      {
+        "function": "haar1",
+        "samples": 5,
+        "percent": 0.5417118093174431
+      },
+      {
+        "function": "find_best_pitch",
+        "samples": 5,
+        "percent": 0.5417118093174431
+      },
+      {
+        "function": "do_lookup_x",
+        "samples": 4,
+        "percent": 0.4333694474539545
+      },
+      {
+        "function": "futex_wait",
+        "samples": 4,
+        "percent": 0.4333694474539545
+      },
+      {
+        "function": "opus_encode_native",
+        "samples": 4,
+        "percent": 0.4333694474539545
+      },
+      {
+        "function": "opus_fft_impl",
+        "samples": 4,
+        "percent": 0.4333694474539545
+      }
+    ],
+    "inclusive": [
+      {
+        "function": "main",
+        "samples": 803,
+        "percent": 86.99891657638136
+      },
+      {
+        "function": "start",
+        "samples": 793,
+        "percent": 85.91549295774648
+      },
+      {
+        "function": "_libc_start_call_main",
+        "samples": 793,
+        "percent": 85.91549295774648
+      },
+      {
+        "function": "_libc_start_main_alias_2",
+        "samples": 793,
+        "percent": 85.91549295774648
+      },
+      {
+        "function": "gk_media_prepare",
+        "samples": 614,
+        "percent": 66.52221018418201
+      },
+      {
+        "function": "gk_media_prepare_begin",
+        "samples": 614,
+        "percent": 66.52221018418201
+      },
+      {
+        "function": "gk_rgb_to_yuv_rows.arch_x86_64_v4",
+        "samples": 507,
+        "percent": 54.929577464788736
+      },
+      {
+        "function": "av_hwframe_transfer_data",
+        "samples": 107,
+        "percent": 11.592632719393283
+      },
+      {
+        "function": "vaapi_transfer_data_to",
+        "samples": 107,
+        "percent": 11.592632719393283
+      },
+      {
+        "function": "celt_encode_with_ec",
+        "samples": 81,
+        "percent": 8.775731310942579
+      },
+      {
+        "function": "opus_multistream_encode_native",
+        "samples": 77,
+        "percent": 8.342361863488623
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "samples": 75,
+        "percent": 8.125677139761647
+      },
+      {
+        "function": "av_image_copy",
+        "samples": 73,
+        "percent": 7.908992416034669
+      },
+      {
+        "function": "image_copy_plane",
+        "samples": 73,
+        "percent": 7.908992416034669
+      },
+      {
+        "function": "gk_gpu_open",
+        "samples": 70,
+        "percent": 7.583965330444204
+      },
+      {
+        "function": "opus_encode_native",
+        "samples": 68,
+        "percent": 7.367280606717227
+      },
+      {
+        "function": "vaInitialize",
+        "samples": 63,
+        "percent": 6.825568797399783
+      },
+      {
+        "function": "vaapi_device_connect",
+        "samples": 63,
+        "percent": 6.825568797399783
+      },
+      {
+        "function": "av_hwdevice_ctx_create",
+        "samples": 63,
+        "percent": 6.825568797399783
+      },
+      {
+        "function": "_vaDriverInit_1_24",
+        "samples": 60,
+        "percent": 6.500541711809317
+      },
+      {
+        "function": "vl_drm_screen_create",
+        "samples": 60,
+        "percent": 6.500541711809317
+      },
+      {
+        "function": "get_cpu_topology",
+        "samples": 59,
+        "percent": 6.3921993499458285
+      },
+      {
+        "function": "amdgpu_winsys_create",
+        "samples": 59,
+        "percent": 6.3921993499458285
+      },
+      {
+        "function": "radeonsi_screen_create_impl",
+        "samples": 59,
+        "percent": 6.3921993499458285
+      },
+      {
+        "function": "pipe_loader_create_screen_vk",
+        "samples": 59,
+        "percent": 6.3921993499458285
+      }
+    ]
+  },
+  "native": {
+    "thread": "1879265.3",
+    "active_sample_weight": 655,
+    "reported_cpu_delta_us": 210934,
+    "exclusive_cpu_us": [
+      {
+        "function": "_memset_avx512_unaligned_erms",
+        "cpu_us": 10056,
+        "percent": 4.7673679918837175
+      },
+      {
+        "function": "mid_memalign",
+        "cpu_us": 6512,
+        "percent": 3.0872215953805457
+      },
+      {
+        "function": "__pthread_mutex_lock",
+        "cpu_us": 5974,
+        "percent": 2.8321655114870055
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "cpu_us": 5808,
+        "percent": 2.7534679093934598
+      },
+      {
+        "function": "_GI_ppoll",
+        "cpu_us": 5219,
+        "percent": 2.4742336465434684
+      },
+      {
+        "function": "amdgpu_cs_add_buffer(radeon_cmdbuf*, pb_buffer_lean*, unsigned int, radeon_bo_domain)",
+        "cpu_us": 3949,
+        "percent": 1.8721495823338106
+      },
+      {
+        "function": "vlVaSyncBuffer",
+        "cpu_us": 3877,
+        "percent": 1.8380156826305858
+      },
+      {
+        "function": "amdgpu_cs_flush(radeon_cmdbuf*, unsigned int, pipe_fence_handle**)",
+        "cpu_us": 3760,
+        "percent": 1.7825480956128457
+      },
+      {
+        "function": "_GI___libc_free",
+        "cpu_us": 3541,
+        "percent": 1.678724150682204
+      },
+      {
+        "function": "_syscall_cancel_arch",
+        "cpu_us": 3505,
+        "percent": 1.6616572008305917
+      },
+      {
+        "function": "do_lookup_x",
+        "cpu_us": 2886,
+        "percent": 1.3682004797709235
+      },
+      {
+        "function": "_GI___libc_malloc",
+        "cpu_us": 2856,
+        "percent": 1.3539780215612467
+      },
+      {
+        "function": "_GI___ioctl",
+        "cpu_us": 2815,
+        "percent": 1.3345406620080216
+      },
+      {
+        "function": "hw_base_encode_pick_next",
+        "cpu_us": 2761,
+        "percent": 1.308940237230603
+      },
+      {
+        "function": "gk_replay_add",
+        "cpu_us": 2759,
+        "percent": 1.3079920733499577
+      },
+      {
+        "function": "g_mutex_lock",
+        "cpu_us": 2619,
+        "percent": 1.2416206017047986
+      },
+      {
+        "function": "radeon_enc_begin_frame",
+        "cpu_us": 2534,
+        "percent": 1.2013236367773805
+      },
+      {
+        "function": "g_main_context_check_unlocked",
+        "cpu_us": 2115,
+        "percent": 1.0026833037822258
+      },
+      {
+        "function": "drmSyncobjWait",
+        "cpu_us": 2079,
+        "percent": 0.9856163539306134
+      },
+      {
+        "function": "_GI___errno_location",
+        "cpu_us": 2038,
+        "percent": 0.9661789943773882
+      }
+    ],
+    "inclusive_cpu_us": [
+      {
+        "function": "_libc_start_call_main",
+        "cpu_us": 207651,
+        "percent": 98.44358898992101
+      },
+      {
+        "function": "main",
+        "cpu_us": 207651,
+        "percent": 98.44358898992101
+      },
+      {
+        "function": "start",
+        "cpu_us": 207651,
+        "percent": 98.44358898992101
+      },
+      {
+        "function": "_libc_start_main_alias_2",
+        "cpu_us": 207651,
+        "percent": 98.44358898992101
+      },
+      {
+        "function": "encode_receive_packet_internal",
+        "cpu_us": 91788,
+        "percent": 43.51503313832763
+      },
+      {
+        "function": "ff_hw_base_encode_receive_packet",
+        "cpu_us": 89756,
+        "percent": 42.551698635592174
+      },
+      {
+        "function": "gk_media_submit",
+        "cpu_us": 69125,
+        "percent": 32.77091412479733
+      },
+      {
+        "function": "avcodec_send_frame",
+        "cpu_us": 68663,
+        "percent": 32.5518882683683
+      },
+      {
+        "function": "vlVaEndPicture",
+        "cpu_us": 64249,
+        "percent": 30.4592905837845
+      },
+      {
+        "function": "vaEndPicture",
+        "cpu_us": 64249,
+        "percent": 30.4592905837845
+      },
+      {
+        "function": "gk_media_prepare_begin",
+        "cpu_us": 52483,
+        "percent": 24.881242473949197
+      },
+      {
+        "function": "gk_gpu_convert_submit",
+        "cpu_us": 51688,
+        "percent": 24.504347331392758
+      },
+      {
+        "function": "vaapi_encode_issue",
+        "cpu_us": 47159,
+        "percent": 22.35723022367186
+      },
+      {
+        "function": "proc_end_frame",
+        "cpu_us": 40788,
+        "percent": 19.336854181876795
+      },
+      {
+        "function": "gk_media_collect",
+        "cpu_us": 36412,
+        "percent": 17.26227161102525
+      },
+      {
+        "function": "receive_video",
+        "cpu_us": 34719,
+        "percent": 16.459650886059148
+      },
+      {
+        "function": "g_main_context_iterate_unlocked.isra.0",
+        "cpu_us": 31666,
+        "percent": 15.012278722254354
+      },
+      {
+        "function": "avcodec_receive_packet",
+        "cpu_us": 31069,
+        "percent": 14.729251803881782
+      },
+      {
+        "function": "g_main_context_iteration",
+        "cpu_us": 30649,
+        "percent": 14.530137388946306
+      },
+      {
+        "function": "gk_portal_wait_completion",
+        "cpu_us": 25597,
+        "percent": 12.135075426436705
+      },
+      {
+        "function": "compositor_proc_process_frame",
+        "cpu_us": 21117,
+        "percent": 10.011188333791612
+      },
+      {
+        "function": "vl_compositor_cs_rgb_yuv_pair",
+        "cpu_us": 19806,
+        "percent": 9.38966691002873
+      },
+      {
+        "function": "vl_compositor_convert_rgb_to_yuv",
+        "cpu_us": 19806,
+        "percent": 9.38966691002873
+      },
+      {
+        "function": "si_flush_from_st",
+        "cpu_us": 18915,
+        "percent": 8.967259901201324
+      },
+      {
+        "function": "compositor_proc_end_frame",
+        "cpu_us": 18763,
+        "percent": 8.895199446272294
+      }
+    ],
+    "exclusive": [
+      {
+        "function": "util_set_thread_affinity",
+        "samples": 38,
+        "percent": 5.801526717557252
+      },
+      {
+        "function": "_memset_avx512_unaligned_erms",
+        "samples": 28,
+        "percent": 4.2748091603053435
+      },
+      {
+        "function": "_GI_ppoll",
+        "samples": 26,
+        "percent": 3.969465648854962
+      },
+      {
+        "function": "get_cpu_topology",
+        "samples": 22,
+        "percent": 3.3587786259541983
+      },
+      {
+        "function": "g_mutex_lock",
+        "samples": 19,
+        "percent": 2.900763358778626
+      },
+      {
+        "function": "__pthread_mutex_lock",
+        "samples": 17,
+        "percent": 2.595419847328244
+      },
+      {
+        "function": "_memmove_avx512_unaligned_erms",
+        "samples": 15,
+        "percent": 2.2900763358778624
+      },
+      {
+        "function": "do_futex_fence_wait",
+        "samples": 14,
+        "percent": 2.1374045801526718
+      },
+      {
+        "function": "mid_memalign",
+        "samples": 13,
+        "percent": 1.984732824427481
+      },
+      {
+        "function": "g_main_context_check_unlocked",
+        "samples": 10,
+        "percent": 1.5267175572519085
+      },
+      {
+        "function": "_syscall_cancel_arch",
+        "samples": 9,
+        "percent": 1.3740458015267176
+      },
+      {
+        "function": "futex_wait",
+        "samples": 9,
+        "percent": 1.3740458015267176
+      },
+      {
+        "function": "g_main_context_iterate_unlocked.isra.0",
+        "samples": 9,
+        "percent": 1.3740458015267176
+      },
+      {
+        "function": "hw_base_encode_pick_next",
+        "samples": 8,
+        "percent": 1.2213740458015268
+      },
+      {
+        "function": "amdgpu_cs_add_buffer(radeon_cmdbuf*, pb_buffer_lean*, unsigned int, radeon_bo_domain)",
+        "samples": 8,
+        "percent": 1.2213740458015268
+      },
+      {
+        "function": "_GI___pthread_mutex_unlock_usercnt",
+        "samples": 7,
+        "percent": 1.0687022900763359
+      },
+      {
+        "function": "_GI___libc_free",
+        "samples": 7,
+        "percent": 1.0687022900763359
+      },
+      {
+        "function": "do_lookup_x",
+        "samples": 6,
+        "percent": 0.916030534351145
+      },
+      {
+        "function": "gk_replay_add",
+        "samples": 6,
+        "percent": 0.916030534351145
+      },
+      {
+        "function": "int_malloc",
+        "samples": 6,
+        "percent": 0.916030534351145
+      }
+    ],
+    "inclusive": [
+      {
+        "function": "_libc_start_call_main",
+        "samples": 643,
+        "percent": 98.16793893129771
+      },
+      {
+        "function": "main",
+        "samples": 643,
+        "percent": 98.16793893129771
+      },
+      {
+        "function": "start",
+        "samples": 643,
+        "percent": 98.16793893129771
+      },
+      {
+        "function": "_libc_start_main_alias_2",
+        "samples": 643,
+        "percent": 98.16793893129771
+      },
+      {
+        "function": "encode_receive_packet_internal",
+        "samples": 242,
+        "percent": 36.94656488549618
+      },
+      {
+        "function": "ff_hw_base_encode_receive_packet",
+        "samples": 236,
+        "percent": 36.030534351145036
+      },
+      {
+        "function": "gk_media_submit",
+        "samples": 193,
+        "percent": 29.46564885496183
+      },
+      {
+        "function": "avcodec_send_frame",
+        "samples": 189,
+        "percent": 28.85496183206107
+      },
+      {
+        "function": "vlVaEndPicture",
+        "samples": 168,
+        "percent": 25.64885496183206
+      },
+      {
+        "function": "vaEndPicture",
+        "samples": 168,
+        "percent": 25.64885496183206
+      },
+      {
+        "function": "vaapi_encode_issue",
+        "samples": 138,
+        "percent": 21.068702290076335
+      },
+      {
+        "function": "gk_media_prepare_begin",
+        "samples": 121,
+        "percent": 18.47328244274809
+      },
+      {
+        "function": "gk_gpu_convert_submit",
+        "samples": 118,
+        "percent": 18.015267175572518
+      },
+      {
+        "function": "g_main_context_iterate_unlocked.isra.0",
+        "samples": 116,
+        "percent": 17.709923664122137
+      },
+      {
+        "function": "g_main_context_iteration",
+        "samples": 111,
+        "percent": 16.946564885496183
+      },
+      {
+        "function": "gk_portal_wait_completion",
+        "samples": 101,
+        "percent": 15.419847328244275
+      },
+      {
+        "function": "proc_end_frame",
+        "samples": 87,
+        "percent": 13.282442748091603
+      },
+      {
+        "function": "receive_video",
+        "samples": 85,
+        "percent": 12.977099236641221
+      },
+      {
+        "function": "gk_media_collect",
+        "samples": 84,
+        "percent": 12.82442748091603
+      },
+      {
+        "function": "avcodec_receive_packet",
+        "samples": 77,
+        "percent": 11.755725190839694
+      },
+      {
+        "function": "gk_gpu_open",
+        "samples": 68,
+        "percent": 10.381679389312977
+      },
+      {
+        "function": "av_hwdevice_ctx_create",
+        "samples": 67,
+        "percent": 10.229007633587786
+      },
+      {
+        "function": "vaInitialize",
+        "samples": 66,
+        "percent": 10.076335877862595
+      },
+      {
+        "function": "vaapi_device_connect",
+        "samples": 66,
+        "percent": 10.076335877862595
+      },
+      {
+        "function": "_vaDriverInit_1_24",
+        "samples": 65,
+        "percent": 9.923664122137405
+      }
+    ]
+  }
+}

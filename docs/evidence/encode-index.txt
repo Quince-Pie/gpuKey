@@ -1,0 +1,108 @@
+Resume allocation audit and RADV header writer — 24 October 2026 UTC
+
+Implemented
+- Compact host accumulator emits complete command words. Flush returns the
+  fragment's exact length; the next position is count modulo32. All AV1 and
+  H264/HEVC copy consumers use the corresponding contract.
+- Hot writer8bytes; complete radv_enc_state48bytes versus72 originally on x86-64.
+  Dead emulation-prevention state, unused size/byte-position bookkeeping and the
+  consumers' cumulative subtraction are removed. No output-capacity, GPU-image,
+  quality/reference-count, queue-submission or lifetime policy change.
+- rgb-word-amd retains the measured conventional accumulator (writer12/state56).
+  mesa-rgb-byte-reference retains the original driver for controlled comparison.
+- Explicit negative-test gates replace ineffective standalone ! grep commands.
+  tests/validation_gate.sh is in make check and the Nix source closure.
+- Source-extracted oracle checks actual original/patched functions, every emitted
+  word and each fragment length. GCC, Clang and sanitizer flake checks pass.
+
+Fixed reference
+- /tmp/gpukey-before-map: preceding212-file source, with its manifest preserved.
+- Recorder90sv0rykd64v4fmqr252d0ax735aq55k-gpukey-rgb-amd.
+- Driver896yc4wnz6wn804kdbl1638gl243vskz-mesa-gpukey-rgb-26.2.5.
+- FFmpeg1qkrws4ikc9f225cggfdbr1yxqmn00c4-ffmpeg-gpukey-vulkan-rgb-9.0.2-lib.
+
+Final packages
+- /nix/store/hz02jpvisd33dlv5l4cd5x94g96g0762-gpukey-rgb-amd
+- /nix/store/aml3iin3mml8kvdlzzl249mwiwzncwmk-gpukey-rgb-full-amd
+- /nix/store/dni1bqj73yysrlvc43jdylsdmx23cw7r-gpukey-rgb-word-amd
+- Compact driver /nix/store/xp9jvjhyfb9fkayhz7jq6xbr07kp90xf-mesa-gpukey-rgb-26.2.5.
+
+Evidence after extracting encode-evidence.tar.gz under /tmp
+- gpukey-map/cost-probes: initial libdrm-only diagnostic. It missed native RADV
+  mapping, which uses mmap directly. Source and that failed assumption remain.
+- cost-probes-vk and cost-analysis.*: corrected encoder Vulkan entry hooks.
+  Resumed allocation514.5 +/-21.7us, mapping21.35 +/-1.70us, binding0.54 +/-0.11us,
+  n3. Nested instrumentation is included; these are not uninstrumented timings.
+- readiness-probes: first resumed producer poll was already ready in all3 runs.
+- bitwriter/control.h and variants.h: extracted original and accumulator/in-place
+  alternatives, with independent bit-level oracle and stateful/boundary checks.
+- bitwriter/benchmark-gcc.txt, benchmark-clang.txt: cached-memory prototypes.
+- bitwriter/gpu-{cached,wc,vram}*: actual mapped-memory tests; output matches.
+  In-place updates lose on WC/VRAM. Isolated ratios are not recorder speedups.
+- bitwriter/native-{word,sentinel}*: standalone extracted-function executables;
+  GPU recording directories instead use gpu-native-* (the initial name collision
+  and script are retained).
+- bitwriter/gpu-native-*, gpu-dpb-*, other-*: AV1 packet/picture equality, 8/10-bit,
+  portrait, forced keys, reconstruction restoration, failures and H264/HEVC.
+- bitwriter/native-control/{h264,hevc}.log: stock full-FFmpeg control's preexisting
+  synchronization/view-lifetime VUIDs. Clean compatibility checks use the audited
+  patches, built as ffmpeg-gpukey-vulkan-check-full; the failures are not hidden.
+- bitwriter/gate-positive.log, gate-negative.log: injected positive/cleanup errors
+  are rejected, clean log reaches the decoder, and the old checker is rejected.
+- bitwriter/preceding-dpb-validation-search.log: independent search of prior DPB
+  logs has no VUIDs; the old gate weakness did not hide errors in those saved logs.
+- bitwriter/recorder-comparison:18 rotating12-second motion/10-second resume runs.
+- bitwriter/long-comparison:9 rotating30-second motion runs. Conventional writer
+  had the lowest CPU mean; variability and other results remain explicit.
+- bitwriter/encode-costs, fragment-costs, inline-costs: actual CmdEncode CPU traces.
+  Source starts/stops frame submission exactly as the recorder did; these probes
+  distinguish command generation from allocation, GPU completion and scheduling.
+- bitwriter/fragment.patch: producer/consumer counter reformulation, selected.
+- bitwriter/inline.patch: examined inline/restrict variant, not selected. Its
+  text growth and diagnostics are retained, not called universally inferior.
+- bitwriter/drivers.nix now names mesa-rgb-byte-reference explicitly so the
+  candidates remain reproducible after default selection; this is the same896...
+  store path used originally. drivers-original.nix preserves the prior expression.
+- c23-verify.log: full compiler/linker/sanitizer and applicable x86-64 flake checks.
+- bits-check-{gcc,clang,word}.log: original/patched oracle, ordinary +sanitized.
+- native-rgb, native-full, native-dpb and capture-{rgb,full,asan}: final drivers,
+  multichannel audio, replay, reconfiguration, missing-PTS and static behavior.
+- resume-failure-final-rgb: first resumed reconstruction allocation fault leaves
+  64 independently decoded pictures and an error exit.
+- samply, tracy and profile-analysis.*: final-source motion/standby/resume profiles,
+  with two independently decoded exports each. No kernel profiling policy change.
+- confirmation:18 final uninstrumented lifecycle comparisons; motion30s,
+  pause/resume10s and requested1080/1000FPS overload10s, three per variant/case.
+- latency-confirmation:6 separate resume API timing runs.
+- confirmation-analysis.*: complete final values, variance, observed tails,
+  memory phases, actual offered/delivered rates and overload drops.
+- Final CPU means fixed/compact: motion214.671/199.266ms over30s,
+  pause/resume46.448/37.859ms over10s, overload157.433/108.396ms over10s.
+  Full SD/per-run values are retained. RSS is mixed; image memory is unchanged.
+- First-resume API ms fixed/compact:10.4193 +/-0.8529 /10.6311 +/-1.3646, n3.
+  Actual overloaded submission254.175 +/-1.580 /256.087 +/-2.230 FPS. Zero/one
+  missing interior identity occurs per overload run; application skipped count0,
+  exact earlier handoff location untraced. Other cases have no interior gaps.
+- final-inputs.sha256 and final-inputs-verified.log: frozen inputs rechecked after
+  final comparisons.
+
+Boundaries
+- AV1 encoding parameters, source counts, producer and FFmpeg are matched.
+  No builds, profilers, players or heavy analysis overlap final timings.
+- Overload requested rate is not achieved source/encode throughput. Report actual
+  produced/offered/submitted counts and missing identities under the drop policy.
+- Driver state/text sizes are not measured process-RSS or physical-VRAM savings.
+  The image/coded-buffer targets from the previous checkpoint remain unchanged.
+- Scoped CPU improvements do not prove every-metric or universal optimality.
+  ARM runtime and whole driver/library sanitizer instrumentation are not covered.
+
+Reproduction/integrity
+- encode-control.tar.gz contains the preceding212-file source.
+- encode-evidence.tar.gz contains the full working evidence and scripts above.
+- encode.sha256 verifies these archives and this index.
+- implementation.sha256 identifies delivered source/tests/docs.
+- Run nix flake check for the source-level writer and gate checks.
+- Run: nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0
+  Compact standby is selected by --gpu-memory compact --static-interval 2.
+- rgb-word-amd selects the retained conventional writer with the same recorder.
+The broad optimization goal remains active.

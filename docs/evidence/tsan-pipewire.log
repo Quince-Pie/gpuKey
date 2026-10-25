@@ -1,0 +1,13 @@
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 packets; 0 capture skips; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 packets; 0 capture skips; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+integration: private PipeWire source -> recorder -> independent decoder passed

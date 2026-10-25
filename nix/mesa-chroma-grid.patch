@@ -1,0 +1,136 @@
+--- a/src/gallium/auxiliary/vl/vl_compositor.c
++++ b/src/gallium/auxiliary/vl/vl_compositor.c
+@@ -119,6 +119,9 @@
+    if (c->cs_rgb_yuv_pair)
+       c->pipe->delete_compute_state(c->pipe, c->cs_rgb_yuv_pair);
+    c->cs_rgb_yuv_pair = NULL;
++   if (c->cs_rgb_yuv_edge)
++      c->pipe->delete_compute_state(c->pipe, c->cs_rgb_yuv_edge);
++   c->cs_rgb_yuv_edge = NULL;
+    pipe_resource_release(c->pipe, c->rgb_yuv_params);
+    c->rgb_yuv_params = NULL;
+    c->rgb_yuv_params_valid = false;
+@@ -844,6 +847,14 @@
+    if (!init_shaders(c))
+       goto cleanup;
+ 
++   bool unit_scale = (dst->buffer_format == PIPE_FORMAT_NV12 ||
++                      dst->buffer_format == PIPE_FORMAT_P010) &&
++                     src_rect && dst_rect && !src_rect->x0 && !src_rect->y0 &&
++                     !dst_rect->x0 && !dst_rect->y0 &&
++                     src_rect->x1 == dst_rect->x1 && src_rect->y1 == dst_rect->y1 &&
++                     s->layers[0].rotate == VL_COMPOSITOR_ROTATE_0 &&
++                     s->layers[0].mirror == VL_COMPOSITOR_MIRROR_NONE;
++
+    dst_surfaces = dst->get_surfaces(dst);
+ 
+    set_rgb_to_yuv_layer(s, c, 0, sv, src_rect, NULL, VL_COMPOSITOR_PLANE_Y);
+@@ -858,6 +869,15 @@
+       set_rgb_to_yuv_layer(s, c, 0, sv, src_rect, NULL, dst_surfaces[2].texture ? VL_COMPOSITOR_PLANE_U :
+                            VL_COMPOSITOR_PLANE_UV);
+       vl_compositor_set_layer_dst_area(s, 0, dst_rect);
++      if (unit_scale && c->pipe_cs_composit_supported) {
++         /* Coverage rounds up; sample spacing remains exactly twice luma.
++          * Reuse the existing viewport/rectangle fields to keep these separate. */
++         struct vl_compositor_layer *l = &s->layers[0];
++         l->viewport.scale[0] = l->sampler_views[0]->texture->width0 * (l->src.br.x - l->src.tl.x) * 0.5f;
++         l->viewport.scale[1] = l->sampler_views[0]->texture->height0 * (l->src.br.y - l->src.tl.y) * 0.5f;
++         l->dst.br.x = nextafterf(dst_rect->x1 / l->viewport.scale[0], INFINITY);
++         l->dst.br.y = nextafterf(dst_rect->y1 / l->viewport.scale[1], INFINITY);
++      }
+       vl_compositor_render(s, c, &dst_surfaces[1], NULL, false);
+ 
+       if (dst_surfaces[2].texture) {
+--- a/src/gallium/auxiliary/vl/vl_compositor.h
++++ b/src/gallium/auxiliary/vl/vl_compositor.h
+@@ -216,6 +216,7 @@
+    /* Full-frame RGB conversion: one dispatch, source-owned views, and one
+     * immutable-until-changed constant buffer. Owned by this pipe context. */
+    void *cs_rgb_yuv_pair;
++   void *cs_rgb_yuv_edge;
+    struct pipe_resource *rgb_yuv_params;
+    float rgb_yuv_cached[16];
+    bool rgb_yuv_params_valid;
+--- a/src/gallium/auxiliary/vl/vl_compositor_cs.c
++++ b/src/gallium/auxiliary/vl/vl_compositor_cs.c
+@@ -732,9 +732,9 @@
+ /* Preserve rgb_yuv's four chroma samples and accumulation order. One invocation
+  * writes a 2x2 luma tile and its chroma pair; eligibility excludes blending,
+  * primaries/transfer changes, crop, scaling, rotation and interlacing. */
+-static void *create_rgb_yuv_pair_shader(struct vl_compositor *c)
+-{
+-   struct cs_shader s = {.name = "rgb_yuv_pair", .num_samplers = 1};
++static void *create_rgb_yuv_pair_shader(struct vl_compositor *c, bool edge)
++{
++   struct cs_shader s = {.name = edge ? "rgb_yuv_edge" : "rgb_yuv_pair", .num_samplers = 1};
+    nir_builder *b = &s.b;
+    nir_def *tile = nir_channels(b, cs_create_shader(c, &s), 0x3);
+    for (unsigned i = 0; i < 3; ++i)
+@@ -756,7 +756,11 @@
+          nir_def *coord = nir_fmin(b, nir_fadd_imm(b, nir_u2f32(b, pos), 0.5f), bounds);
+          nir_def *color = cs_fetch_texel(&s, coord, 0);
+          color = nir_vector_insert_imm(b, color, s.fone, 3);
++         if (edge)
++            nir_push_if(b, nir_ball(b, nir_flt(b, nir_u2f32(b, pos), bounds)));
+          cs_image_store(&s, pos, cs_color_conversion(&s, color, 0, RGB2YUV));
++         if (edge)
++            nir_pop_if(b, NULL);
+       }
+    }
+    /* Unit scale makes the original chroma projection exactly 2x. Preserve its
+@@ -1289,9 +1293,10 @@
+        s->layers[0].mirror != VL_COMPOSITOR_MIRROR_NONE || dst->interlaced ||
+        s->in_transfer_characteristic != s->out_transfer_characteristic || !is_identity(s->primaries) ||
+        !src_rect || !dst_rect || src_rect->x0 || src_rect->y0 || dst_rect->x0 || dst_rect->y0 ||
+-       src_rect->x1 != src->width0 || src_rect->y1 != src->height0 ||
++       src_rect->x1 <= 0 || src_rect->y1 <= 0 ||
++       src_rect->x1 > src->width0 || src_rect->y1 > src->height0 ||
+        dst_rect->x1 != src_rect->x1 || dst_rect->y1 != src_rect->y1 ||
+-       (src->width0 & 1) || (src->height0 & 1) || src->target != PIPE_TEXTURE_2D ||
++       src->target != PIPE_TEXTURE_2D ||
+        src->nr_samples > 1 || source->u.tex.first_level || source->u.tex.last_level ||
+        source->u.tex.first_layer || source->u.tex.last_layer ||
+        (dst->buffer_format != PIPE_FORMAT_NV12 && dst->buffer_format != PIPE_FORMAT_P010))
+@@ -1312,9 +1317,17 @@
+       if (surfaces[i].level || surfaces[i].first_layer || surfaces[i].last_layer)
+          return false;
+ 
+-   if (!c->cs_rgb_yuv_pair) {
+-      c->cs_rgb_yuv_pair = create_rgb_yuv_pair_shader(c);
+-      if (!c->cs_rgb_yuv_pair)
++   unsigned logical_width = src_rect->x1, logical_height = src_rect->y1;
++   if (surfaces[0].texture->width0 < logical_width ||
++       surfaces[0].texture->height0 < logical_height ||
++       surfaces[1].texture->width0 < DIV_ROUND_UP(logical_width, 2) ||
++       surfaces[1].texture->height0 < DIV_ROUND_UP(logical_height, 2))
++      return false;
++   bool edge = (logical_width | logical_height) & 1;
++   void **shader = edge ? &c->cs_rgb_yuv_edge : &c->cs_rgb_yuv_pair;
++   if (!*shader) {
++      *shader = create_rgb_yuv_pair_shader(c, edge);
++      if (!*shader)
+          return false;
+    }
+    if (!c->rgb_yuv_params) {
+@@ -1325,8 +1338,8 @@
+    }
+    float params[16];
+    memcpy(params, s->rgb2yuv, sizeof(s->rgb2yuv));
+-   params[12] = (float)src->width0 - 0.5f;
+-   params[13] = (float)src->height0 - 0.5f;
++   params[12] = (float)logical_width - 0.5f;
++   params[13] = (float)logical_height - 0.5f;
+    params[14] = chroma_offset_x(s->chroma_location);
+    params[15] = chroma_offset_y(s->chroma_location);
+    if (!c->rgb_yuv_params_valid || memcmp(params, c->rgb_yuv_cached, sizeof(params))) {
+@@ -1362,8 +1375,8 @@
+    pipe_set_constant_buffer(pipe, MESA_SHADER_COMPUTE, 0, c->rgb_yuv_params);
+    pipe->bind_sampler_states(pipe, MESA_SHADER_COMPUTE, 0, 1, &c->sampler_linear);
+    pipe->set_sampler_views(pipe, MESA_SHADER_COMPUTE, 0, 1, 0, &source);
+-   pipe->bind_compute_state(pipe, c->cs_rgb_yuv_pair);
+-   unsigned width = src->width0 / 2, height = src->height0 / 2;
++   pipe->bind_compute_state(pipe, *shader);
++   unsigned width = DIV_ROUND_UP(logical_width, 2), height = DIV_ROUND_UP(logical_height, 2);
+    struct pipe_grid_info grid = {
+       .block = {8, 8, 1}, .last_block = {width % 8, height % 8, 0},
+       .grid = {DIV_ROUND_UP(width, 8), DIV_ROUND_UP(height, 8), 1},

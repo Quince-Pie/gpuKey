@@ -1,0 +1,21 @@
+{
+  "submitted": 2400,
+  "packets": 2400,
+  "skipped": 0,
+  "saves": 2,
+  "fallbacks": 0,
+  "elapsed_s": 40.027063476,
+  "child_cpu_ms": 396.819,
+  "rss_mib": 45.609375,
+  "memory_mib": {
+    "total-vram": 105.32421875,
+    "total-gtt": 23.34765625
+  },
+  "producer": {
+    "produced": 2401,
+    "empty_processes": 0,
+    "coalesced_ticks": 0,
+    "peak_source_buffers": 2,
+    "peak_source_bytes": 60293120
+  }
+}

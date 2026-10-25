@@ -1,0 +1,187 @@
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_cs.h
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_cs.h
+@@ -83,6 +83,9 @@
+    struct amdgpu_cs_buffer     *buffers;
+ };
+ 
++/* This high limit is needed for viewperf2020/catia. */
++#define BUFFER_HASHLIST_SIZE 32768
++
+ struct amdgpu_cs_context {
+    struct drm_amdgpu_cs_chunk_ib chunk_ib[IB_NUM];
+    uint32_t                    *ib_main_addr; /* the beginning of IB before chaining */
+@@ -91,7 +94,10 @@
+ 
+    /* Buffers. */
+    struct amdgpu_buffer_list   buffer_lists[NUM_BO_LIST_TYPES];
++   /* Context-owned optional hints. NULL means exact linear lookup. The
++    * high mask bit suppresses further optional growth attempts this batch. */
+    int16_t                     *buffer_indices_hashlist;
++   unsigned                     buffer_hash_mask;
+ 
+    struct amdgpu_winsys_bo     *last_added_bo;
+    unsigned                    last_added_bo_usage;
+@@ -109,9 +115,6 @@
+    /* TMZ: will this command be submitted using the TMZ flag */
+    bool secure;
+ };
+-
+-/* This high limit is needed for viewperf2020/catia. */
+-#define BUFFER_HASHLIST_SIZE 32768
+ 
+ struct amdgpu_cs {
+    struct amdgpu_ib main_ib; /* must be first because this is inherited */
+@@ -137,14 +140,6 @@
+     */
+    struct amdgpu_cs_context csc[2];
+    int current_csc_index;
+-   /* buffer_indices_hashlist[hash(bo)] returns -1 if the bo
+-    * isn't part of any buffer lists or the index where the bo could be found.
+-    * Since 1) hash collisions of 2 different bo can happen and 2) we use a
+-    * single hashlist for the 3 buffer list, this is only a hint.
+-    * amdgpu_lookup_buffer uses this hint to speed up buffers look up.
+-    */
+-   int16_t buffer_indices_hashlist[BUFFER_HASHLIST_SIZE];
+-
+    /* Flush CS. */
+    void (*flush_cs)(void *ctx, unsigned flags, struct pipe_fence_handle **fence);
+    void *flush_data;
+--- a/src/gallium/winsys/amdgpu/drm/amdgpu_cs.cpp
++++ b/src/gallium/winsys/amdgpu/drm/amdgpu_cs.cpp
+@@ -572,21 +572,58 @@
+    return 0;
+ }
+ 
++/* A failed optional cache allocation keeps exact linear/collision fallback.
++ * Count buffers, not a benchmark-derived resource limit; large lists retain
++ * the original capped hint policy and may exceed the encoded hint index. */
++static void amdgpu_grow_buffer_hash(struct amdgpu_cs_context *csc)
++{
++   const unsigned failed = 1u << 31;
++   unsigned mask = csc->buffer_hash_mask & (BUFFER_HASHLIST_SIZE - 1);
++   if ((csc->buffer_hash_mask & failed) || mask == BUFFER_HASHLIST_SIZE - 1)
++      return;
++
++   size_t count = 0;
++   for (unsigned kind = 0; kind < NUM_BO_LIST_TYPES; ++kind)
++      count += csc->buffer_lists[kind].num_buffers;
++   if (count <= 8 || (csc->buffer_indices_hashlist && count <= (mask + 1) / 4))
++      return;
++
++   unsigned capacity = csc->buffer_indices_hashlist ? mask + 1 : 32;
++   while (capacity < BUFFER_HASHLIST_SIZE && count > capacity / 4)
++      capacity *= 2;
++   int16_t *table = (int16_t *)REALLOC(csc->buffer_indices_hashlist,
++                                     csc->buffer_indices_hashlist ? (mask + 1) * sizeof(*table) : 0,
++                                     capacity * sizeof(*table));
++   if (!table) {
++      csc->buffer_hash_mask |= failed;
++      return;
++   }
++   memset(table, -1, capacity * sizeof(*table));
++   csc->buffer_indices_hashlist = table;
++   csc->buffer_hash_mask = capacity - 1;
++   /* Rebuild from live, owned lists. Clearing a resized table alone would
++    * otherwise make previously inserted buffers appear absent. */
++   for (unsigned kind = 0; kind < NUM_BO_LIST_TYPES; ++kind) {
++      struct amdgpu_buffer_list *list = &csc->buffer_lists[kind];
++      for (unsigned i = 0; i < list->num_buffers; ++i)
++         table[list->buffers[i].bo->unique_id & (capacity - 1)] = i & 0x7fff;
++   }
++}
++
+ static struct amdgpu_cs_buffer *
+ amdgpu_lookup_buffer(struct amdgpu_cs_context *csc, struct amdgpu_winsys_bo *bo,
+                      struct amdgpu_buffer_list *list)
+ {
+    int num_buffers = list->num_buffers;
+    struct amdgpu_cs_buffer *buffers = list->buffers;
+-   unsigned hash = bo->unique_id & (BUFFER_HASHLIST_SIZE-1);
+-   int i = csc->buffer_indices_hashlist[hash];
+-
+-   /* not found or found */
+-   if (i < 0)
+-      return NULL;
+-
+-   if (i < num_buffers && buffers[i].bo == bo)
+-      return &buffers[i];
++   unsigned hash = bo->unique_id & csc->buffer_hash_mask & (BUFFER_HASHLIST_SIZE - 1);
++   if (csc->buffer_indices_hashlist) {
++      int i = csc->buffer_indices_hashlist[hash];
++      if (i < 0)
++         return NULL;
++      if (i < num_buffers && buffers[i].bo == bo)
++         return &buffers[i];
++   }
+ 
+    /* Hash collision, look for the BO in the list of buffers linearly. */
+    for (int i = num_buffers - 1; i >= 0; i--) {
+@@ -600,7 +637,8 @@
+           *         AAAAAAAAAAABBBBBBBBBBBBBBCCCCCCCC
+           * will collide here: ^ and here:   ^,
+           * meaning that we should get very few collisions in the end. */
+-         csc->buffer_indices_hashlist[hash] = i & 0x7fff;
++         if (csc->buffer_indices_hashlist)
++            csc->buffer_indices_hashlist[hash] = i & 0x7fff;
+          return &buffers[i];
+       }
+    }
+@@ -642,8 +680,11 @@
+    buffer->bo = bo;
+    buffer->usage = 0;
+ 
+-   unsigned hash = bo->unique_id & (BUFFER_HASHLIST_SIZE-1);
+-   csc->buffer_indices_hashlist[hash] = idx & 0x7fff;
++   amdgpu_grow_buffer_hash(csc);
++   if (csc->buffer_indices_hashlist) {
++      unsigned hash = bo->unique_id & csc->buffer_hash_mask & (BUFFER_HASHLIST_SIZE - 1);
++      csc->buffer_indices_hashlist[hash] = idx & 0x7fff;
++   }
+    return buffer;
+ }
+ 
+@@ -890,6 +931,7 @@
+    amdgpu_cs_context_cleanup(aws, csc);
+    for (unsigned i = 0; i < ARRAY_SIZE(csc->buffer_lists); i++)
+       FREE(csc->buffer_lists[i].buffers);
++   FREE(csc->buffer_indices_hashlist);
+    FREE(csc->syncobj_dependencies.list);
+    FREE(csc->syncobj_dependencies.points);
+    FREE(csc->syncobj_to_signal.list);
+@@ -993,13 +1035,10 @@
+    ac_drm_cs_chunk_fence_info_to_data(acs->ctx->user_fence_bo_kms_handle, acs->ip_type * 4,
+                                       (struct drm_amdgpu_cs_chunk_data*)&acs->fence_chunk);
+ 
+-   memset(acs->buffer_indices_hashlist, -1, sizeof(acs->buffer_indices_hashlist));
+-
+    for (unsigned i = 0; i < ARRAY_SIZE(acs->csc); i++) {
+       amdgpu_init_cs_context(ctx->aws, &acs->csc[i], ip_type);
+ 
+-     /* only csc will use for buffer_indices_hashlist. */
+-      acs->csc[i].buffer_indices_hashlist = acs->buffer_indices_hashlist;
++      /* The hint cache is optional and materializes only when useful. */
+       acs->csc[i].aws = ctx->aws;
+    }
+ 
+@@ -2227,6 +2266,9 @@
+ 
+    /* Wait for any pending ioctl of this CS to complete. */
+    util_queue_fence_wait(&acs->flush_completed);
++   /* The futex fence can finish via a relaxed load. Acquire the completed
++    * worker's list/cache updates before ownership returns to the frontend. */
++   __atomic_thread_fence(__ATOMIC_ACQUIRE);
+ }
+ 
+ static bool amdgpu_pad_ib(struct radeon_cmdbuf *rcs)
+@@ -2374,7 +2416,10 @@
+       amdgpu_cs_context_cleanup(aws, csc_current);
+    }
+ 
+-   memset(csc_current->buffer_indices_hashlist, -1, sizeof(acs->buffer_indices_hashlist));
++   csc_current->buffer_hash_mask &= BUFFER_HASHLIST_SIZE - 1;
++   if (csc_current->buffer_indices_hashlist)
++      memset(csc_current->buffer_indices_hashlist, -1,
++             (csc_current->buffer_hash_mask + 1) * sizeof(*csc_current->buffer_indices_hashlist));
+ 
+    amdgpu_get_new_ib(aws, rcs, &acs->main_ib, acs);
+    if (rcs->gang_cs)

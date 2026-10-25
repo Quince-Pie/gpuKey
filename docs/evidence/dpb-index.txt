@@ -1,0 +1,95 @@
+Vulkan reconstruction standby checkpoint — 24 October 2026 UTC
+
+Delivered behavior
+- The direct-RGB Vulkan queue-owned AV1 path deactivates retired slots in the
+  existing encode submission, excluding the overwritten slot and inactive slots.
+- Compact standby reclaims unused reconstruction views/images only after
+  successful readout and an empty issued-output FIFO. Live references remain.
+- New input restores capacity lazily. Fatal encoder failures use full close;
+  the completed recording prefix remains available with the original error.
+- No persistent field, per-packet field or extra retirement submission is added.
+  The final patch skips the retirement-list scan on ordinary pictures.
+- Existing retain/default static-cadence policies remain available. The new
+  reclamation is reached with --gpu-memory compact --static-interval 2.
+
+Fixed references and final packages
+- Fixed 209-file source: /tmp/gpukey-before-dpb.
+- Fixed RGB: /nix/store/brpdzw51wrc3w3w9px0by8kxxx3ngvm5-gpukey-rgb-amd.
+- First candidate: /nix/store/y8y8603lzw8prli5nlgbid9p6cxy4kaq-gpukey-rgb-amd.
+- Final RGB: /nix/store/90sv0rykd64v4fmqr252d0ax735aq55k-gpukey-rgb-amd.
+- Final full RGB: /nix/store/nd09hqrk60hv0larib5ha85rxbxldjp8-gpukey-rgb-full-amd.
+- Library/control paths and scripts are preserved under gpukey-dpb/final/.
+
+Evidence layout after extracting dpb-evidence.tar.gz under /tmp
+- gpukey-dpb/native-matrix, native-dpb, native-dpb-asan, native-matrix-asan:
+  initial native validation, forced keys, 8/10-bit equality and failure cases.
+- gpukey-dpb/probes and latency-probes: retained initial harness attempts.
+  The first one-spare wrapper selected an empty main output; its memory result
+  is not a one-spare measurement. A nested preload also reached an older host
+  env binary and failed. These attempts are excluded from policy comparisons.
+- gpukey-dpb/probes-v2 and latency-probes-v2: corrected exploratory controls.
+  analyze.py records exact common decoded-prefix equality and actual endpoints.
+- gpukey-dpb/confirmation, latency-confirmation, replay-confirmation: the first
+  candidate's 15 file, 9 API-traced and 3 forty-second replay runs.
+- gpukey-dpb/dpb-before-fast-path.patch: the preceding candidate's library patch.
+- gpukey-dpb/retirement-mask.log: all 26 available three-slot states match the
+  declarative retirement-set specification.
+- gpukey-dpb/c23-verify.log: GCC/Clang, ASan/UBSan, all applicable flake checks.
+- gpukey-dpb/final/native-checks.log and native-*: final native validation,
+  sanitizers, multiple reclamation/restoration cycles, failure cleanup, packet
+  ownership, and the actual one-spare control (7 created/4 retired views).
+- gpukey-dpb/final/capture-{rgb,full,asan}: capture, two 16-channel audio tracks,
+  replay, reconfiguration, missing-PTS capture and static-repeat checks.
+- gpukey-dpb/final/resume-failure-final-rgb: an injected reconstruction BO
+  allocation failure after standby preserves 64 independently decoded pictures.
+- gpukey-dpb/final/samply and tracy: final-source motion/standby/resume profiles,
+  both with two independently decoded replay exports. profile-analysis.* contains
+  resolved CPU samples; zones.csv includes one 163,530 ns idle-release call.
+- gpukey-dpb/final/confirmation: 18 rotating file runs, including the fixed
+  reference, preceding candidate, final candidate and one-spare alternative.
+- gpukey-dpb/final/latency-confirmation: 9 separate API timing runs.
+- gpukey-dpb/final/replay-confirmation: 3 forty-second runs saving twice after
+  the original moving frames have aged out of the thirty-second history.
+- gpukey-dpb/final/confirmation-analysis.*: all final observations, variance,
+  memory phases and observed API tails. Frozen input hashes are checked again
+  after the series. No compilation/profiling/heavy analysis overlaps timings.
+- gpukey-dpb/target-arithmetic.log: independent portrait/4K/odd-size calculations.
+- gpukey-dpb/delivery-check.log: material, original clip and fixed-source integrity.
+
+Memory boundary and limits
+- Portrait8/60 file idle VRAM: retained 91.5546875 MiB, one spare 80.98046875 MiB,
+  no spare 70.40625 MiB. Active file peak remains 91.5546875 MiB. The one-spare
+  long replay has another observed 4 KiB allocation, with attribution unresolved.
+  Total/resident VRAM agree in the inspected idle phases.
+- Both shared capture images remain counted: 57.5 MiB. Each reclaimed
+  reconstruction is 11,087,872 bytes; two return 21.1484375 MiB.
+- Dense standby image target: 66.796875 MiB, or 77.34375 MiB with one spare.
+  Active dense-image target remains 87.890625 MiB. Alignment and other observed
+  storage account for the gap; complete attribution of the latter remains open.
+- Reallocation on resume is real work. API delays include scheduling and GPU
+  completion; they are not pure GPU time or full display-to-file latency.
+- First resumed API ms (mean +/- SD, n=3): fixed 10.4878 +/- 0.5470,
+  one spare 11.2430 +/- 1.3753, none 10.8582 +/- 1.2669. One spare establishes
+  no clear first-resume advantage here. All three long replays export twice
+  successfully and write 1,315,916 bytes each across the two clips.
+- CPU/RSS results vary by workload. No universal speed, latency, memory-minimum
+  or state-of-the-art claim is established. Defaults remain retain/one second.
+- ARM execution and an instrumented whole driver/library stack are not covered.
+
+Integrity and reproduction
+- dpb-control.tar.gz contains the preceding 209-file source.
+- dpb-evidence.tar.gz contains scripts, logs, recordings, profiles and controls.
+- dpb.sha256 identifies both archives and this index.
+- implementation.sha256 identifies the delivered source/tests/docs.
+- Main native check: tools/check-vulkan-dpb.sh PROBE NEW_DIRECTORY inside the
+  RGB Nix shell with the pinned ICD and validation layer selected. Exact compile
+  flags and environments are in gpukey-dpb/final/run-native.sh.
+- Main comparison: gpukey-dpb/final/run-confirmation.sh, in the RGB Nix shell.
+  Output directories must be new; scripts refuse to overwrite evidence.
+- User command:
+  nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0 --gpu-memory compact --static-interval 2
+
+The broad optimization goal remains active. The current result preserves the
+reference schedule. Dropping the final reference and forcing a new independent
+picture on resume is a separate, untested alternative with compression/latency
+costs; the current conditional target is not a universal lower bound.

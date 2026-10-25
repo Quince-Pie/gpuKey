@@ -1,0 +1,99 @@
+bash tests/integration.sh /tmp/gpuKey/build/gcc-release/gpukey /tmp/gpuKey/build/gcc-release/tests/capture_fixture
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/result.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2620/2620/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+capture: selected source was removed (Broken pipe)
+Incomplete recording: 20 video inputs, 20 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1672/1672/0
+gpukey: Broken pipe. Any partial output has been preserved.
+private PipeWire integration: 20 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/static.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 1 video inputs, 1 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=514/514/0
+private PipeWire integration: 1 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/capped.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 26 video inputs, 26 encoded packets; 0 capture skips, 25 FPS-limited; accepted/written/durable bytes=1737/1737/0
+private PipeWire integration: 26 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/audio.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=1347864/1347864/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/audio-revoked.mp4
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; fragmented MP4 1 us timing
+audio 1: Synthetic mono mic; mono; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 5.1; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+capture: selected audio format was removed (Stale file handle)
+Incomplete recording: 21 video inputs, 21 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=541643/541643/0
+gpukey: Stale file handle. Any partial output has been preserved.
+private PipeWire integration: 21 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/missing.mp4
+device: explicit software AV1 control
+audio device not found: missing-device; run 'gpukey devices'
+capture: selected audio is unavailable (No such file or directory)
+Incomplete recording: 0 video inputs, 0 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=0/0/0
+gpukey: No such file or directory. Any partial output has been preserved.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/duplicate.mp4
+device: explicit software AV1 control
+capture: the same audio device was selected twice (File exists)
+Incomplete recording: 0 video inputs, 0 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=0/0/0
+gpukey: File exists. Any partial output has been preserved.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/kind.mp4
+device: explicit software AV1 control
+capture: audio source/monitor kind does not match; use --audio ID (Invalid argument)
+Incomplete recording: 0 video inputs, 0 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=0/0/0
+gpukey: Invalid argument. Any partial output has been preserved.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/aux.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+Completed: 50 video inputs, 50 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=317710/317710/0
+private PipeWire integration: 50 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/aux-pcm.mkv
+device: explicit software AV1 control
+plan: libaom-av1; 64x48 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; pcm_f32le
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; pcm_f32le
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=6149258/6149258/0
+private PipeWire integration: 50 video packets, passed
+Audio devices (IDs last until PipeWire restarts; names can be reused):
+  ID           TYPE      DESCRIPTION / NODE NAME
+  No audio devices are visible on this PipeWire connection.
+
+Use: gpukey clip.mkv --audio ID [--audio ID ...]
+Each selected device becomes a separate track; no audio is selected by default.
+Use --display or --window to choose a screen source in the desktop dialog.
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/gpu.mp4
+device: /dev/dri/renderD128: Mesa Gallium driver 26.1.8 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=2753/2753/0
+private PipeWire integration: 51 video packets, passed
+Saving to /tmp/nix-shell.tbAYnC/nix-shell.6bmFcB/tmp.IOzZ0TlbfA/gpu-aux.mkv
+device: /dev/dri/renderD128: Mesa Gallium driver 26.1.8 for AMD Radeon RX 9070 XT (radeonsi, gfx1201, ACO, DRM 3.64, 7.2.10)
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; Matroska 1 ms timing
+audio 1: Synthetic mono mic; 16 discrete AUX channels; 44100 → 48000 Hz; libopus
+audio 2: Synthetic surround monitor; 16 discrete AUX channels; 48000 → 48000 Hz; libopus
+Recording. Ctrl-C stops and finalizes.
+Completed: 51 video inputs, 51 encoded packets; 0 capture skips, 0 FPS-limited; accepted/written/durable bytes=309087/309087/0
+private PipeWire integration: 50 video packets, passed
+integration: private PipeWire source -> recorder -> independent decoder passed

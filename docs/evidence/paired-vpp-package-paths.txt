@@ -1,0 +1,2 @@
+/nix/store/775jhbmziv4kv4179nyqmcypslrbnmpi-gpukey-amd
+/nix/store/ahk6w4vrnl67bca0ms3k4q60b6xnz8wn-gpukey-amd-reference

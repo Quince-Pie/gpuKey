@@ -1,0 +1,27 @@
+--- a/src/gallium/auxiliary/vl/vl_csc.c
++++ b/src/gallium/auxiliary/vl/vl_csc.c
+@@ -60,6 +60,8 @@
+    const bool out_yuv = util_format_is_yuv(out_format);
+    const unsigned bpc = format_bpc(in_format);
+    const unsigned bpcs[3] = { bpc, bpc, bpc };
++   const unsigned out_bpc = format_bpc(out_format);
++   const unsigned out_bpcs[3] = { out_bpc, out_bpc, out_bpc };
+ 
+    memcpy(matrix, &identity, sizeof(vl_csc_matrix));
+ 
+@@ -111,12 +113,12 @@
+    float out_range[3][2];
+    if (out_yuv) {
+       if (out_color_range == PIPE_VIDEO_VPP_CHROMA_COLOR_RANGE_REDUCED)
+-         util_get_narrow_range_coeffs(out_range, bpcs);
++         util_get_narrow_range_coeffs(out_range, out_bpcs);
+       else
+-         util_get_full_range_coeffs(out_range, bpcs);
++         util_get_full_range_coeffs(out_range, out_bpcs);
+    } else {
+       if (out_color_range == PIPE_VIDEO_VPP_CHROMA_COLOR_RANGE_REDUCED)
+-         util_get_narrow_range_rgb_coeffs(out_range, bpcs);
++         util_get_narrow_range_rgb_coeffs(out_range, out_bpcs);
+       else
+          util_get_identity_range_coeffs(out_range);
+    }

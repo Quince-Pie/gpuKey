@@ -1,0 +1,5 @@
+Saved 1.194 seconds to /tmp/gpukey-replay-final-vulkan/buffered.mkv
+true
+Saved 1.194 seconds to /tmp/gpukey-replay-final-vulkan/uring.mkv
+true
+Vulkan replay: mapped output copied, both sinks drained durably, independent video/audio decode passed

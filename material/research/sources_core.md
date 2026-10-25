@@ -1,0 +1,27 @@
+# Core sources
+
+- [C01] freedesktop.org, ScreenCast portal interface, current version 6. https://flatpak.github.io/xdg-desktop-portal/docs/doc-org.freedesktop.portal.ScreenCast.html
+- [C02] PipeWire, 1.4 DMA-BUF sharing and explicit synchronization. https://docs.pipewire.org/1.4/page_dma_buf.html
+- [C03] ext-image-copy-capture-v1 protocol XML rendered by Wayland Explorer; upstream freedesktop protocol links are provided there. https://wayland.app/protocols/ext-image-copy-capture-v1
+- [C04] Linux kernel 6.12 DRM UAPI, including GETFB2 permissions and handle lifetime. https://www.kernel.org/doc/html/v6.12/gpu/drm-uapi.html
+- [C05] GPU Screen Recorder, primary project documentation and implementation entry point. https://git.dec05eba.com/gpu-screen-recorder/about/
+- [C06] PipeWire NEWS, 1.6 release and device-ID/metadata capability development history; current development DMA-BUF contract. https://github.com/PipeWire/pipewire/blob/master/NEWS ; https://docs.pipewire.org/devel/page_dma_buf.html
+- [C07] PipeWire, raw video format structure. https://docs.pipewire.org/structspa__video__info__raw.html
+- [C08] PipeWire, frame metadata header and buffer metadata types. https://docs.pipewire.org/structspa__meta__header.html ; https://docs.pipewire.org/group__spa__buffer.html
+- [C09] PipeWire 1.6.9 metadata definitions and synchronization timeline. https://docs.pipewire.org/meta_8h_source.html ; https://docs.pipewire.org/structspa__meta__sync__timeline.html
+- [C10] PipeWire synchronization examples; illustrative eventfd stand-ins must not be confused with DRM timeline APIs. https://docs.pipewire.org/video-src-sync_8c-example.html ; https://docs.pipewire.org/video-play-sync_8c-example.html
+- [C11] PipeWire stream lifecycle, event threads and processing contract. https://docs.pipewire.org/page_streams.html ; https://docs.pipewire.org/structpw__stream__events.html ; https://docs.pipewire.org/group__pw__stream.html
+- [C12] Linux kernel, DMA-BUF sharing, sync-file export/import and CPU-access synchronization. https://docs.kernel.org/driver-api/dma-buf.html
+- [C13] Khronos, Vulkan synchronization and external-resource ownership. https://docs.vulkan.org/spec/latest/chapters/synchronization.html
+- [C14] KDE KWin, color-management and capture behavior. https://github.com/KDE/kwin/blob/master/doc/color-management.md
+- [C15] Sunshine primary PipeWire implementation, version 2026.914.233613, including HDR classification and metadata fallback. https://docs.lizardbyte.dev/projects/sunshine/v2026.914.233613/pipewire_8cpp_source.html
+- [C16] ITU-R, Recommendation BT.709-6, normative color components and coding. https://www.itu.int/dms_pubrec/itu-r/rec/bt/R-REC-BT.709-6-201506-I%21%21PDF-E.pdf
+- [C17] Microsoft, 10-bit and 16-bit YUV video formats, including P010 layout. https://learn.microsoft.com/en-us/windows/win32/medfound/10-bit-and-16-bit-yuv-video-formats
+- [C18] PipeWire cursor metadata structure. https://docs.pipewire.org/structspa__meta__cursor.html
+- [C19] AOMedia, AV1 bitstream and decoding specification. https://aomediacodec.github.io/av1-spec/ ; https://aomediacodec.github.io/av1-spec/av1-spec.pdf
+- [C20] Xiph.Org, Opus encoder controls, API 1.6. https://opus-codec.org/docs/opus_api-1.6/group__opus__encoderctls.html
+- [C21] WG14, C23 working draft N3096. https://www.open-std.org/jtc1/sc22/wg14/www/docs/n3096.pdf
+- [C22] Netflix, VMAF v1 and v0 model documentation and metric scope. https://github.com/Netflix/vmaf/blob/master/resource/doc/models_v1.md ; https://github.com/Netflix/vmaf/blob/master/resource/doc/models_v0.md ; https://github.com/Netflix/vmaf/blob/master/resource/doc/faq.md
+- [C23] Cloudinary, SSIMULACRA2 primary implementation and methodology. https://github.com/cloudinary/ssimulacra2/blob/main/README.md
+- [C24] Khronos, calibrated Vulkan timestamps and maximum-deviation contract. https://docs.vulkan.org/refpages/latest/refpages/source/vkGetCalibratedTimestampsKHR.html
+- [C25] MPI-SWS, GenMC model checker; proposed future native weak-memory validation, not executed here. https://github.com/MPI-SWS/genmc

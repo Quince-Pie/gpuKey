@@ -1,0 +1,65 @@
+--- a/libavutil/refstruct.h
++++ b/libavutil/refstruct.h
+@@ -219,6 +219,8 @@
+  * flag had been provided.
+  */
+ #define AV_REFSTRUCT_POOL_FLAG_ZERO_EVERY_TIME                       (1 << 18)
++/** Keep only the newest unused entry. Active references are never evicted. */
++#define AV_REFSTRUCT_POOL_FLAG_SINGLE_IDLE                           (1 << 19)
+ 
+ /**
+  * Equivalent to av_refstruct_pool_alloc(size, flags, NULL, NULL, NULL, NULL, NULL)
+--- a/libavutil/refstruct.c
++++ b/libavutil/refstruct.c
+@@ -255,17 +255,28 @@
+ 
+ static void pool_return_entry(void *ref_)
+ {
+-    RefCount *ref = ref_;
++    RefCount *ref = ref_, *victim = NULL;
+     AVRefStructPool *pool = ref->opaque.nc;
+ 
+     ff_mutex_lock(&pool->mutex);
+     if (!pool->uninited) {
+-        ref->opaque.nc = pool->available_entries;
++        if (pool->pool_flags & AV_REFSTRUCT_POOL_FLAG_SINGLE_IDLE) {
++            victim = pool->available_entries;
++            ff_assert(!victim || !victim->opaque.nc);
++            ref->opaque.nc = NULL;
++        } else {
++            ref->opaque.nc = pool->available_entries;
++        }
+         pool->available_entries = ref;
+         ref = NULL;
+     }
+     ff_mutex_unlock(&pool->mutex);
+ 
++    /* The returning entry's pool reference pins this state through both
++     * callbacks, even if a callback uninitializes the owner and destroys
++     * the newly cached entry in place. Never read that entry afterward. */
++    if (victim)
++        pool_free_entry(pool, victim);
+     if (ref)
+         pool_free_entry(pool, ref);
+ 
+--- a/libavcodec/vaapi_encode.c
++++ b/libavcodec/vaapi_encode.c
+@@ -848,8 +848,6 @@
+ end:
+     av_refstruct_unref(&pic->output_buffer_ref);
+     pic->output_buffer = VA_INVALID_ID;
+-    if (ctx->async_trim)
+-        av_refstruct_pool_trim(ctx->output_buffer_pool, 1);
+     return err;
+ }
+ 
+@@ -2332,7 +2330,8 @@
+     }
+ 
+     ctx->output_buffer_pool =
+-        av_refstruct_pool_alloc_ext(sizeof(VAAPIEncodeBuffer), AV_REFSTRUCT_POOL_FLAG_FREE_ON_INIT_ERROR, avctx,
++        av_refstruct_pool_alloc_ext(sizeof(VAAPIEncodeBuffer), AV_REFSTRUCT_POOL_FLAG_FREE_ON_INIT_ERROR |
++                                    (ctx->async_trim ? AV_REFSTRUCT_POOL_FLAG_SINGLE_IDLE : 0), avctx,
+                                     &vaapi_encode_alloc_output_buffer, NULL,
+                                     vaapi_encode_free_output_buffer, NULL);
+     if (!ctx->output_buffer_pool) {

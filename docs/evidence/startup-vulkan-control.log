@@ -1,0 +1,148 @@
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+
+=================================================================
+==1739850==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 768 byte(s) in 3 object(s) allocated from:
+    #0 0x7ffff792b31f in realloc.part.0 (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b31f)
+    #1 0x7bffe0b9662a  (<unknown module>)
+    #2 0x7bffe0b96b0a  (<unknown module>)
+    #3 0x7ffff4ea5023 in __pthread_once_slow.isra.0 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa5023) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #4 0x7ffff4ea50a0 in pthread_once@@GLIBC_2.34 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa50a0) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #5 0x7bffe0b94a1c  (<unknown module>)
+    #6 0x7bffe0bcbe37  (<unknown module>)
+    #7 0x7ffff7868296 in asan_thread_start(void*) (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x68296)
+    #8 0x7ffff4e9f750 in start_thread (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x9f750) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #9 0x7ffff4f2ba4b in __clone3 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x12ba4b) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+
+Direct leak of 768 byte(s) in 3 object(s) allocated from:
+    #0 0x7ffff792b31f in realloc.part.0 (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b31f)
+    #1 0x7bffdafc12ea  (<unknown module>)
+    #2 0x7bffdafc17ca  (<unknown module>)
+    #3 0x7ffff4ea5023 in __pthread_once_slow.isra.0 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa5023) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #4 0x7ffff4ea50a0 in pthread_once@@GLIBC_2.34 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa50a0) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #5 0x7bffdb277782  (<unknown module>)
+    #6 0x7bffdae516b4  (<unknown module>)
+    #7 0x7bffdaf29068  (<unknown module>)
+    #8 0x7bffdaf28fc8  (<unknown module>)
+    #9 0x7bffdaeff4d4  (<unknown module>)
+    #10 0x7bffdaf00a37  (<unknown module>)
+    #11 0x7bffdaee4ef8  (<unknown module>)
+    #12 0x7bffdaee5a5d  (<unknown module>)
+    #13 0x7ffff77a60b7 in setup_loader_term_phys_devs (/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so+0x4b0b7)
+    #14 0x7ffff77a72ea in terminator_EnumeratePhysicalDevices (/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so+0x4c2ea)
+    #15 0x7ffff0f9d41c  (<unknown module>)
+    #16 0x7ffff77b0210 in vkEnumeratePhysicalDevices (/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so+0x55210)
+    #17 0x7ffff5a55dba in vulkan_device_create_internal.isra.0 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x55dba)
+    #18 0x7ffff5a5895f in vulkan_device_create (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x5895f)
+    #19 0x7ffff5a416d9 in av_hwdevice_ctx_create (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x416d9)
+    #20 0x5555555568ba in main docs/evidence/startup-vulkan-control.c.txt:13
+    #21 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #22 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #23 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+Direct leak of 352 byte(s) in 4 object(s) allocated from:
+    #0 0x7ffff792b98f in posix_memalign (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b98f)
+    #1 0x7ffff5a6572c in av_malloc.localalias (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x6572c)
+    #2 0x7ffff5a658c8 in av_mallocz (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x658c8)
+    #3 0x7ffff5eab28e in ff_cbs_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0xab28e)
+    #4 0x7ffff5f02252 in vulkan_encode_av1_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x102252)
+    #5 0x7ffff601b45a in avcodec_open2 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x21b45a)
+    #6 0x5555555567ee in main docs/evidence/startup-vulkan-control.c.txt:42
+    #7 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #8 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #9 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+Direct leak of 256 byte(s) in 1 object(s) allocated from:
+    #0 0x7ffff792b31f in realloc.part.0 (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b31f)
+    #1 0x7bffdb5c12ea  (<unknown module>)
+    #2 0x7bffdb5c17ca  (<unknown module>)
+    #3 0x7ffff4ea5023 in __pthread_once_slow.isra.0 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa5023) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #4 0x7ffff4ea50a0 in pthread_once@@GLIBC_2.34 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa50a0) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #5 0x7bffdb877782  (<unknown module>)
+    #6 0x7bffdb4516b4  (<unknown module>)
+    #7 0x7bffdb529068  (<unknown module>)
+    #8 0x7bffdb528fc8  (<unknown module>)
+    #9 0x7bffdb4ff4d4  (<unknown module>)
+    #10 0x7bffdb500a37  (<unknown module>)
+    #11 0x7bffdb4e4ef8  (<unknown module>)
+    #12 0x7bffdb4e5a5d  (<unknown module>)
+    #13 0x7ffff77a60b7 in setup_loader_term_phys_devs (/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so+0x4b0b7)
+    #14 0x7ffff77a72ea in terminator_EnumeratePhysicalDevices (/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so+0x4c2ea)
+    #15 0x7ffff0f9d41c  (<unknown module>)
+    #16 0x7ffff77b0210 in vkEnumeratePhysicalDevices (/nix/store/aj8kinwyd2whhs3xg4b2p6j6dd9w6x56-vulkan-loader-1.4.363.0/lib/libvulkan.so+0x55210)
+    #17 0x7ffff5a55dba in vulkan_device_create_internal.isra.0 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x55dba)
+    #18 0x7ffff5a5895f in vulkan_device_create (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x5895f)
+    #19 0x7ffff5a416d9 in av_hwdevice_ctx_create (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x416d9)
+    #20 0x5555555568ba in main docs/evidence/startup-vulkan-control.c.txt:13
+    #21 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #22 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #23 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+Direct leak of 256 byte(s) in 1 object(s) allocated from:
+    #0 0x7ffff792b31f in realloc.part.0 (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b31f)
+    #1 0x7bffed39662a  (<unknown module>)
+    #2 0x7bffed396b0a  (<unknown module>)
+    #3 0x7ffff4ea5023 in __pthread_once_slow.isra.0 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa5023) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #4 0x7ffff4ea50a0 in pthread_once@@GLIBC_2.34 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0xa50a0) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #5 0x7bffed394a1c  (<unknown module>)
+    #6 0x7bffed3cbe37  (<unknown module>)
+    #7 0x7ffff7868296 in asan_thread_start(void*) (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x68296)
+    #8 0x7ffff4e9f750 in start_thread (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x9f750) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #9 0x7ffff4f2ba4b in __clone3 (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x12ba4b) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+
+Direct leak of 224 byte(s) in 4 object(s) allocated from:
+    #0 0x7ffff792b98f in posix_memalign (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b98f)
+    #1 0x7ffff5a6572c in av_malloc.localalias (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x6572c)
+    #2 0x7ffff6054987 in ff_cbs_insert_unit_content (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x254987)
+    #3 0x7ffff6a334fd in write_sequence_header (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0xc334fd)
+    #4 0x7ffff5f02287 in vulkan_encode_av1_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x102287)
+    #5 0x7ffff601b45a in avcodec_open2 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x21b45a)
+    #6 0x5555555567ee in main docs/evidence/startup-vulkan-control.c.txt:42
+    #7 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #8 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #9 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+Indirect leak of 3145728 byte(s) in 3 object(s) allocated from:
+    #0 0x7ffff792b31f in realloc.part.0 (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b31f)
+    #1 0x7ffff5a65890 in av_reallocp (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x65890)
+    #2 0x7ffff6053781 in ff_cbs_write_fragment_data (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x253781)
+    #3 0x7ffff6a33515 in write_sequence_header (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0xc33515)
+    #4 0x7ffff5f02287 in vulkan_encode_av1_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x102287)
+    #5 0x7ffff601b45a in avcodec_open2 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x21b45a)
+    #6 0x5555555567ee in main docs/evidence/startup-vulkan-control.c.txt:42
+    #7 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #8 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #9 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+Indirect leak of 11680 byte(s) in 4 object(s) allocated from:
+    #0 0x7ffff792b98f in posix_memalign (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b98f)
+    #1 0x7ffff5a6572c in av_malloc.localalias (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x6572c)
+    #2 0x7ffff5a743c2 in av_refstruct_alloc_ext_c (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x743c2)
+    #3 0x7ffff6052e46 in cbs_clone_unit_content.isra.0 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x252e46)
+    #4 0x7ffff606df82 in cbs_av1_write_obu (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x26df82)
+    #5 0x7ffff6053530 in ff_cbs_write_fragment_data (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x253530)
+    #6 0x7ffff6a33515 in write_sequence_header (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0xc33515)
+    #7 0x7ffff5f02287 in vulkan_encode_av1_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x102287)
+    #8 0x7ffff601b45a in avcodec_open2 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x21b45a)
+    #9 0x5555555567ee in main docs/evidence/startup-vulkan-control.c.txt:42
+    #10 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #11 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #12 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+Indirect leak of 10688 byte(s) in 4 object(s) allocated from:
+    #0 0x7ffff792b98f in posix_memalign (/nix/store/7a2cjhcgzyym5zaz6m4fksw47qvm150w-gcc-16.2.0-lib/lib/libasan.so.8+0x12b98f)
+    #1 0x7ffff5a6572c in av_malloc.localalias (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x6572c)
+    #2 0x7ffff5a658c8 in av_mallocz (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavutil.so.61+0x658c8)
+    #3 0x7ffff5eab2af in ff_cbs_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0xab2af)
+    #4 0x7ffff5f02252 in vulkan_encode_av1_init (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x102252)
+    #5 0x7ffff601b45a in avcodec_open2 (/nix/store/dadxly3w77jzaigadldkbaajzrrrr82z-ffmpeg-headless-9.0.2-lib/lib/libavcodec.so.63+0x21b45a)
+    #6 0x5555555567ee in main docs/evidence/startup-vulkan-control.c.txt:42
+    #7 0x7ffff4e2b390 in __libc_start_call_main (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b390) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #8 0x7ffff4e2b4a7 in __libc_start_main_impl (/nix/store/pqyiidz5mi73wv5f91d48s9plcqyj5bz-glibc-2.44-57/lib/libc.so.6+0x2b4a7) (BuildId: 342d94d33e8a929e8d32ff5226646738d2236e4a)
+    #9 0x555555556224 in _start (/tmp/gpukey-startup-vulkan-control+0x2224)
+
+SUMMARY: AddressSanitizer: 3170720 byte(s) leaked in 27 allocation(s).

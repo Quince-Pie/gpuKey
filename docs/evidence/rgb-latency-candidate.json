@@ -1,0 +1,10 @@
+{
+  "count": 360,
+  "mean_ns": 9296956.897222223,
+  "median_ns": 9361698.0,
+  "p99_observed_ns": 9779208,
+  "min_ns": 3328120,
+  "max_ns": 9910548,
+  "first_packet_ns": 4851271,
+  "max_pending": 1
+}

@@ -1,0 +1,106 @@
+Idle GPU capacity continuation — 23 October 2026 UTC
+
+Result and contract
+- Final packages expose --gpu-memory retain|compact; retain remains the default.
+- Compact releases spare input/coded-output allocations after work drains and
+  restores capacity on demand. AV1, quality settings, latest/prepared images,
+  external leases and two-deep capacity remain intact.
+- The controlled backlog sheds 11.25 MiB VRAM and 21.15625 MiB GTT afterward.
+  This is retained-storage reduction, not a lower active-overlap peak.
+- CPU, RSS and tails are mixed. No every-metric or universal SOTA claim.
+- A separate admission-failure fix preserves valid queued video/audio while
+  retaining the original failure exit status.
+
+Pinned packages
+- Fixed preceding control:
+  /nix/store/9z7s0zyr4ivf5716fg0ly2kwxyph87m6-gpukey-amd
+- Final AMD / preceding-library reference / Tracy:
+  /nix/store/q7rkq342smywmjd4c3iv4syh1qw9lvrz-gpukey-amd
+  /nix/store/hw9ywy08kkgb2yy0szc0dgxvg983qqz9-gpukey-amd-capacity-reference
+  /nix/store/yf441ibf1wd29fs6jainsxh3xijzh9i1-gpukey-tracy-0.1.0
+- Common driver, unchanged in this continuation:
+  /nix/store/qkqg6qvw6fssxkpw1c3f7k4s06xc2gws-mesa-gpukey-hints-26.2.5
+- Selected FFmpeg library:
+  /nix/store/zkbn5fyfijgv9qwq40acmlgcy8cak98h-ffmpeg-gpukey-capacity-return-9.0.2-lib
+- Generic explicit-trim library:
+  /nix/store/vnw9gcwb761864rwl0kndkzc4sr3w0nn-ffmpeg-gpukey-capacity-9.0.2-lib
+- Measured balanced-confirmation return-policy executable:
+  /nix/store/gn9217gbvyjj69adhjh38iyp4s89lcgh-gpukey-capacity-return-amd
+- Measured balanced-confirmation explicit-trim executable:
+  /nix/store/xmmadnpxpd3yw99hhp4cncjqb1srhc12-gpukey-capacity-amd
+- The final failure-draining fix postdates that confirmation. Its binaries differ;
+  do not attribute the full matrix to an identical final executable.
+
+Evidence layout (capacity-evidence.tar.gz)
+- trace60: ordinary 40-second creation/destruction trace; one input/coded buffer.
+- stall60: fixed control, one 50 ms owner delay after completion 120.
+- compact-stall60: first eager-trimming experiment, retained for comparison.
+- idle-stall60: wait for all submitted output before trimming input storage.
+- return-stall60: trim coded output during the existing return operation.
+- repeated-bursts: seven 50 ms delays, actual reuse/closure, successful saves.
+- retention-summary.json: post-three-second sampled VRAM/GTT distributions.
+- comparison: initial three-run matrix, four variants, five cases.
+- confirmation: four rotations, four variants, five cases, 80 completed runs.
+  Eight-second paced/static and twenty-second saturated runs, no build/profiler
+  overlap. Every variant occupies each order position; raw variation/tails remain.
+- pools-*, return-pools-*: actual FFmpeg buffer/refstruct source probes; active
+  clones, allocation failures, concurrent reuse/trim and reentrant owner close.
+  ASan/UBSan and TSan pass. Both missing-pin negative controls fail correctly.
+- native-ownership-sanitizer.log: both depths, prepared frames during collection,
+  retained images after device-owner teardown, capacities up to one million.
+- restore-failure: original failure behavior, eleven inputs / ten packets.
+- restore-failure-drained: corrected error exit, eleven accepted/decoded pictures.
+- drain-check-verified.log: eight container/audio/admission-failure cases pass.
+- drain-negative-check.log: fixed previous media implementation fails that oracle.
+- final-verification.log: GCC/Clang, application ASan/UBSan, all 16 x86-64 checks.
+- final-native-integration.log: final application/native compact audio/capture/
+  replay integration under Clang ASan/UBSan. External libraries are not all
+  sanitizer-instrumented.
+- final-samply: actual private twelve-second capture, symbols and CPU summary.
+- final-tracy-capture: actual six-second trace, CSV zones, independently decoded
+  replay clips. Blocked wait zones are wall time, not CPU consumption.
+- final-long: final forty-second replay, 2400 inputs/packets, two late saves with
+  independent decoding, no recorder skips, producer misses/coalesced ticks or
+  completion fallback. CPU 420.770 ms, RSS 44.359 MiB, sampled VRAM/GTT peaks
+  103.434/23.348 MiB, live replay payload 8076263 bytes, source-lease max 0.638 ms.
+  One confirmation run, not a variance estimate or instantaneous peak bound.
+- delivery-summary.json preserves those values and unavailable-read accounting.
+- final-tested-binaries.sha256 and source manifests identify the actual inputs.
+- dependency-source: touched pinned FFmpeg source/header files and hashes;
+  flake.lock, nix derivations and patches reproduce the complete dependency.
+- final-lifecycle.sh records the private fixture, wrappers and final run commands.
+
+Invalid/intermediate evidence retained
+- observer-failed-hd240-trim-2 and comparison-observer-failure.log: transient
+  fdinfo PermissionError invalidated the observer, not an asserted recorder fault.
+- pools-gcc: constexpr multiple declarators rejected; separate declarations pass.
+- verification-packaging-failure.log: check artifact symlink referenced /build;
+  copied sources/config and untouched binary hashes repair artifact packaging.
+- drain-invalid-oracle.log and drain-oracle-* preserve the invalid raw-step audio
+  expectation. A separate resampler with the same conversion contract replaces it.
+- delivery-package-selector-error.log: requested nonexistent .#tracy; corrected
+  selector .#gcc.tracy builds and is used by the final profile.
+
+Reproduction
+- nix run .#amd -- replay 30 --display --fps 60 --gpu-memory compact
+- nix run .#amd -- replay 30 --display --fps 60 --gpu-memory retain
+- capacity-amd selects the explicit-trim control; amd-capacity-reference selects
+  the preceding library (retain only). The fixed pre-change package above also
+  preserves the preceding application rather than only its library.
+- nix flake check
+- tools/check-pool-trim.sh compiles real dependency sources; its script documents
+  ASan/TSan and missing-pin negative-control options.
+- tools/check-capacity-failure.sh RECORDER FIXTURE INTERPOSER NEW_DIRECTORY
+- tools/benchmark-gpu-programs.sh and tools/summarize-gpu-memory.py reproduce
+  complete-child timing/memory comparisons with fixed inputs and workloads.
+- tools/profile-portal-samply.sh, tools/profile-replay.sh and
+  tools/benchmark-gpu-memory.sh retain the private capture workflows.
+
+Open work
+- Flat owner-local VA-ID/FD arenas could remove generic coded-output pool
+  bookkeeping; hidden-frame ownership and failure paths need a real prototype.
+- Image layout/alignment and driver workspaces remain above the conditional
+  98.4375 MiB dense-image target at 2560x2880; active overlap has a larger target.
+- Existing essential Mesa BO-list OOM defects are separate and remain open.
+- Broader hardware, matched-quality cross-recorder, power and game-interference
+  comparisons remain unmet. The active optimization goal is not complete.

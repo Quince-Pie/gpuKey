@@ -1,0 +1,18 @@
+--- a/src/amd/vulkan/radv_formats.c
++++ b/src/amd/vulkan/radv_formats.c
+@@ -521,6 +521,15 @@
+          tiled |= VK_FORMAT_FEATURE_2_HOST_IMAGE_TRANSFER_BIT_EXT;
+    }
+ 
++   if (pdev->video_encode_enabled && pdev->info.video_caps.enc[AC_VIDEO_CODEC_AVC].efc &&
++       (format == VK_FORMAT_R8G8B8A8_UNORM || format == VK_FORMAT_B8G8R8A8_UNORM ||
++        format == VK_FORMAT_A2R10G10B10_UNORM_PACK32 || format == VK_FORMAT_A2B10G10R10_UNORM_PACK32)) {
++      /* RGB conversion source formats need the same feature advertised by
++       * the profile-specific format query, including mutable input views. */
++      linear |= VK_FORMAT_FEATURE_2_VIDEO_ENCODE_INPUT_BIT_KHR;
++      tiled |= VK_FORMAT_FEATURE_2_VIDEO_ENCODE_INPUT_BIT_KHR;
++   }
++
+    if (pdev->video_encode_enabled) {
+       const VkFormat map_format = pdev->enc_hw_ver >= RADV_VIDEO_ENC_HW_5 ? VK_FORMAT_R16_SINT : VK_FORMAT_R32_SINT;
+       if (format == map_format) {

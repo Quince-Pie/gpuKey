@@ -1,0 +1,481 @@
+--- a/libavutil/hwcontext_vaapi.c
++++ b/libavutil/hwcontext_vaapi.c
+@@ -17,6 +17,7 @@
+  */
+ 
+ #include "config.h"
++#include <stdatomic.h>
+ 
+ #if HAVE_VAAPI_WIN32
+ #   include <windows.h>
+@@ -56,6 +57,7 @@
+ #include "hwcontext_drm.h"
+ #include "hwcontext_internal.h"
+ #include "hwcontext_vaapi.h"
++#include "imgutils.h"
+ #include "mem.h"
+ #include "pixdesc.h"
+ #include "pixfmt.h"
+@@ -97,8 +99,8 @@
+     int           nb_attributes;
+     // RT format of the underlying surface (Intel driver ignores this anyway).
+     unsigned int rt_format;
+-    // Whether vaDeriveImage works.
+-    int derive_works;
++    // Policy hint for implicit writes; explicit direct maps test the surface.
++    atomic_int prefer_copied_writes;
+     // Caches whether VA_SURFACE_ATTRIB_MEM_TYPE_DRM_PRIME_2 is unsupported for
+     // surface imports.
+     int prime_2_import_unsupported;
+@@ -579,12 +581,9 @@
+     AVVAAPIDeviceContext *hwctx = hwfc->device_ctx->hwctx;
+     const VAAPIFormatDescriptor *desc = NULL;
+     VAImageFormat *expected_format = NULL;
+-    AVBufferRef *test_surface = NULL;
+-    VASurfaceID test_surface_id;
+-    VAImage test_image;
+-    VAStatus vas;
+     int err, i;
+ 
++    atomic_init(&ctx->prefer_copied_writes, 0);
+     err = vaapi_get_img_desc_and_format(hwfc->device_ctx, hwfc->sw_format,
+                                         &desc, &expected_format);
+     if (err < 0) {
+@@ -670,56 +669,12 @@
+         }
+     }
+ 
+-    // Allocate a single surface to test whether vaDeriveImage() is going
+-    // to work for the specific configuration.
+-    if (hwfc->pool) {
+-        test_surface = av_buffer_pool_get(hwfc->pool);
+-        if (!test_surface) {
+-            av_log(hwfc, AV_LOG_ERROR, "Unable to allocate a surface from "
+-                   "user-configured buffer pool.\n");
+-            err = AVERROR(ENOMEM);
+-            goto fail;
+-        }
+-    } else {
+-        test_surface = av_buffer_pool_get(ffhwframesctx(hwfc)->pool_internal);
+-        if (!test_surface) {
+-            av_log(hwfc, AV_LOG_ERROR, "Unable to allocate a surface from "
+-                   "internal buffer pool.\n");
+-            err = AVERROR(ENOMEM);
+-            goto fail;
+-        }
+-    }
+-    test_surface_id = (VASurfaceID)(uintptr_t)test_surface->data;
+-
+-    ctx->derive_works = 0;
+-    if (expected_format) {
+-        vas = vaDeriveImage(hwctx->display, test_surface_id, &test_image);
+-        if (vas == VA_STATUS_SUCCESS) {
+-            if (expected_format->fourcc == test_image.format.fourcc) {
+-                av_log(hwfc, AV_LOG_DEBUG, "Direct mapping possible.\n");
+-                ctx->derive_works = 1;
+-            } else {
+-                av_log(hwfc, AV_LOG_DEBUG, "Direct mapping disabled: "
+-                       "derived image format %08x does not match "
+-                       "expected format %08x.\n",
+-                       expected_format->fourcc, test_image.format.fourcc);
+-            }
+-            vaDestroyImage(hwctx->display, test_image.image_id);
+-        } else {
+-            av_log(hwfc, AV_LOG_DEBUG, "Direct mapping disabled: "
+-                   "deriving image does not work: "
+-                   "%d (%s).\n", vas, vaErrorStr(vas));
+-        }
+-    } else {
+-        av_log(hwfc, AV_LOG_DEBUG, "Direct mapping disabled: "
+-               "image format is not supported.\n");
+-    }
+-
+-    av_buffer_unref(&test_surface);
++    // Mapping is a consumer operation, not a frame-pool requirement. Do not
++    // allocate/derive a throwaway image for GPU-only pipelines. The actual
++    // mapping path checks the actual surface and caches only fallback policy.
+     return 0;
+ 
+ fail:
+-    av_buffer_unref(&test_surface);
+     av_freep(&avfc->surface_ids);
+     av_freep(&ctx->attributes);
+     return err;
+@@ -784,29 +739,29 @@
+     return 0;
+ }
+ 
+-static void vaapi_unmap_frame(AVHWFramesContext *hwfc,
+-                              HWMapDescriptor *hwmap)
++static int vaapi_finish_mapping(AVHWFramesContext *hwfc, VASurfaceID surface_id,
++                                 VAAPIMapping *map)
+ {
+     AVVAAPIDeviceContext *hwctx = hwfc->device_ctx->hwctx;
+-    VAAPIMapping           *map = hwmap->priv;
+-    VASurfaceID surface_id;
+     VAStatus vas;
+-
+-    surface_id = (VASurfaceID)(uintptr_t)hwmap->source->data[3];
++    int err = 0;
++
+     av_log(hwfc, AV_LOG_DEBUG, "Unmap surface %#x.\n", surface_id);
+ 
+     vas = vaUnmapBuffer(hwctx->display, map->image.buf);
+     if (vas != VA_STATUS_SUCCESS) {
++        err = AVERROR(EIO);
+         av_log(hwfc, AV_LOG_ERROR, "Failed to unmap image from surface "
+                "%#x: %d (%s).\n", surface_id, vas, vaErrorStr(vas));
+     }
+ 
+-    if ((map->flags & AV_HWFRAME_MAP_WRITE) &&
++    if (!err && (map->flags & AV_HWFRAME_MAP_WRITE) &&
+         !(map->flags & AV_HWFRAME_MAP_DIRECT)) {
+         vas = vaPutImage(hwctx->display, surface_id, map->image.image_id,
+                          0, 0, hwfc->width, hwfc->height,
+                          0, 0, hwfc->width, hwfc->height);
+         if (vas != VA_STATUS_SUCCESS) {
++            err = AVERROR(EIO);
+             av_log(hwfc, AV_LOG_ERROR, "Failed to write image to surface "
+                    "%#x: %d (%s).\n", surface_id, vas, vaErrorStr(vas));
+         }
+@@ -814,22 +769,30 @@
+ 
+     vas = vaDestroyImage(hwctx->display, map->image.image_id);
+     if (vas != VA_STATUS_SUCCESS) {
++        err = AVERROR(EIO);
+         av_log(hwfc, AV_LOG_ERROR, "Failed to destroy image from surface "
+                "%#x: %d (%s).\n", surface_id, vas, vaErrorStr(vas));
+     }
+ 
++    return err;
++}
++
++static void vaapi_unmap_frame(AVHWFramesContext *hwfc, HWMapDescriptor *hwmap)
++{
++    VAAPIMapping *map = hwmap->priv;
++    // Persistent maps own their descriptor and the source reference in hwmap.
++    vaapi_finish_mapping(hwfc, (VASurfaceID)(uintptr_t)hwmap->source->data[3], map);
+     av_free(map);
+ }
+ 
+-static int vaapi_map_frame(AVHWFramesContext *hwfc,
+-                           AVFrame *dst, const AVFrame *src, int flags)
++static int vaapi_map_data(AVHWFramesContext *hwfc, VASurfaceID surface_id,
++                          enum AVPixelFormat format, int flags, VAAPIMapping *map,
++                          uint8_t *data[4], int linesize[4])
+ {
+     AVVAAPIDeviceContext *hwctx = hwfc->device_ctx->hwctx;
+     VAAPIFramesContext *ctx = hwfc->hwctx;
+-    VASurfaceID surface_id;
+     const VAAPIFormatDescriptor *desc;
+     VAImageFormat *image_format;
+-    VAAPIMapping *map;
+     VAStatus vas;
+     void *address = NULL;
+     int err, i;
+@@ -837,29 +800,21 @@
+     uint32_t vaflags = 0;
+ #endif
+ 
+-    surface_id = (VASurfaceID)(uintptr_t)src->data[3];
+     av_log(hwfc, AV_LOG_DEBUG, "Map surface %#x.\n", surface_id);
+ 
+-    if (!ctx->derive_works && (flags & AV_HWFRAME_MAP_DIRECT)) {
+-        // Requested direct mapping but it is not possible.
+-        return AVERROR(EINVAL);
+-    }
+-    if (dst->format == AV_PIX_FMT_NONE)
+-        dst->format = hwfc->sw_format;
+-    if (dst->format != hwfc->sw_format && (flags & AV_HWFRAME_MAP_DIRECT)) {
++    if (format == AV_PIX_FMT_NONE)
++        format = hwfc->sw_format;
++    if (format != hwfc->sw_format && (flags & AV_HWFRAME_MAP_DIRECT)) {
+         // Requested direct mapping but the formats do not match.
+         return AVERROR(EINVAL);
+     }
+ 
+-    err = vaapi_get_image_format(hwfc->device_ctx, dst->format, &image_format);
++    err = vaapi_get_image_format(hwfc->device_ctx, format, &image_format);
+     if (err < 0) {
+         // Requested format is not a valid output format.
+         return err;
+     }
+ 
+-    map = av_malloc(sizeof(*map));
+-    if (!map)
+-        return AVERROR(ENOMEM);
+     map->flags = flags;
+     map->image.image_id = VA_INVALID_ID;
+ 
+@@ -878,25 +833,42 @@
+     // faster with a copy routine which is aware of the limitation, but we
+     // assume for now that the user is not aware of that and would therefore
+     // prefer not to be given direct-mapped memory if they request read access.
+-    if (ctx->derive_works && dst->format == hwfc->sw_format &&
+-        ((flags & AV_HWFRAME_MAP_DIRECT) || !(flags & AV_HWFRAME_MAP_READ))) {
++    if (format == hwfc->sw_format &&
++        ((flags & AV_HWFRAME_MAP_DIRECT) ||
++         (!(flags & AV_HWFRAME_MAP_READ) &&
++          !atomic_load_explicit(&ctx->prefer_copied_writes, memory_order_relaxed)))) {
+         vas = vaDeriveImage(hwctx->display, surface_id, &map->image);
+-        if (vas != VA_STATUS_SUCCESS) {
+-            av_log(hwfc, AV_LOG_ERROR, "Failed to derive image from "
+-                   "surface %#x: %d (%s).\n",
+-                   surface_id, vas, vaErrorStr(vas));
+-            err = AVERROR(EIO);
+-            goto fail;
+-        }
+-        if (map->image.format.fourcc != image_format->fourcc) {
+-            av_log(hwfc, AV_LOG_ERROR, "Derive image of surface %#x "
+-                   "is in wrong format: expected %#08x, got %#08x.\n",
+-                   surface_id, image_format->fourcc, map->image.format.fourcc);
+-            err = AVERROR(EIO);
+-            goto fail;
+-        }
+-        map->flags |= AV_HWFRAME_MAP_DIRECT;
+-    } else {
++        if (vas == VA_STATUS_SUCCESS && map->image.format.fourcc == image_format->fourcc) {
++            map->flags |= AV_HWFRAME_MAP_DIRECT;
++        } else {
++            // Prefer copies after a capability failure, without rejecting direct
++            // maps of another surface. This hint publishes no data or ownership.
++            if (vas == VA_STATUS_SUCCESS ||
++                vas == VA_STATUS_ERROR_UNIMPLEMENTED ||
++                vas == VA_STATUS_ERROR_UNSUPPORTED_RT_FORMAT ||
++                vas == VA_STATUS_ERROR_UNSUPPORTED_MEMORY_TYPE ||
++                vas == VA_STATUS_ERROR_UNSUPPORTED_BUFFERTYPE)
++                atomic_store_explicit(&ctx->prefer_copied_writes, 1, memory_order_relaxed);
++            // A successful derive with another format still owns an image.
++            // Release it before the copied-map fallback.
++            if (vas == VA_STATUS_SUCCESS) {
++                vas = vaDestroyImage(hwctx->display, map->image.image_id);
++                if (vas != VA_STATUS_SUCCESS) {
++                    err = AVERROR(EIO);
++                    goto fail;
++                }
++                map->image.image_id = VA_INVALID_ID;
++            } else {
++                map->image.image_id = VA_INVALID_ID;
++            }
++            if (flags & AV_HWFRAME_MAP_DIRECT) {
++                av_log(hwfc, AV_LOG_ERROR, "Direct mapping is unavailable for this surface.\n");
++                err = AVERROR(EINVAL);
++                goto fail;
++            }
++        }
++    }
++    if (!(map->flags & AV_HWFRAME_MAP_DIRECT)) {
+         vas = vaCreateImage(hwctx->display, image_format,
+                             hwfc->width, hwfc->height, &map->image);
+         if (vas != VA_STATUS_SUCCESS) {
+@@ -936,23 +908,21 @@
+         goto fail;
+     }
+ 
+-    err = ff_hwframe_map_create(src->hw_frames_ctx,
+-                                dst, src, &vaapi_unmap_frame, map);
+-    if (err < 0)
++    if (map->image.num_planes <= 0 ||
++        map->image.num_planes > FF_ARRAY_ELEMS(map->image.offsets)) {
++        err = AVERROR(EIO);
+         goto fail;
+-
+-    dst->width  = src->width;
+-    dst->height = src->height;
+-
++    }
+     for (i = 0; i < map->image.num_planes; i++) {
+-        dst->data[i] = (uint8_t*)address + map->image.offsets[i];
+-        dst->linesize[i] = map->image.pitches[i];
++        data[i] = (uint8_t*)address + map->image.offsets[i];
++        linesize[i] = map->image.pitches[i];
+     }
+ 
+     desc = vaapi_format_from_fourcc(map->image.format.fourcc);
+     if (desc && desc->chroma_planes_swapped) {
+         // Chroma planes are YVU rather than YUV, so swap them.
+-        FFSWAP(uint8_t*, dst->data[1], dst->data[2]);
++        FFSWAP(uint8_t*, data[1], data[2]);
++        FFSWAP(int, linesize[1], linesize[2]);
+     }
+ 
+     return 0;
+@@ -963,71 +933,102 @@
+             vaUnmapBuffer(hwctx->display, map->image.buf);
+         if (map->image.image_id != VA_INVALID_ID)
+             vaDestroyImage(hwctx->display, map->image.image_id);
++    }
++    return err;
++}
++
++static int vaapi_map_frame(AVHWFramesContext *hwfc,
++                           AVFrame *dst, const AVFrame *src, int flags)
++{
++    VAAPIMapping *map = av_malloc(sizeof(*map));
++    VASurfaceID surface_id = (VASurfaceID)(uintptr_t)src->data[3];
++    int err;
++    if (!map)
++        return AVERROR(ENOMEM);
++    if (dst->format == AV_PIX_FMT_NONE)
++        dst->format = hwfc->sw_format;
++    err = vaapi_map_data(hwfc, surface_id, dst->format, flags, map,
++                         dst->data, dst->linesize);
++    if (err < 0) {
+         av_free(map);
+-    }
+-    return err;
++        return err;
++    }
++    err = ff_hwframe_map_create(src->hw_frames_ctx, dst, src, &vaapi_unmap_frame, map);
++    if (err < 0) {
++        // The caller has not received the mapping and cannot have written it.
++        map->flags &= ~AV_HWFRAME_MAP_WRITE;
++        vaapi_finish_mapping(hwfc, surface_id, map);
++        av_free(map);
++        return err;
++    }
++    dst->width = src->width;
++    dst->height = src->height;
++    return 0;
++}
++
++// Synchronous transfers borrow their caller's source/context lifetime. They
++// need plane views, not an owned AVFrame/HWMapDescriptor/reference graph.
++// Frame references/properties remain intact on failure. Device backing is not
++// transactional: a failed operation may already have modified its destination.
++static int vaapi_copy_pixels(uint8_t *const dst[4], const int dst_stride[4],
++                             uint8_t *const src[4], const int src_stride[4],
++                             enum AVPixelFormat format, int width, int height)
++{
++    int planes = av_pix_fmt_count_planes(format);
++    if (width <= 0 || height <= 0 || planes <= 0)
++        return AVERROR(EINVAL);
++    for (int i = 0; i < planes; ++i)
++        if (!dst[i] || !src[i])
++            return AVERROR(EINVAL);
++    av_image_copy2(dst, dst_stride, src, src_stride, format, width, height);
++    return 0;
+ }
+ 
+ static int vaapi_transfer_data_from(AVHWFramesContext *hwfc,
+                                     AVFrame *dst, const AVFrame *src)
+ {
+-    AVFrame *map;
+-    int err;
+-
+-    if (dst->width > hwfc->width || dst->height > hwfc->height)
++    VAAPIMapping map;
++    uint8_t *data[4] = { 0 };
++    int stride[4] = { 0 };
++    VASurfaceID surface_id = (VASurfaceID)(uintptr_t)src->data[3];
++    int err, cleanup;
++
++    if (dst->width <= 0 || dst->height <= 0 ||
++        dst->width > hwfc->width || dst->height > hwfc->height)
+         return AVERROR(EINVAL);
+-
+-    map = av_frame_alloc();
+-    if (!map)
+-        return AVERROR(ENOMEM);
+-    map->format = dst->format;
+-
+-    err = vaapi_map_frame(hwfc, map, src, AV_HWFRAME_MAP_READ);
+-    if (err)
+-        goto fail;
+-
+-    map->width  = dst->width;
+-    map->height = dst->height;
+-
+-    err = av_frame_copy(dst, map);
+-    if (err)
+-        goto fail;
+-
+-    err = 0;
+-fail:
+-    av_frame_free(&map);
+-    return err;
++    err = vaapi_map_data(hwfc, surface_id, dst->format, AV_HWFRAME_MAP_READ,
++                         &map, data, stride);
++    if (err < 0)
++        return err;
++    err = vaapi_copy_pixels(dst->data, dst->linesize, data, stride,
++                            dst->format, dst->width, dst->height);
++    cleanup = vaapi_finish_mapping(hwfc, surface_id, &map);
++    return err < 0 ? err : cleanup;
+ }
+ 
+ static int vaapi_transfer_data_to(AVHWFramesContext *hwfc,
+                                   AVFrame *dst, const AVFrame *src)
+ {
+-    AVFrame *map;
+-    int err;
+-
+-    if (src->width > hwfc->width || src->height > hwfc->height)
++    VAAPIMapping map;
++    uint8_t *data[4] = { 0 };
++    int stride[4] = { 0 };
++    VASurfaceID surface_id = (VASurfaceID)(uintptr_t)dst->data[3];
++    int err, cleanup;
++
++    if (src->width <= 0 || src->height <= 0 ||
++        src->width > hwfc->width || src->height > hwfc->height)
+         return AVERROR(EINVAL);
+-
+-    map = av_frame_alloc();
+-    if (!map)
+-        return AVERROR(ENOMEM);
+-    map->format = src->format;
+-
+-    err = vaapi_map_frame(hwfc, map, dst, AV_HWFRAME_MAP_WRITE | AV_HWFRAME_MAP_OVERWRITE);
+-    if (err)
+-        goto fail;
+-
+-    map->width  = src->width;
+-    map->height = src->height;
+-
+-    err = av_frame_copy(map, src);
+-    if (err)
+-        goto fail;
+-
+-    err = 0;
+-fail:
+-    av_frame_free(&map);
+-    return err;
++    err = vaapi_map_data(hwfc, surface_id, src->format,
++                         AV_HWFRAME_MAP_WRITE | AV_HWFRAME_MAP_OVERWRITE,
++                         &map, data, stride);
++    if (err < 0)
++        return err;
++    err = vaapi_copy_pixels(data, stride, src->data, src->linesize,
++                            src->format, src->width, src->height);
++    if (err < 0)
++        map.flags &= ~AV_HWFRAME_MAP_WRITE;
++    cleanup = vaapi_finish_mapping(hwfc, surface_id, &map);
++    return err < 0 ? err : cleanup;
+ }
+ 
+ static int vaapi_map_to_memory(AVHWFramesContext *hwfc, AVFrame *dst,
+@@ -1035,15 +1036,17 @@
+ {
+     int err;
+ 
+-    err = vaapi_map_frame(hwfc, dst, src, flags);
+-    if (err)
+-        return err;
+-
++    if (src->width <= 0 || src->height <= 0 ||
++        src->width > hwfc->width || src->height > hwfc->height)
++        return AVERROR(EINVAL);
++    // Finish fallible metadata construction before exposing writable pixels.
++    // Size-dependent side data is copied using the actual displayed extent.
++    dst->width = src->width;
++    dst->height = src->height;
+     err = av_frame_copy_props(dst, src);
+     if (err)
+         return err;
+-
+-    return 0;
++    return vaapi_map_frame(hwfc, dst, src, flags);
+ }
+ 
+ #if CONFIG_LIBDRM

@@ -1,0 +1,3 @@
+                 U ___tracy_emit_frame_mark
+                 U ___tracy_emit_zone_begin_callstack
+                 U ___tracy_emit_zone_end

@@ -1,0 +1,53 @@
+[libaom-av1 @ 0x5555555ba080] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x55555570e000] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+[libaom-av1 @ 0x5555555ba080] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+[libaom-av1 @ 0x55555570e000] 3.15.1
+plan: libaom-av1; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+plan: av1_vulkan; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+plan: av1_vulkan; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+no video frames submitted: No data available
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+plan: av1_vulkan; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+WARNING: radv is not a conformant Vulkan implementation, testing use only.
+plan: av1_vulkan; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; explicit CPU conversion/upload; Matroska 1 ms timing
+audio 1: Unused audio; stereo; 48000 → 48000 Hz; libopus
+negative video timestamp: Numerical result out of range
+no video frames submitted: No data available
+media: empty file/replay and rejected first-frame teardown passed

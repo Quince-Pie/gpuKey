@@ -1,0 +1,4 @@
+name,src_file,src_line,total_ns,total_perc,counts,mean_ns,min_ns,max_ns,std_ns
+media.prepare-submit,src/media.c,715,1945919392,31.321120,360,5405331,5190928,6489963,160989.401480
+sink.pwrite,src/sink.c,86,337480,0.005432,14,24105,501,51077,17231.541469
+media.encode-and-packets,src/media.c,762,25249352,0.406408,360,70137,38904,340716,24135.260034

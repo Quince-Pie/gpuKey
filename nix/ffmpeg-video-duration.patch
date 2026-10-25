@@ -1,0 +1,26 @@
+--- a/libavformat/matroskaenc.c
++++ b/libavformat/matroskaenc.c
+@@ -255,6 +255,7 @@
+     int64_t             cluster_time_limit;
+     int                 write_crc;
+     int                 is_live;
++    int                 write_video_duration;
+ 
+     int                 is_dash;
+     int                 dash_track_number;
+@@ -2893,6 +2894,7 @@
+     ebml_writer_add_block(&writer, mkv);
+ 
+     if (duration > 0 && (par->codec_type == AVMEDIA_TYPE_SUBTITLE ||
++        (par->codec_type == AVMEDIA_TYPE_VIDEO && mkv->write_video_duration) ||
+         /* If the packet's duration is inconsistent with the default duration,
+          * add an explicit duration element. */
+         track->default_duration_high > 0 &&
+@@ -3677,6 +3679,7 @@
+     { "dash", "create a WebM file conforming to WebM DASH specification", OFFSET(is_dash), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS },
+     { "dash_track_number", "track number for the DASH stream", OFFSET(dash_track_number), AV_OPT_TYPE_INT, { .i64 = 1 }, 1, INT_MAX, FLAGS },
+     { "live", "write files assuming it is a live stream", OFFSET(is_live), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS },
++    { "write_video_duration", "Write positive video packet durations even without DefaultDuration", OFFSET(write_video_duration), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS },
+     { "allow_raw_vfw", "allow raw VFW mode", OFFSET(allow_raw_vfw), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS },
+     { "flipped_raw_rgb", "store raw RGB bitmaps in VFW mode in bottom-up mode", OFFSET(flipped_raw_rgb), AV_OPT_TYPE_BOOL, { .i64 = 0 }, 0, 1, FLAGS },
+     { "write_crc32", "write a CRC32 element inside every Level 1 element", OFFSET(write_crc), AV_OPT_TYPE_BOOL, { .i64 = 1 }, 0, 1, FLAGS },

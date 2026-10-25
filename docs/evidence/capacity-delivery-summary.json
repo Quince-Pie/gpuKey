@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "submitted": 2400,
+  "packets": 2400,
+  "skipped": 0,
+  "fps_limited": 0,
+  "completion_fallbacks": 0,
+  "replay_saved": 2,
+  "replay_failed": 0,
+  "replay_peak_live_bytes": 8076263,
+  "replay_peak_owned_bytes": 8076263,
+  "elapsed_ns": 40022941687,
+  "source_lease": {
+    "count": 2400,
+    "mean_ns": 164569.2,
+    "p50_bucket_upper_ns": 262143,
+    "p99_bucket_upper_ns": 262143,
+    "max_ns": 638212
+  },
+  "child_cpu_ms": 420.77,
+  "child_rss_mib": 44.359375,
+  "peak_vram_mib": 103.43359375,
+  "shared_at_vram_peak_mib": 57.5,
+  "peak_gtt_mib": 23.34765625,
+  "producer_empty": 0,
+  "producer_coalesced": 0,
+  "fdinfo_unavailable": {}
+}

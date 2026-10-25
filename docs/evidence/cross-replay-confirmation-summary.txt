@@ -1,0 +1,4 @@
+case variant n | CPU ms ± SD | RSS MiB ± SD | sampled VRAM(shared) GTT MiB | source buffers/payload MiB | frames unique repeats gaps | patch MAE
+portrait60        gpukey  1 |  423.908 ±    nan |  44.688 ±    nan | 103.434 ( 57.500)  23.348 |  2/ 57.500 |  1856.0  1856.0   0.0   0.0 | 0.184
+portrait60        gsr2    1 |  812.869 ±    nan |  76.301 ±    nan | 113.707 ( 57.500)  50.148 |  2/ 57.500 |  1850.0  1850.0   0.0   0.0 | 1.232
+portrait60        gsr3    1 |  792.082 ±    nan |  76.066 ±    nan | 113.715 ( 57.500)  71.305 |  2/ 57.500 |  1850.0  1850.0   0.0   0.0 | 1.232

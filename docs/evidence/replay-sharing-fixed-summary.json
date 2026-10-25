@@ -1,0 +1,1227 @@
+{
+  "opus": {
+    "auto": {
+      "admission_max_ns": {
+        "max": 31180,
+        "mean": 28783.285714285714,
+        "min": 26610,
+        "sample_sd": 1648.464812513521
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 363733,
+        "mean": 335720.4285714286,
+        "min": 313590,
+        "sample_sd": 21966.135381970304
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 1988,
+        "mean": 1876.2857142857142,
+        "min": 1728,
+        "sample_sd": 98.47117054535012
+      },
+      "elapsed_ns": {
+        "max": 1740584,
+        "mean": 1574296.5714285714,
+        "min": 1401010,
+        "sample_sd": 114652.29695018055
+      },
+      "live_bytes": {
+        "max": 805958,
+        "mean": 805958,
+        "min": 805958,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 1069278,
+        "mean": 1069278,
+        "min": 1069278,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 3202,
+        "mean": 3202,
+        "min": 3202,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 556063,
+        "mean": 556063,
+        "min": 556063,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 803898,
+        "mean": 803898,
+        "min": 803898,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 9,
+        "mean": 9,
+        "min": 9,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 2705,
+        "mean": 2380.285714285714,
+        "min": 1663,
+        "sample_sd": 341.8648438031782
+      }
+    },
+    "control": {
+      "admission_max_ns": {
+        "max": 57499,
+        "mean": 34929.142857142855,
+        "min": 23244,
+        "sample_sd": 12042.317418567069
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 478807,
+        "mean": 372750.71428571426,
+        "min": 285254,
+        "sample_sd": 68405.26340546778
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 2162,
+        "mean": 1936.2857142857142,
+        "min": 1691,
+        "sample_sd": 186.04274982354127
+      },
+      "elapsed_ns": {
+        "max": 1826376,
+        "mean": 1637369.2857142857,
+        "min": 1430736,
+        "sample_sd": 152072.92975818575
+      },
+      "live_bytes": {
+        "max": 1074548,
+        "mean": 1074548,
+        "min": 1074548,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 1427406,
+        "mean": 1427406,
+        "min": 1427406,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 3202,
+        "mean": 3202,
+        "min": 3202,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 556063,
+        "mean": 556063,
+        "min": 556063,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 2655,
+        "mean": 2400.285714285714,
+        "min": 2144,
+        "sample_sd": 167.93224257193165
+      }
+    },
+    "reference": {
+      "admission_max_ns": {
+        "max": 35537,
+        "mean": 29347,
+        "min": 23875,
+        "sample_sd": 4150.3482986371155
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 385803,
+        "mean": 373663.85714285716,
+        "min": 340980,
+        "sample_sd": 15966.986935847472
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 2165,
+        "mean": 1913.4285714285713,
+        "min": 1685,
+        "sample_sd": 176.64357441172996
+      },
+      "elapsed_ns": {
+        "max": 1824232,
+        "mean": 1614966.4285714286,
+        "min": 1383836,
+        "sample_sd": 165177.5914925681
+      },
+      "live_bytes": {
+        "max": 1074548,
+        "mean": 1074548,
+        "min": 1074548,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 1427406,
+        "mean": 1427406,
+        "min": 1427406,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 3202,
+        "mean": 3202,
+        "min": 3202,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 556063,
+        "mean": 556063,
+        "min": 556063,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3046,
+        "mean": 2622,
+        "min": 2003,
+        "sample_sd": 354.7731669672891
+      }
+    }
+  },
+  "pcm": {
+    "auto": {
+      "admission_max_ns": {
+        "max": 70664,
+        "mean": 40691.57142857143,
+        "min": 29386,
+        "sample_sd": 14639.938306531472
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 471075,
+        "mean": 374247.14285714284,
+        "min": 324436,
+        "sample_sd": 54686.0158463099
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4223,
+        "mean": 3785.4285714285716,
+        "min": 3495,
+        "sample_sd": 300.8808496968289
+      },
+      "elapsed_ns": {
+        "max": 2928247,
+        "mean": 2543503,
+        "min": 2353136,
+        "sample_sd": 208957.59282447718
+      },
+      "live_bytes": {
+        "max": 5821804,
+        "mean": 5821804,
+        "min": 5821804,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 8272098,
+        "mean": 8272098,
+        "min": 8272098,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 3200,
+        "mean": 3200,
+        "min": 3200,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 4928615,
+        "mean": 4928615,
+        "min": 4928615,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 803898,
+        "mean": 803898,
+        "min": 803898,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 9,
+        "mean": 9,
+        "min": 9,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 4007,
+        "mean": 3183.285714285714,
+        "min": 2505,
+        "sample_sd": 518.3456743286647
+      }
+    },
+    "control": {
+      "admission_max_ns": {
+        "max": 44825,
+        "mean": 32705.14285714286,
+        "min": 26330,
+        "sample_sd": 6265.962613692367
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 474.42857142857144,
+        "min": 255,
+        "sample_sd": 96.75890509036218
+      },
+      "admission_total_ns": {
+        "max": 435540,
+        "mean": 350424.85714285716,
+        "min": 290133,
+        "sample_sd": 47216.693874901815
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4126,
+        "mean": 3634.285714285714,
+        "min": 3238,
+        "sample_sd": 312.5319793160983
+      },
+      "elapsed_ns": {
+        "max": 2720944,
+        "mean": 2481301.1428571427,
+        "min": 2211017,
+        "sample_sd": 200711.3123422366
+      },
+      "live_bytes": {
+        "max": 6090394,
+        "mean": 6090394,
+        "min": 6090394,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 8630226,
+        "mean": 8630226,
+        "min": 8630226,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 3200,
+        "mean": 3200,
+        "min": 3200,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 4928615,
+        "mean": 4928615,
+        "min": 4928615,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 2866,
+        "mean": 2522.4285714285716,
+        "min": 2315,
+        "sample_sd": 232.26267969898302
+      }
+    },
+    "reference": {
+      "admission_max_ns": {
+        "max": 45777,
+        "mean": 32460.14285714286,
+        "min": 28855,
+        "sample_sd": 5947.4309699951245
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 450573,
+        "mean": 368753.5714285714,
+        "min": 322994,
+        "sample_sd": 39281.348932443514
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4121,
+        "mean": 3642.8571428571427,
+        "min": 3338,
+        "sample_sd": 302.4276379408406
+      },
+      "elapsed_ns": {
+        "max": 2805465,
+        "mean": 2416030,
+        "min": 2135173,
+        "sample_sd": 240707.49990669865
+      },
+      "live_bytes": {
+        "max": 6090394,
+        "mean": 6090394,
+        "min": 6090394,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 8630226,
+        "mean": 8630226,
+        "min": 8630226,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 3200,
+        "mean": 3200,
+        "min": 3200,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 4928615,
+        "mean": 4928615,
+        "min": 4928615,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3367,
+        "mean": 2862.5714285714284,
+        "min": 2404,
+        "sample_sd": 368.2901289033132
+      }
+    }
+  },
+  "scene-changing": {
+    "auto": {
+      "admission_max_ns": {
+        "max": 376404,
+        "mean": 245797.57142857142,
+        "min": 141689,
+        "sample_sd": 86078.11499031397
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 1492440,
+        "mean": 1319643.142857143,
+        "min": 1162570,
+        "sample_sd": 123852.75806702701
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4468,
+        "mean": 4153.285714285715,
+        "min": 3921,
+        "sample_sd": 205.37584593919047
+      },
+      "elapsed_ns": {
+        "max": 3017888,
+        "mean": 2797015.8571428573,
+        "min": 2557344,
+        "sample_sd": 200509.50438772104
+      },
+      "live_bytes": {
+        "max": 2031729,
+        "mean": 2031729,
+        "min": 2031729,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 3642414,
+        "mean": 3642414,
+        "min": 3642414,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 7516,
+        "mean": 7516,
+        "min": 7516,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 1175224,
+        "mean": 1175224,
+        "min": 1175224,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3316,
+        "mean": 2911.1428571428573,
+        "min": 2635,
+        "sample_sd": 286.961338029724
+      }
+    },
+    "control": {
+      "admission_max_ns": {
+        "max": 353882,
+        "mean": 251199.42857142858,
+        "min": 85482,
+        "sample_sd": 88766.9474689334
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 1489180,
+        "mean": 1343870.5714285714,
+        "min": 1063743,
+        "sample_sd": 145164.02768920537
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4390,
+        "mean": 4203.857142857143,
+        "min": 4009,
+        "sample_sd": 139.73001177440798
+      },
+      "elapsed_ns": {
+        "max": 3012538,
+        "mean": 2853327,
+        "min": 2688964,
+        "sample_sd": 120317.42344869813
+      },
+      "live_bytes": {
+        "max": 2031633,
+        "mean": 2031633,
+        "min": 2031633,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 3642222,
+        "mean": 3642222,
+        "min": 3642222,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 7516,
+        "mean": 7516,
+        "min": 7516,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 1175224,
+        "mean": 1175224,
+        "min": 1175224,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3065,
+        "mean": 2669.1428571428573,
+        "min": 2254,
+        "sample_sd": 318.09402623093933
+      }
+    },
+    "reference": {
+      "admission_max_ns": {
+        "max": 263711,
+        "mean": 148460.42857142858,
+        "min": 67578,
+        "sample_sd": 59678.37035827174
+      },
+      "admission_p99_upper_ns": {
+        "max": 511,
+        "mean": 511,
+        "min": 511,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 1783158,
+        "mean": 1333000.5714285714,
+        "min": 1010764,
+        "sample_sd": 230795.6757566146
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4898,
+        "mean": 4421.142857142857,
+        "min": 3861,
+        "sample_sd": 356.8881377366623
+      },
+      "elapsed_ns": {
+        "max": 3519950,
+        "mean": 3020029.285714286,
+        "min": 2690697,
+        "sample_sd": 305032.53628354374
+      },
+      "live_bytes": {
+        "max": 2031633,
+        "mean": 2031633,
+        "min": 2031633,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 3642222,
+        "mean": 3642222,
+        "min": 3642222,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 7516,
+        "mean": 7516,
+        "min": 7516,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 1175224,
+        "mean": 1175224,
+        "min": 1175224,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3497,
+        "mean": 2653.5714285714284,
+        "min": 2234,
+        "sample_sd": 451.3556827834921
+      }
+    }
+  },
+  "scene-static": {
+    "auto": {
+      "admission_max_ns": {
+        "max": 30768,
+        "mean": 27966,
+        "min": 24156,
+        "sample_sd": 2582.523184794282
+      },
+      "admission_p99_upper_ns": {
+        "max": 32767,
+        "mean": 32767,
+        "min": 32767,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 90562,
+        "mean": 74459.28571428571,
+        "min": 52269,
+        "sample_sd": 12788.119339374936
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 676,
+        "mean": 547.5714285714286,
+        "min": 496,
+        "sample_sd": 63.502905820277604
+      },
+      "elapsed_ns": {
+        "max": 513906,
+        "mean": 413560.71428571426,
+        "min": 376946,
+        "sample_sd": 48874.75596431586
+      },
+      "live_bytes": {
+        "max": 159484,
+        "mean": 159484,
+        "min": 159484,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 220078,
+        "mean": 220078,
+        "min": 220078,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 31,
+        "mean": 31,
+        "min": 31,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 271370,
+        "mean": 271370,
+        "min": 271370,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 1341900,
+        "mean": 1341900,
+        "min": 1341900,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 15,
+        "mean": 15,
+        "min": 15,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3737,
+        "mean": 2515,
+        "min": 1853,
+        "sample_sd": 647.0844870133524
+      }
+    },
+    "control": {
+      "admission_max_ns": {
+        "max": 32672,
+        "mean": 28812.285714285714,
+        "min": 26962,
+        "sample_sd": 2059.066674838037
+      },
+      "admission_p99_upper_ns": {
+        "max": 32767,
+        "mean": 32767,
+        "min": 32767,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 199397,
+        "mean": 136128.57142857142,
+        "min": 96555,
+        "sample_sd": 32709.762762092618
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 676,
+        "mean": 593.4285714285714,
+        "min": 497,
+        "sample_sd": 60.82449381309348
+      },
+      "elapsed_ns": {
+        "max": 506512,
+        "mean": 440453.4285714286,
+        "min": 381203,
+        "sample_sd": 44267.71514266781
+      },
+      "live_bytes": {
+        "max": 428488,
+        "mean": 428488,
+        "min": 428488,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 847786,
+        "mean": 847786,
+        "min": 847786,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 31,
+        "mean": 31,
+        "min": 31,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 271370,
+        "mean": 271370,
+        "min": 271370,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 2665,
+        "mean": 2279.8571428571427,
+        "min": 2043,
+        "sample_sd": 264.80963512897875
+      }
+    },
+    "reference": {
+      "admission_max_ns": {
+        "max": 30337,
+        "mean": 28227.714285714286,
+        "min": 26000,
+        "sample_sd": 1377.2554488650867
+      },
+      "admission_p99_upper_ns": {
+        "max": 32767,
+        "mean": 32767,
+        "min": 32767,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 128422,
+        "mean": 122895.71428571429,
+        "min": 118636,
+        "sample_sd": 4195.85516568775
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 624,
+        "mean": 599.8571428571429,
+        "min": 554,
+        "sample_sd": 23.83574746348134
+      },
+      "elapsed_ns": {
+        "max": 468379,
+        "mean": 442109,
+        "min": 399578,
+        "sample_sd": 25190.94597932625
+      },
+      "live_bytes": {
+        "max": 428488,
+        "mean": 428488,
+        "min": 428488,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 847786,
+        "mean": 847786,
+        "min": 847786,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 31,
+        "mean": 31,
+        "min": 31,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 271370,
+        "mean": 271370,
+        "min": 271370,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 2705,
+        "mean": 2536.1428571428573,
+        "min": 2424,
+        "sample_sd": 109.78225201344185
+      }
+    }
+  },
+  "user": {
+    "auto": {
+      "admission_max_ns": {
+        "max": 1195349,
+        "mean": 678232.8571428572,
+        "min": 462057,
+        "sample_sd": 279218.9229191726
+      },
+      "admission_p99_upper_ns": {
+        "max": 2097151,
+        "mean": 898778.4285714285,
+        "min": 524287,
+        "sample_sd": 583373.83181366
+      },
+      "admission_total_ns": {
+        "max": 1875480,
+        "mean": 1379379,
+        "min": 1110078,
+        "sample_sd": 313692.9393478066
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4161,
+        "mean": 3889,
+        "min": 3411,
+        "sample_sd": 254.80646250307964
+      },
+      "elapsed_ns": {
+        "max": 3443385,
+        "mean": 3147204.4285714286,
+        "min": 2727096,
+        "sample_sd": 262052.81604405446
+      },
+      "live_bytes": {
+        "max": 1835972,
+        "mean": 1835972,
+        "min": 1835972,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 1835972,
+        "mean": 1835972,
+        "min": 1835972,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 18,
+        "mean": 18,
+        "min": 18,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 5297356,
+        "mean": 5297356,
+        "min": 5297356,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 14115328,
+        "mean": 14115328,
+        "min": 14115328,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 8,
+        "mean": 8,
+        "min": 8,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 4969,
+        "mean": 3870.285714285714,
+        "min": 3256,
+        "sample_sd": 734.1207244692375
+      }
+    },
+    "control": {
+      "admission_max_ns": {
+        "max": 419756,
+        "mean": 361962.28571428574,
+        "min": 319776,
+        "sample_sd": 39005.19991708065
+      },
+      "admission_p99_upper_ns": {
+        "max": 524287,
+        "mean": 524287,
+        "min": 524287,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 1063217,
+        "mean": 860008.7142857143,
+        "min": 727258,
+        "sample_sd": 100559.46203236221
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4691,
+        "mean": 4400,
+        "min": 4101,
+        "sample_sd": 213.158000866337
+      },
+      "elapsed_ns": {
+        "max": 3823176,
+        "mean": 3594671.1428571427,
+        "min": 3339669,
+        "sample_sd": 201690.51965691443
+      },
+      "live_bytes": {
+        "max": 7129844,
+        "mean": 7129844,
+        "min": 7129844,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 7129844,
+        "mean": 7129844,
+        "min": 7129844,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 18,
+        "mean": 18,
+        "min": 18,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 5297356,
+        "mean": 5297356,
+        "min": 5297356,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 3647,
+        "mean": 3250.714285714286,
+        "min": 2806,
+        "sample_sd": 366.2575206443841
+      }
+    },
+    "reference": {
+      "admission_max_ns": {
+        "max": 347169,
+        "mean": 334875.28571428574,
+        "min": 324556,
+        "sample_sd": 8357.611814274173
+      },
+      "admission_p99_upper_ns": {
+        "max": 524287,
+        "mean": 524287,
+        "min": 524287,
+        "sample_sd": 0.0
+      },
+      "admission_total_ns": {
+        "max": 903496,
+        "mean": 833640.1428571428,
+        "min": 775924,
+        "sample_sd": 43938.41077928882
+      },
+      "copied_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "cpu_us": {
+        "max": 4600,
+        "mean": 4145.285714285715,
+        "min": 3799,
+        "sample_sd": 278.17423453998174
+      },
+      "elapsed_ns": {
+        "max": 3643816,
+        "mean": 3377773.714285714,
+        "min": 3053094,
+        "sample_sd": 232445.82232620305
+      },
+      "live_bytes": {
+        "max": 7129844,
+        "mean": 7129844,
+        "min": 7129844,
+        "sample_sd": 0.0
+      },
+      "owned_bytes": {
+        "max": 7129844,
+        "mean": 7129844,
+        "min": 7129844,
+        "sample_sd": 0.0
+      },
+      "packets": {
+        "max": 18,
+        "mean": 18,
+        "min": 18,
+        "sample_sd": 0.0
+      },
+      "runs": 7,
+      "saved_bytes": {
+        "max": 5297356,
+        "mean": 5297356,
+        "min": 5297356,
+        "sample_sd": 0.0
+      },
+      "shared_key_bytes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "shared_keyframes": {
+        "max": 0,
+        "mean": 0,
+        "min": 0,
+        "sample_sd": 0.0
+      },
+      "snapshot_ns": {
+        "max": 4749,
+        "mean": 3910.285714285714,
+        "min": 3046,
+        "sample_sd": 631.4685830891125
+      }
+    }
+  }
+}

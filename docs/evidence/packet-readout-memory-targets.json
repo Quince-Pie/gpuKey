@@ -1,0 +1,44 @@
+{
+  "assumptions": {
+    "width": 2560,
+    "height": 2880,
+    "bits": 8,
+    "source_buffers": 2,
+    "encode_depth_capacity": 2,
+    "distinct_materialized_inputs": 1,
+    "past_reference_images": 2
+  },
+  "per_image_bytes": {
+    "rgbx8": 29491200,
+    "native_nv12_or_p010": 11059200,
+    "packed_sample_bits_div_8": 11059200
+  },
+  "conditional_vram_payload_targets": {
+    "shared_capture": 58982400,
+    "reconstruction_with_ordered_reuse": 33177600,
+    "native_converted_inputs": 11059200,
+    "native_private": 44236800,
+    "native_pipeline_union": 103219200,
+    "one_input_pipeline_union": 103219200,
+    "inputs_at_full_depth_pipeline_union": 114278400,
+    "direct_rgb_pipeline_union_same_source_count": 92160000,
+    "producer_yuv_pipeline_union_same_source_count": 55296000,
+    "distinct_inflight_reconstructions_pipeline_union": 114278400
+  },
+  "pinned_ffmpeg_reservations_not_lower_bounds": {
+    "coded_width": 2560,
+    "coded_height": 2880,
+    "coded_buffer_bytes_each": 22183936,
+    "coded_buffers_with_completed_output_reuse_bytes": 22183936,
+    "coded_buffers_at_encode_depth_bytes": 44367872
+  },
+  "host_raw_pixel_copy_target_bytes": 0,
+  "replay_ram_payload_target": {
+    "model": "one stored copy per original packet; exact interning/compression may use less",
+    "window_seconds": "32",
+    "aggregate_bitrate_mbps": "5",
+    "encoded_payload_bytes": 20000000,
+    "formula": "sum of retained encoded packet sizes; bitrate * (history + actual preroll) / 8",
+    "excludes": "packet metadata, codec configuration, audio state, export-pinned old data, allocator and runtime"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1792210252,
+        "narHash": "sha256-Mh0PUaIv4nFY+8wAGonaEh8iBzwsmdNlwjVHmFg1Biw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "09063bd1f2b36fd9fd793c36dfade7bd40a93dfc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "tracy-flake": "tracy-flake"
+      }
+    },
+    "tracy-flake": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791150074,
+        "narHash": "sha256-frjZ8qK1OIFxxzkKSv/Toza32Iy7/rbFevXwTF3kEAo=",
+        "owner": "Quince-Pie",
+        "repo": "tracy-flake",
+        "rev": "1f0bf6eaee8e965848274caa7f4ab6d2ff877f97",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Quince-Pie",
+        "repo": "tracy-flake",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

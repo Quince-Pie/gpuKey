@@ -1,0 +1,4 @@
+case variant n | CPU ms ± SD | RSS MiB ± SD | sampled VRAM(shared) GTT MiB | source buffers/payload MiB | frames unique repeats gaps | patch MAE
+portrait60        aco     1 |  296.057 ±    nan |  34.809 ±    nan |  91.555 ( 57.500)  23.242 |  2/ 57.500 |  1856.0  1856.0   0.0   0.0 | 0.500
+portrait60        control 1 |  403.268 ±    nan |  45.844 ±    nan | 103.434 ( 57.500)  23.348 |  2/ 57.500 |  1856.0  1856.0   0.0   0.0 | 0.184
+portrait60        llvm    1 |  287.213 ±    nan |  60.562 ±    nan |  91.555 ( 57.500)  23.242 |  2/ 57.500 |  1856.0  1856.0   0.0   0.0 | 0.500

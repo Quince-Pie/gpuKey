@@ -1,0 +1,58 @@
+--- a/layers/state_tracker/video_session_state.h
++++ b/layers/state_tracker/video_session_state.h
+@@ -65,6 +65,7 @@
+         bool is_decode;
+         bool is_encode;
+         VkVideoProfileInfoKHR base;
++        VkVideoEncodeProfileRgbConversionInfoVALVE encode_rgb;
+         union {
+             VkVideoDecodeUsageInfoKHR decode_usage;
+             VkVideoEncodeUsageInfoKHR encode_usage;
+@@ -160,7 +161,8 @@
+             if (match && lhs->profile_.is_encode) {
+                 match = match && lhs->profile_.encode_usage.videoUsageHints == rhs->profile_.encode_usage.videoUsageHints &&
+                         lhs->profile_.encode_usage.videoContentHints == rhs->profile_.encode_usage.videoContentHints &&
+-                        lhs->profile_.encode_usage.tuningMode == rhs->profile_.encode_usage.tuningMode;
++                        lhs->profile_.encode_usage.tuningMode == rhs->profile_.encode_usage.tuningMode &&
++                        lhs->profile_.encode_rgb.performEncodeRgbConversion == rhs->profile_.encode_rgb.performEncodeRgbConversion;
+             }
+ 
+             if (match) {
+@@ -217,7 +219,7 @@
+ 
+             if (desc->profile_.is_encode) {
+                 hc << desc->profile_.encode_usage.videoUsageHints << desc->profile_.encode_usage.videoContentHints
+-                   << desc->profile_.encode_usage.tuningMode;
++                   << desc->profile_.encode_usage.tuningMode << desc->profile_.encode_rgb.performEncodeRgbConversion;
+             }
+ 
+             switch (desc->profile_.base.videoCodecOperation) {
+--- a/layers/state_tracker/video_session_state.cpp
++++ b/layers/state_tracker/video_session_state.cpp
+@@ -166,6 +166,13 @@
+             }
+         }
+         if (profile_.is_encode) {
++            profile_.encode_rgb = vku::InitStructHelper();
++            auto rgb = vku::FindStructInPNextChain<VkVideoEncodeProfileRgbConversionInfoVALVE>(profile->pNext);
++            if (rgb) {
++                profile_.encode_rgb = *rgb;
++                profile_.encode_rgb.pNext = profile_.base.pNext;
++                profile_.base.pNext = &profile_.encode_rgb;
++            }
+             auto usage = vku::FindStructInPNextChain<VkVideoEncodeUsageInfoKHR>(profile->pNext);
+             if (usage) {
+                 profile_.encode_usage = *usage;
+--- a/layers/vulkan/generated/stateless_validation_helper.cpp
++++ b/layers/vulkan/generated/stateless_validation_helper.cpp
+@@ -10226,7 +10226,9 @@
+                                        "VUID-vkCreateQueryPool-pCreateInfo-parameter", "VUID-VkQueryPoolCreateInfo-sType-sType");
+     if (pCreateInfo != nullptr) {
+         [[maybe_unused]] const Location pCreateInfo_loc = loc.dot(Field::pCreateInfo);
+-        constexpr std::array<VkStructureType, 16> allowed_structs_VkQueryPoolCreateInfo = {
++        constexpr std::array<VkStructureType, 17> allowed_structs_VkQueryPoolCreateInfo = {
++            // Explicitly permitted by VUID-VkQueryPoolCreateInfo-pNext-10918.
++            VK_STRUCTURE_TYPE_VIDEO_ENCODE_PROFILE_RGB_CONVERSION_INFO_VALVE,
+             VK_STRUCTURE_TYPE_QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR,
+             VK_STRUCTURE_TYPE_QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL,
+             VK_STRUCTURE_TYPE_QUERY_POOL_VIDEO_ENCODE_FEEDBACK_CREATE_INFO_KHR,

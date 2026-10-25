@@ -1,0 +1,131 @@
+{
+  "control": [
+    {
+      "bytes": 4096,
+      "heap": 2,
+      "count": 1
+    },
+    {
+      "bytes": 16384,
+      "heap": 4,
+      "count": 1
+    },
+    {
+      "bytes": 65536,
+      "heap": 2,
+      "count": 1
+    },
+    {
+      "bytes": 65536,
+      "heap": 4,
+      "count": 5
+    },
+    {
+      "bytes": 81920,
+      "heap": 4,
+      "count": 1
+    },
+    {
+      "bytes": 131072,
+      "heap": 2,
+      "count": 1
+    },
+    {
+      "bytes": 131072,
+      "heap": 4,
+      "count": 2
+    },
+    {
+      "bytes": 262144,
+      "heap": 4,
+      "count": 2
+    },
+    {
+      "bytes": 950272,
+      "heap": 4,
+      "count": 1
+    },
+    {
+      "bytes": 1048576,
+      "heap": 4,
+      "count": 1
+    },
+    {
+      "bytes": 11059200,
+      "heap": 4,
+      "count": 3
+    },
+    {
+      "bytes": 11796480,
+      "heap": 4,
+      "count": 1
+    },
+    {
+      "bytes": 22183936,
+      "heap": 2,
+      "count": 1
+    }
+  ],
+  "rgb": [
+    {
+      "bytes": 96,
+      "heap": 2,
+      "count": 1
+    },
+    {
+      "bytes": 1312,
+      "heap": 6,
+      "count": 1
+    },
+    {
+      "bytes": 4096,
+      "heap": 2,
+      "count": 1
+    },
+    {
+      "bytes": 16384,
+      "heap": 6,
+      "count": 1
+    },
+    {
+      "bytes": 81920,
+      "heap": 2,
+      "count": 1
+    },
+    {
+      "bytes": 81920,
+      "heap": 6,
+      "count": 7
+    },
+    {
+      "bytes": 131072,
+      "heap": 6,
+      "count": 1
+    },
+    {
+      "bytes": 262144,
+      "heap": 6,
+      "count": 1
+    },
+    {
+      "bytes": 524288,
+      "heap": 6,
+      "count": 1
+    },
+    {
+      "bytes": 950272,
+      "heap": 6,
+      "count": 1
+    },
+    {
+      "bytes": 11087872,
+      "heap": 6,
+      "count": 3
+    },
+    {
+      "bytes": 22183936,
+      "heap": 2,
+      "count": 1
+    }
+  ]
+}

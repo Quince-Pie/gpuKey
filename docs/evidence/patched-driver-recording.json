@@ -1,0 +1,13 @@
+{
+  "cpu_user_us": 28368, "cpu_system_us": 7407,
+  "requested_synthetic_frames": 90,
+  "audio_input_samples": 72072, "audio_boundary_silence_samples": 0, "audio_corrupt_silence_samples": 0,
+  "success": true, "synthetic": true, "elapsed_ns": 78748079,
+  "offered": 0, "submitted": 90, "packets": 90, "skipped": 0,
+  "accepted_bytes": 590315, "written_bytes": 590315, "durable_bytes": 590315, "peak_output_reserved_bytes": 3145728,
+  "max_rss_kib": 90004,
+  "prepare": {"count": 90, "mean_ns": 109146.7, "p50_bucket_upper_ns": 65535, "p99_bucket_upper_ns": 4194303, "max_ns": 4138174},
+  "encode_and_receive": {"count": 90, "mean_ns": 588321.2, "p50_bucket_upper_ns": 524287, "p99_bucket_upper_ns": 4194303, "max_ns": 2181035},
+  "source_lease": {"count": 0, "mean_ns": 0.0, "p50_bucket_upper_ns": 0, "p99_bucket_upper_ns": 0, "max_ns": 0},
+  "sink_completion": {"count": 12, "mean_ns": 36572.1, "p50_bucket_upper_ns": 65535, "p99_bucket_upper_ns": 65535, "max_ns": 45457}
+}

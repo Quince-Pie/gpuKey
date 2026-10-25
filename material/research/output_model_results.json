@@ -1,0 +1,133 @@
+{
+  "status": "PASS",
+  "scope": "Finite abstract accounting and lifetime models, not an implemented recorder or Linux execution.",
+  "write_models": [
+    {
+      "write_ranges_half_open": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "prefix_checks_including_root": 33,
+      "complete_traces": 14,
+      "completion_steps": 32,
+      "positive_short_completion_steps": 8,
+      "completion_steps_above_a_hole": 7,
+      "broken_highest_end_mismatch_prefixes": 10,
+      "distinct_progress_vectors": 9,
+      "independent_composition_multinomial_trace_count": 14,
+      "candidate_matches_independent_byte_oracle": true,
+      "shortest_broken_highest_end_counterexample": {
+        "events": [
+          {
+            "write": 1,
+            "offset": 2,
+            "requested_remainder": 2,
+            "cqe_res": 1
+          }
+        ],
+        "completed_byte_positions": [
+          2
+        ],
+        "oracle_contiguous_W": 0,
+        "broken_W": 3
+      },
+      "counting_note": "Prefix and edge counts include their different trace histories; progress vectors are deduplicated separately."
+    },
+    {
+      "write_ranges_half_open": [
+        [
+          0,
+          2
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          5,
+          7
+        ]
+      ],
+      "prefix_checks_including_root": 1800,
+      "complete_traces": 734,
+      "completion_steps": 1799,
+      "positive_short_completion_steps": 355,
+      "completion_steps_above_a_hole": 485,
+      "broken_highest_end_mismatch_prefixes": 824,
+      "distinct_progress_vectors": 36,
+      "independent_composition_multinomial_trace_count": 734,
+      "candidate_matches_independent_byte_oracle": true,
+      "shortest_broken_highest_end_counterexample": {
+        "events": [
+          {
+            "write": 1,
+            "offset": 2,
+            "requested_remainder": 3,
+            "cqe_res": 1
+          }
+        ],
+        "completed_byte_positions": [
+          2
+        ],
+        "oracle_contiguous_W": 0,
+        "broken_W": 3
+      },
+      "counting_note": "Prefix and edge counts include their different trace histories; progress vectors are deduplicated separately."
+    }
+  ],
+  "cancellation_model": {
+    "traces": 5,
+    "EALREADY_traces": 3,
+    "conservative_success_or_ENOENT_traces": 2,
+    "event_prefix_checks": 15,
+    "correct_policy_satisfies_lifetime_contract": true,
+    "broken_recycle_on_cancel_contract_violating_traces": 2,
+    "broken_payload_access_after_recycle_traces": 1,
+    "counterexample": {
+      "cancel_result": "EALREADY",
+      "events": [
+        {
+          "event": "cancel_cqe",
+          "target_terminal_observed": false,
+          "correct_recycled": false,
+          "broken_recycled": true
+        },
+        {
+          "event": "target_access",
+          "target_terminal_observed": false,
+          "correct_recycled": false,
+          "broken_recycled": true
+        },
+        {
+          "event": "target_terminal_cqe",
+          "target_terminal_observed": true,
+          "correct_recycled": true,
+          "broken_recycled": true
+        }
+      ]
+    },
+    "primary_contract": "https://man7.org/linux/man-pages/man3/io_uring_prep_cancel.3.html"
+  },
+  "totals": {
+    "write_complete_traces": 748,
+    "write_prefix_checks": 1833,
+    "write_completion_steps": 1831,
+    "cancel_traces": 5,
+    "cancel_prefix_checks": 15
+  },
+  "limits": [
+    "Only two specified contiguous nonoverlapping layouts of four and seven bytes.",
+    "All positive completion partitions/interleavings for those layouts; no zero/negative write results, overlap, loss or duplicate CQEs.",
+    "Partial remainder is immediately eligible for abstract resubmission; no SQ capacity or kernel scheduling modeled.",
+    "Cancellation is separate from byte accounting; the decisive memory-lifetime witness uses documented EALREADY.",
+    "No identifier reuse or interaction with cancellation requests still pending after target completion is modeled.",
+    "No successful-cancellation CQE reordering guarantee is assumed.",
+    "No fsync, filesystem, device durability, mux syntax, weak-memory, C23, GPU, throughput or latency validation."
+  ]
+}

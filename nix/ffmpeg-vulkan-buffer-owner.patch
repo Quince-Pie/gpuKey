@@ -1,0 +1,300 @@
+--- a/libavutil/vulkan.c
++++ b/libavutil/vulkan.c
+@@ -1295,11 +1295,37 @@
+     buf->mapped_mem = NULL;
+ }
+ 
++/* Output packets and execution dependencies can outlive the originating
++ * encoder/filter context. Keep only the device and destruction dispatch here,
++ * shared by the pool; no per-buffer device reference or context copy. */
++typedef struct VulkanBufferPoolOwner {
++    AVBufferRef *device_ref;
++    PFN_vkUnmapMemory UnmapMemory;
++    PFN_vkDestroyBuffer DestroyBuffer;
++    PFN_vkFreeMemory FreeMemory;
++} VulkanBufferPoolOwner;
++
++static void free_data_pool(void *opaque)
++{
++    VulkanBufferPoolOwner *owner = opaque;
++    av_buffer_unref(&owner->device_ref);
++    av_free(owner);
++}
++
+ static void free_data_buf(void *opaque, uint8_t *data)
+ {
+-    FFVulkanContext *ctx = opaque;
++    VulkanBufferPoolOwner *owner = opaque;
++    AVHWDeviceContext *device = (AVHWDeviceContext *)owner->device_ref->data;
++    AVVulkanDeviceContext *hwctx = device->hwctx;
+     FFVkBuffer *buf = (FFVkBuffer *)data;
+-    ff_vk_free_buf(ctx, buf);
++
++    if (buf->mapped_mem && !buf->host_ref)
++        owner->UnmapMemory(hwctx->act_dev, buf->mem);
++    if (buf->buf != VK_NULL_HANDLE)
++        owner->DestroyBuffer(hwctx->act_dev, buf->buf, hwctx->alloc);
++    if (buf->mem != VK_NULL_HANDLE)
++        owner->FreeMemory(hwctx->act_dev, buf->mem, hwctx->alloc);
++    av_buffer_unref(&buf->host_ref);
+     av_free(data);
+ }
+ 
+@@ -1316,7 +1342,8 @@
+     return ref;
+ }
+ 
+-int ff_vk_get_pooled_buffer(FFVulkanContext *ctx, AVBufferPool **buf_pool,
++int ff_vk_get_pooled_buffer(FFVulkanContext *ctx, AVBufferRef *device_ref,
++                            AVBufferPool **buf_pool,
+                             AVBufferRef **buf, VkBufferUsageFlags usage,
+                             void *create_pNext, size_t size,
+                             VkMemoryPropertyFlagBits mem_props)
+@@ -1328,10 +1355,25 @@
+     *buf = NULL;
+ 
+     if (!(*buf_pool)) {
+-        *buf_pool = av_buffer_pool_init2(sizeof(FFVkBuffer), ctx,
+-                                         alloc_data_buf, NULL);
+-        if (!(*buf_pool))
++        if (!device_ref)
++            return AVERROR(EINVAL);
++        VulkanBufferPoolOwner *owner = av_mallocz(sizeof(*owner));
++        if (!owner)
+             return AVERROR(ENOMEM);
++        owner->device_ref = av_buffer_ref(device_ref);
++        if (!owner->device_ref) {
++            av_free(owner);
++            return AVERROR(ENOMEM);
++        }
++        owner->UnmapMemory = ctx->vkfn.UnmapMemory;
++        owner->DestroyBuffer = ctx->vkfn.DestroyBuffer;
++        owner->FreeMemory = ctx->vkfn.FreeMemory;
++        *buf_pool = av_buffer_pool_init2(sizeof(FFVkBuffer), owner,
++                                         alloc_data_buf, free_data_pool);
++        if (!(*buf_pool)) {
++            free_data_pool(owner);
++            return AVERROR(ENOMEM);
++        }
+     }
+ 
+     *buf = ref = av_buffer_pool_get(*buf_pool);
+--- a/libavutil/vulkan.h
++++ b/libavutil/vulkan.h
+@@ -586,8 +586,10 @@
+ /** Initialize a pool and create AVBufferRefs containing FFVkBuffer.
+  * Threadsafe to use. Buffers are automatically mapped on creation if
+  * VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT is set in mem_props. Users should
+- * synchronize access themselvesd. Mainly meant for device-local buffers. */
+-int ff_vk_get_pooled_buffer(FFVulkanContext *ctx, AVBufferPool **buf_pool,
++ * synchronize access themselves. device_ref must own the device in ctx; the
++ * pool retains it until all buffers are released, even after ctx is destroyed. */
++int ff_vk_get_pooled_buffer(FFVulkanContext *ctx, AVBufferRef *device_ref,
++                            AVBufferPool **buf_pool,
+                             AVBufferRef **buf, VkBufferUsageFlags usage,
+                             void *create_pNext, size_t size,
+                             VkMemoryPropertyFlagBits mem_props);
+--- a/libavutil/hwcontext_vulkan.c
++++ b/libavutil/hwcontext_vulkan.c
+@@ -4686,7 +4686,7 @@
+                               p->props.properties.limits.optimalBufferCopyOffsetAlignment);
+     }
+ 
+-    err = ff_vk_get_pooled_buffer(&p->vkctx, &fp->tmp, dst, buf_usage,
++    err = ff_vk_get_pooled_buffer(&p->vkctx, hwfc->device_ref, &fp->tmp, dst, buf_usage,
+                                   NULL, buf_offset,
+                                   VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+                                   p->vkctx.host_cached_flag);
+--- a/libavcodec/vulkan_encode.c
++++ b/libavcodec/vulkan_encode.c
+@@ -330,7 +330,7 @@
+     max_pkt_size = FFALIGN(3 * ctx->base.surface_width * ctx->base.surface_height + (1 << 16),
+                            ctx->caps.minBitstreamBufferSizeAlignment);
+ 
+-    err = ff_vk_get_pooled_buffer(&ctx->s, &ctx->buf_pool, &vp->pkt_buf,
++    err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.frames->device_ref, &ctx->buf_pool, &vp->pkt_buf,
+                                   VK_BUFFER_USAGE_VIDEO_ENCODE_DST_BIT_KHR,
+                                   &ctx->profile_list, max_pkt_size,
+                                   VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT |
+--- a/libavcodec/vulkan_decode.c
++++ b/libavcodec/vulkan_decode.c
+@@ -353,7 +353,7 @@
+             buf_pnext = (void *)ff_vk_find_struct(ctx->s.hwfc->create_pnext,
+                                                   VK_STRUCTURE_TYPE_VIDEO_PROFILE_LIST_INFO_KHR);
+ 
+-        err = ff_vk_get_pooled_buffer(&ctx->s, &ctx->buf_pool, &new_ref,
++        err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &ctx->buf_pool, &new_ref,
+                                       DECODER_IS_SDR(avctx->codec_id) ?
+                                       (VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                        VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT) :
+--- a/libavcodec/vulkan_ffv1.c
++++ b/libavcodec/vulkan_ffv1.c
+@@ -145,7 +145,7 @@
+ 
+     /* Allocate slice state data */
+     if (f->picture.f->flags & AV_FRAME_FLAG_KEY) {
+-        err = ff_vk_get_pooled_buffer(&ctx->s, &fv->slice_state_pool,
++        err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &fv->slice_state_pool,
+                                       &fp->slice_state,
+                                       VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                       NULL, f->slice_count*fp->slice_state_size,
+@@ -160,7 +160,7 @@
+     }
+ 
+     /* Allocate slice offsets/status buffer */
+-    err = ff_vk_get_pooled_buffer(&ctx->s, &fv->slice_feedback_pool,
++    err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &fv->slice_feedback_pool,
+                                   &fp->slice_feedback_buf,
+                                   VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                   NULL, 2*(2*f->slice_count*sizeof(uint32_t)),
+@@ -172,7 +172,7 @@
+     /* Allocate slice offsets/status buffer (note, for integer+remap, we don't need it) */
+     if (f->version >=4 && f->micro_version >= 9 &&
+         (av_pix_fmt_desc_get(sw_format)->flags & AV_PIX_FMT_FLAG_FLOAT)) {
+-        err = ff_vk_get_pooled_buffer(&ctx->s, &fv->slice_fltmap_pool,
++        err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &fv->slice_fltmap_pool,
+                                       &fp->slice_fltmap_buf,
+                                       VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                       NULL, 65536*4*f->slice_count*sizeof(uint32_t),
+--- a/libavcodec/vulkan_prores.c
++++ b/libavcodec/vulkan_prores.c
+@@ -102,7 +102,7 @@
+                                   VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT));
+ 
+     /* Allocate metadata buffer */
+-    RET(ff_vk_get_pooled_buffer(&ctx->s, &pv->metadata_pool,
++    RET(ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &pv->metadata_pool,
+                                 &pp->metadata_buf,
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                 NULL, pp->mb_params_off + pp->mb_params_sz,
+--- a/libavcodec/vulkan_prores_raw.c
++++ b/libavcodec/vulkan_prores_raw.c
+@@ -84,7 +84,7 @@
+                               VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT);
+ 
+     /* Allocate tile data */
+-    err = ff_vk_get_pooled_buffer(&ctx->s, &prv->frame_data_pool,
++    err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &prv->frame_data_pool,
+                                   &pp->frame_data_buf,
+                                   VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                   NULL, prr->nb_tiles*sizeof(TileData),
+--- a/libavcodec/vulkan_apv.c
++++ b/libavcodec/vulkan_apv.c
+@@ -84,7 +84,7 @@
+                   (64 + APV_MAX_TILE_COUNT)*APV_MAX_NUM_COMP +
+                   (APV_MAX_TILE_COLS + 1 + APV_MAX_TILE_ROWS + 1)*2;
+ 
+-    err = ff_vk_get_pooled_buffer(&ctx->s, &apvvk->frame_data_pool,
++    err = ff_vk_get_pooled_buffer(&ctx->s, ctx->s.device_ref, &apvvk->frame_data_pool,
+                                   &apvvp->frame_data_buf,
+                                   VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                   VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT,
+--- a/libavcodec/ffv1enc_vulkan.c
++++ b/libavcodec/ffv1enc_vulkan.c
+@@ -312,7 +312,7 @@
+     /* Allocate slice data buffer */
+     slice_data_ref = fv->keyframe_slice_data_ref;
+     if (!slice_data_ref) {
+-        RET(ff_vk_get_pooled_buffer(&fv->s, &fv->slice_data_pool,
++        RET(ff_vk_get_pooled_buffer(&fv->s, fv->s.device_ref, &fv->slice_data_pool,
+                                     &slice_data_ref,
+                                     VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                     NULL, slice_state_size*f->slice_count,
+@@ -333,7 +333,7 @@
+             remap_data_size = 4*(1 << desc->comp[0].depth)*sizeof(uint32_t);
+         }
+ 
+-        RET(ff_vk_get_pooled_buffer(&fv->s, &fv->remap_data_pool,
++        RET(ff_vk_get_pooled_buffer(&fv->s, fv->s.device_ref, &fv->remap_data_pool,
+                                     &remap_data_ref,
+                                     VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                     NULL, remap_data_size*f->slice_count,
+@@ -357,7 +357,7 @@
+                         fv->s.host_cached_flag;
+     }
+ 
+-    RET(ff_vk_get_pooled_buffer(&fv->s, &fv->out_data_pool,
++    RET(ff_vk_get_pooled_buffer(&fv->s, fv->s.device_ref, &fv->out_data_pool,
+                                 &fd->out_data_ref,
+                                 VK_BUFFER_USAGE_TRANSFER_SRC_BIT |
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+--- a/libavcodec/proresenc_kostya_vulkan.c
++++ b/libavcodec/proresenc_kostya_vulkan.c
+@@ -390,7 +390,7 @@
+     ff_vk_exec_start(vkctx, exec);
+ 
+     /* Get a pooled buffer for writing output data */
+-    RET(ff_vk_get_pooled_buffer(vkctx, &pv->pkt_buf_pool, &pd->out_data_ref[picture_idx],
++    RET(ff_vk_get_pooled_buffer(vkctx, vkctx->device_ref, &pv->pkt_buf_pool, &pd->out_data_ref[picture_idx],
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                 VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT |
+                                 VK_BUFFER_USAGE_TRANSFER_SRC_BIT, NULL,
+@@ -403,7 +403,7 @@
+     ff_vk_exec_add_dep_buf(vkctx, exec, &pd->out_data_ref[picture_idx], 1, 1);
+ 
+     /* Allocate buffer for writing slice data */
+-    RET(ff_vk_get_pooled_buffer(vkctx, &pv->slice_data_buf_pool, &pd->slice_data_ref[picture_idx],
++    RET(ff_vk_get_pooled_buffer(vkctx, vkctx->device_ref, &pv->slice_data_buf_pool, &pd->slice_data_ref[picture_idx],
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                 VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT, NULL,
+                                 ctx->slices_per_picture * sizeof(SliceData),
+@@ -412,7 +412,7 @@
+     ff_vk_exec_add_dep_buf(vkctx, exec, &pd->slice_data_ref[picture_idx], 1, 1);
+ 
+     /* Allocate buffer for writing slice scores */
+-    RET(ff_vk_get_pooled_buffer(vkctx, &pv->slice_score_buf_pool, &pd->slice_score_ref[picture_idx],
++    RET(ff_vk_get_pooled_buffer(vkctx, vkctx->device_ref, &pv->slice_score_buf_pool, &pd->slice_score_ref[picture_idx],
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                 VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT, NULL,
+                                 ctx->slices_per_picture * sizeof(SliceScore),
+@@ -421,7 +421,7 @@
+     ff_vk_exec_add_dep_buf(vkctx, exec, &pd->slice_score_ref[picture_idx], 1, 1);
+ 
+     /* Allocate buffer for writing frame size */
+-    RET(ff_vk_get_pooled_buffer(vkctx, &pv->frame_size_buf_pool, &pd->frame_size_ref[picture_idx],
++    RET(ff_vk_get_pooled_buffer(vkctx, vkctx->device_ref, &pv->frame_size_buf_pool, &pd->frame_size_ref[picture_idx],
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                 VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT, NULL,
+                                 sizeof(int),
+--- a/libavfilter/vf_scdet_vulkan.c
++++ b/libavfilter/vf_scdet_vulkan.c
+@@ -160,7 +160,7 @@
+     if (!s->prev)
+         goto done;
+ 
+-    RET(ff_vk_get_pooled_buffer(vkctx, &s->det_buf_pool, &buf,
++    RET(ff_vk_get_pooled_buffer(vkctx, vkctx->frames->device_ref, &s->det_buf_pool, &buf,
+                                 VK_BUFFER_USAGE_TRANSFER_DST_BIT |
+                                 VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                 NULL,
+--- a/libavfilter/vf_blackdetect_vulkan.c
++++ b/libavfilter/vf_blackdetect_vulkan.c
+@@ -202,7 +202,7 @@
+     if (!s->initialized)
+         RET(init_filter(ctx));
+ 
+-    err = ff_vk_get_pooled_buffer(vkctx, &s->sum_buf_pool, &sum_buf,
++    err = ff_vk_get_pooled_buffer(vkctx, vkctx->frames->device_ref, &s->sum_buf_pool, &sum_buf,
+                                   VK_BUFFER_USAGE_TRANSFER_DST_BIT |
+                                   VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+                                   NULL,
+--- a/libavfilter/vf_nlmeans_vulkan.c
++++ b/libavfilter/vf_nlmeans_vulkan.c
+@@ -492,7 +492,7 @@
+     ws_size = ws_count * sizeof(float);
+ 
+     /* Buffers */
+-    err = ff_vk_get_pooled_buffer(&s->vkctx, &s->integral_buf_pool, &integral_buf,
++    err = ff_vk_get_pooled_buffer(&s->vkctx, s->vkctx.frames->device_ref, &s->integral_buf_pool, &integral_buf,
+                                   VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                   VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT,
+                                   NULL,
+@@ -502,7 +502,7 @@
+         return err;
+     integral_vk = (FFVkBuffer *)integral_buf->data;
+ 
+-    err = ff_vk_get_pooled_buffer(&s->vkctx, &s->ws_buf_pool, &ws_buf,
++    err = ff_vk_get_pooled_buffer(&s->vkctx, s->vkctx.frames->device_ref, &s->ws_buf_pool, &ws_buf,
+                                   VK_BUFFER_USAGE_STORAGE_BUFFER_BIT |
+                                   VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+                                   NULL,

@@ -1,0 +1,6 @@
+copying path '/nix/store/0jp6mnvf8rn44vhy5rq8jy94r3iwf03h-samply-0.13.1' from 'https://cache.nixos.org'...
+building '/nix/store/1cvr34p7nmwn72a9nyazn4bxddgfgkw8-nix-shell-env.drv'...
+TAP version 14
+# random seed: R02Sa4c40dca1218838d49a3ceaa84075679
+tests/portal_test.c:207: elapsed >= 30000
+cleaning up pid 1842270

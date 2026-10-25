@@ -1,0 +1,12 @@
+--- a/libavcodec/vaapi_encode_av1.c
++++ b/libavcodec/vaapi_encode_av1.c
+@@ -131,7 +131,8 @@
+     ret = ff_cbs_init(&priv->cbc, AV_CODEC_ID_AV1, avctx);
+     if (ret < 0)
+         return ret;
+-    priv->cbc->trace_enable  = 1;
++    /* Only rate-control modes consume the packed-header bit offsets. */
++    priv->cbc->trace_enable  = !(ctx->va_rc_mode & VA_RC_CQP);
+     priv->cbc->trace_level   = AV_LOG_DEBUG;
+     priv->cbc->trace_context = ctx;
+     priv->cbc->trace_write_callback = vaapi_encode_av1_trace_write_log;

@@ -1,0 +1,6 @@
+error (ignored): SQLite database '/home/quince/.cache/nix/eval-cache-v6/9514c13ef29bbbf171d0948e23ac5344e52b9a9f8e238157b29ff40a97228c70.sqlite' is busy
+map: 576 raw outputs match; 0 expected operation failure
+shader1: 576 raw outputs match; 0 expected operation failure
+shader3: 575 raw outputs match; 1 expected operation failure
+shader7: 575 raw outputs match; 1 expected operation failure
+shader13: 575 raw outputs match; 1 expected operation failure

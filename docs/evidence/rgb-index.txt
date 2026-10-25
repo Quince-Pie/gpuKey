@@ -1,0 +1,86 @@
+Direct RGB AV1 continuation — 23 October 2026 UTC
+
+Authority and artifacts
+- Original material/ and original frozen-recording sample remain unchanged.
+- Fixed reference source/executable: rgb-control.tar.gz (pre-RGB implementation).
+- Final source: current workspace, enumerated by implementation.sha256.
+- Final native package: /nix/store/4fsykvy59bv48gl14plaplbgrpizkq9q-gpukey-rgb-amd
+- Final RADV driver: /nix/store/0jq2axwnmxcargkdlmpjjv02m7g4aggx-mesa-gpukey-rgb-26.2.5
+- Fixed executable: /nix/store/q7rkq342smywmjd4c3iv4syh1qw9lvrz-gpukey-amd/bin/.gpukey-wrapped
+- VA producer/reference driver: /nix/store/qkqg6qvw6fssxkpw1c3f7k4s06xc2gws-mesa-gpukey-hints-26.2.5
+- A process-local diagnostic validation-layer fork is used for RGB profile checks.
+  It repairs profile retention/identity and a query allowlist inconsistency. It
+  is not an unmodified-upstream validation pass. Bad-profile control still fails.
+
+Archive layout (rgb-evidence.tar.gz expands to gpukey-rgb/)
+- verified-comparison/: final matching Nix builds; 18 alternating/rotating file
+  captures, 3 per program/workload (1080p60, portrait60, 1080p240), all independently
+  decoded. Source counts, bytes, frame identities, color errors, CPU variance,
+  RSS, VRAM, GTT, engine counters and unavailable observations are retained.
+- verified-replay/: final 40-second portrait60 pair, 30-second rolling history,
+  two saves after the window advances; independently decoded consecutive IDs.
+- samply-{control,rgb}-verified/: final private 6-second profiles and symbol tables.
+- tracy-verified/: final instrumented trace, zone CSV, two decoded replay exports.
+- latency-{control,rgb}-verified/: public API submit-to-receive timing and native
+  BO allocation diagnostics. These are not GPU-only/capture-to-packet timings.
+- asan-verified/: final native ASan/UBSan capture, multichannel audio, replay,
+  reconfiguration, static and missing-PTS checks, with RADV kept loaded.
+- verified-native-matrix/: final imported/owned RGB, forced keys, 10-bit and portrait
+  cases; ordinary vs queue-owned reconstructions; submit/export/view failures.
+- verified-default-native/: final default VAAPI regression, including startup audio.
+- verified-producer-wait/: final packaged recorder with first DMA-BUF readiness
+  deferred 30 ms; the early-tone oracle checks both AUX tracks.
+- pool-{gcc,asan,tsan}/: exact extracted pool-construction helper under mocks.
+  Native GPU execution is covered separately, not by these mock checks.
+- frame-pool-retry.log/mkv: native failed lazy construction, successful retry and
+  60 independently decoded pictures. pool-construction-failure.log: clean failure
+  during encoder command-pool construction, with no validation errors.
+- pool-retry-debug.log: original RADV allocation-failure SIGSEGV backtrace.
+- audio-start-control.json and producer-wait-control/: earlier candidate loses
+  initial tone. producer-wait-fixed/ is an incomplete first fix. The complete
+  fix is producer-wait-preserved/, final-wait-regression/ and verified-producer-wait/.
+- verification-complete.log and check-names.json: all 17 x86-64 flake checks,
+  GCC/Clang and sanitizer verification. AArch64/native other-GPU coverage is absent.
+- analyze-profiles.py and profile-analysis.json/txt: actual symbolicated inclusive/leaf stack analysis;
+  inclusive percentages overlap. output-volume.json preserves compression-size
+  differences; verified-allocations.json preserves allocation requests by heap.
+- immutable-inputs-verified.log, fixed-control-verified.log, verified-binaries.sha256.
+
+Exploration and failures are retained
+- Earlier comparison/, package-comparison/, final-comparison/ and replay variants
+  predate final lifetime/layout fixes. Some used a development build. They are
+  not the final candidate's performance evidence.
+- Initial BGRA views swapped channels; later native views corrected them.
+- Rate-control, initial-layout, view/output-buffer/CBS cleanup and failed-picture
+  unlinking errors were found and fixed. A 256-byte driver-unload leak report is
+  retained separately from the fixed FFmpeg leak.
+- Reducing video-session slot reservation did not reduce measured VRAM. Repeated
+  80 KiB allocations were command buffers, not per-slot CDF allocations.
+- Some harness attempts inherited benchmark-only variables or used a mismatched
+  file extension; those failed before exercising the intended recorder path.
+- A preload aimed at a /usr/bin/env wrapper hit the host's older glibc. The final
+  API tracer selects the backend while launching the Nix ELF directly.
+- A patch-generation assertion failed before writing its target; its correction
+  and the resulting rebuild are retained. No such failure is called a pass.
+
+Reproduce from /tmp/gpuKey
+  nix run .#rgb-amd -- replay 30 --display --fps 60 --backend vulkan --device 0
+  nix develop .#rgb -c make PROFILE=release VULKAN_RGB=1
+  nix develop .#rgb-clang -c make PROFILE=release VULKAN_RGB=1 CFLAGS=-Werror check
+  nix flake check
+  nix develop .#gcc -c bash tools/check-vulkan-pool.sh /tmp/new-pool-check
+
+Native verification uses the supplied driver and validation layer paths, an
+exclusive NEW_DIRECTORY, tools/check-vulkan-rgb.sh and tools/check-rgb-capture.sh.
+The exact final commands and fixture inputs are retained in the archive's
+run-verified-evaluation.sh, run-verified-comparison.sh and per-run record scripts.
+All captures use private fixtures; no live user recorder was attached or stopped.
+
+Remaining scope
+The default remains VAAPI. Direct RGB saves VRAM but uses more RSS, has slightly
+higher constant-patch error, longer source leases, and mixed portrait CPU results.
+A single long replay pair is not a universal win. Full-scene rate-distortion,
+game interference, energy, complete source-to-packet latency and other hardware
+remain unverified. The active goal continues. Initial DPB transition ownership,
+minimal video-only device construction and VA encode-time RGB processing remain
+open alternatives. No state-of-the-art-on-every-metric claim is made.

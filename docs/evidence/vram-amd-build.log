@@ -1,0 +1,6 @@
+these 2 derivations will be built:
+  /nix/store/zbf5q79rrvygn34dlri37h9jq40k8pv0-gpukey-0.1.0.drv
+  /nix/store/5hiis484vzrccnsyv06mam5nynkb246s-gpukey-amd.drv
+building '/nix/store/zbf5q79rrvygn34dlri37h9jq40k8pv0-gpukey-0.1.0.drv'...
+building '/nix/store/5hiis484vzrccnsyv06mam5nynkb246s-gpukey-amd.drv'...
+/nix/store/4bkc9arvwdwrw17pi6qnpvrik91z31jz-gpukey-amd

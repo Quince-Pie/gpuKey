@@ -1,0 +1,4 @@
+plan: av1_vaapi; 320x240 8-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+plan: av1_vaapi; 320x240 10-bit 4:2:0; iec61966-2-1 transfer; BT.709 limited; persistent DMA-BUF + GPU VPP; fragmented MP4 1 us timing
+GPU color: 8-bit, persistent modifier import, seven independent RGB/YUV endpoints; max error 0.4406 codes
+GPU color: 10-bit, persistent modifier import, seven independent RGB/YUV endpoints; max error 3.0000 codes
